@@ -18,6 +18,20 @@ CREATE SCHEMA diplomacy;
 
 ALTER SCHEMA diplomacy OWNER TO skallaher;
 
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
 SET search_path = diplomacy, pg_catalog;
 
 SET default_tablespace = '';
@@ -65,6 +79,109 @@ CREATE TABLE faction (
 
 
 ALTER TABLE diplomacy.faction OWNER TO skallaher;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: faction_equal_procedure(diplomacy.faction, diplomacy.faction); Type: FUNCTION; Schema: public; Owner: skallaher
+--
+
+CREATE FUNCTION faction_equal_procedure(diplomacy.faction, diplomacy.faction) RETURNS boolean
+    LANGUAGE sql
+    AS $_$SELECT $1.id = $2.id;$_$;
+
+
+ALTER FUNCTION public.faction_equal_procedure(diplomacy.faction, diplomacy.faction) OWNER TO skallaher;
+
+--
+-- Name: get_attacks(integer); Type: FUNCTION; Schema: public; Owner: skallaher
+--
+
+CREATE FUNCTION get_attacks(gameid integer) RETURNS TABLE(orderid integer)
+    LANGUAGE sql
+    AS $$SELECT unitorder.id FROM diplomacy.unit, diplomacy.unitorder, diplomacy.ordertype, diplomacy.faction WHERE faction.gameid = gameId AND unit.factionid = faction.id AND unit.curorder = unitorder.id AND unitorder.type = type$$;
+
+
+ALTER FUNCTION public.get_attacks(gameid integer) OWNER TO skallaher;
+
+--
+-- Name: get_order_of_type(integer, integer); Type: FUNCTION; Schema: public; Owner: skallaher
+--
+
+CREATE FUNCTION get_order_of_type(gameid integer, type integer) RETURNS TABLE(orderid integer)
+    LANGUAGE sql
+    AS $$SELECT unitorder.id FROM diplomacy.unit, diplomacy.unitorder, diplomacy.ordertype, diplomacy.faction WHERE faction.gameid = gameId AND unit.factionid = faction.id AND unit.curorder = unitorder.id AND unitorder.type = type$$;
+
+
+ALTER FUNCTION public.get_order_of_type(gameid integer, type integer) OWNER TO skallaher;
+
+--
+-- Name: get_orders_on(integer, integer); Type: FUNCTION; Schema: public; Owner: skallaher
+--
+
+CREATE FUNCTION get_orders_on(locationid integer, type integer) RETURNS TABLE(orderid integer)
+    LANGUAGE sql
+    AS $$SELECT unitorder.id AS orderid FROM diplomacy.unitorder WHERE unitorder.target = locationid AND unitorder.type = type;$$;
+
+
+ALTER FUNCTION public.get_orders_on(locationid integer, type integer) OWNER TO skallaher;
+
+--
+-- Name: get_origin(integer); Type: FUNCTION; Schema: public; Owner: skallaher
+--
+
+CREATE FUNCTION get_origin(unitid integer) RETURNS TABLE(unitlocation integer)
+    LANGUAGE sql
+    AS $$SELECT unit.location AS unitlocation FROM diplomacy.unit WHERE unit.id = unitid;$$;
+
+
+ALTER FUNCTION public.get_origin(unitid integer) OWNER TO skallaher;
+
+--
+-- Name: get_player(integer); Type: FUNCTION; Schema: public; Owner: skallaher
+--
+
+CREATE FUNCTION get_player(integer) RETURNS diplomacy.player
+    LANGUAGE sql
+    AS $_$SELECT * FROM diplomacy.player WHERE id = $1;$_$;
+
+
+ALTER FUNCTION public.get_player(integer) OWNER TO skallaher;
+
+--
+-- Name: get_units(integer); Type: FUNCTION; Schema: public; Owner: skallaher
+--
+
+CREATE FUNCTION get_units(gameid integer) RETURNS TABLE(faction_id integer, unit_id integer)
+    LANGUAGE sql
+    AS $$SELECT unit.factionid AS faction_id, unit.id AS unit_id FROM diplomacy.unit, diplomacy.faction WHERE faction.id = unit.factionid AND faction.gameid = gameId;$$;
+
+
+ALTER FUNCTION public.get_units(gameid integer) OWNER TO skallaher;
+
+--
+-- Name: loc_is_empty(integer); Type: FUNCTION; Schema: public; Owner: skallaher
+--
+
+CREATE FUNCTION loc_is_empty(locationid integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN IF locationid = ANY(SELECT unit.location FROM diplomacy.unit) THEN RETURN false; ELSE RETURN true; END IF; end;$$;
+
+
+ALTER FUNCTION public.loc_is_empty(locationid integer) OWNER TO skallaher;
+
+--
+-- Name: test(); Type: FUNCTION; Schema: public; Owner: skallaher
+--
+
+CREATE FUNCTION test() RETURNS integer
+    LANGUAGE sql
+    AS $$SELECT 1 as RESULT$$;
+
+
+ALTER FUNCTION public.test() OWNER TO skallaher;
+
+SET search_path = diplomacy, pg_catalog;
 
 --
 -- Name: faction_id_seq; Type: SEQUENCE; Schema: diplomacy; Owner: skallaher
@@ -399,6 +516,7 @@ SELECT pg_catalog.setval('game_gameid_seq', 1, true);
 
 COPY location (xpos, ypos, ispoi, id, type, owner) FROM stdin;
 1	1	f	7	1	1
+1	0	t	8	1	1
 \.
 
 
@@ -406,7 +524,7 @@ COPY location (xpos, ypos, ispoi, id, type, owner) FROM stdin;
 -- Name: location_id_seq; Type: SEQUENCE SET; Schema: diplomacy; Owner: skallaher
 --
 
-SELECT pg_catalog.setval('location_id_seq', 7, true);
+SELECT pg_catalog.setval('location_id_seq', 8, true);
 
 
 --
@@ -464,7 +582,7 @@ SELECT pg_catalog.setval('testunit_id_seq', 1, false);
 --
 
 COPY unit (id, isnaval, location, curorder, factionid) FROM stdin;
-7	f	7	2	1
+7	f	8	2	1
 \.
 
 
@@ -641,6 +759,16 @@ ALTER TABLE ONLY location
 
 ALTER TABLE ONLY unitorder
     ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES ordertype(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
