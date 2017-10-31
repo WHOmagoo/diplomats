@@ -94,17 +94,6 @@ CREATE FUNCTION faction_equal_procedure(diplomacy.faction, diplomacy.faction) RE
 ALTER FUNCTION public.faction_equal_procedure(diplomacy.faction, diplomacy.faction) OWNER TO skallaher;
 
 --
--- Name: get_attacks(integer); Type: FUNCTION; Schema: public; Owner: skallaher
---
-
-CREATE FUNCTION get_attacks(gameid integer) RETURNS TABLE(orderid integer)
-    LANGUAGE sql
-    AS $$SELECT unitorder.id FROM diplomacy.unit, diplomacy.unitorder, diplomacy.ordertype, diplomacy.faction WHERE faction.gameid = gameId AND unit.factionid = faction.id AND unit.curorder = unitorder.id AND unitorder.type = type$$;
-
-
-ALTER FUNCTION public.get_attacks(gameid integer) OWNER TO skallaher;
-
---
 -- Name: get_order_of_type(integer, integer); Type: FUNCTION; Schema: public; Owner: skallaher
 --
 
@@ -138,15 +127,15 @@ CREATE FUNCTION get_origin(unitid integer) RETURNS TABLE(unitlocation integer)
 ALTER FUNCTION public.get_origin(unitid integer) OWNER TO skallaher;
 
 --
--- Name: get_player(integer); Type: FUNCTION; Schema: public; Owner: skallaher
+-- Name: get_unit_at(integer); Type: FUNCTION; Schema: public; Owner: skallaher
 --
 
-CREATE FUNCTION get_player(integer) RETURNS diplomacy.player
+CREATE FUNCTION get_unit_at(locationid integer) RETURNS TABLE(unitid integer)
     LANGUAGE sql
-    AS $_$SELECT * FROM diplomacy.player WHERE id = $1;$_$;
+    AS $$SELECT unit.id FROM diplomacy.unit WHERE unit.location = locationId$$;
 
 
-ALTER FUNCTION public.get_player(integer) OWNER TO skallaher;
+ALTER FUNCTION public.get_unit_at(locationid integer) OWNER TO skallaher;
 
 --
 -- Name: get_units(integer); Type: FUNCTION; Schema: public; Owner: skallaher
@@ -169,17 +158,6 @@ CREATE FUNCTION loc_is_empty(locationid integer) RETURNS boolean
 
 
 ALTER FUNCTION public.loc_is_empty(locationid integer) OWNER TO skallaher;
-
---
--- Name: test(); Type: FUNCTION; Schema: public; Owner: skallaher
---
-
-CREATE FUNCTION test() RETURNS integer
-    LANGUAGE sql
-    AS $$SELECT 1 as RESULT$$;
-
-
-ALTER FUNCTION public.test() OWNER TO skallaher;
 
 SET search_path = diplomacy, pg_catalog;
 
