@@ -39,42 +39,15 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: color; Type: TABLE; Schema: diplomacy; Owner: skallaher; Tablespace: 
---
-
-CREATE TABLE color (
-    name character varying NOT NULL,
-    r integer NOT NULL,
-    g integer NOT NULL,
-    b integer NOT NULL
-);
-
-
-ALTER TABLE diplomacy.color OWNER TO skallaher;
-
---
--- Name: player; Type: TABLE; Schema: diplomacy; Owner: skallaher; Tablespace: 
---
-
-CREATE TABLE player (
-    firstname character varying,
-    lastname character varying,
-    id integer NOT NULL
-);
-
-
-ALTER TABLE diplomacy.player OWNER TO skallaher;
-
---
 -- Name: faction; Type: TABLE; Schema: diplomacy; Owner: skallaher; Tablespace: 
 --
 
 CREATE TABLE faction (
     id integer NOT NULL,
     name character varying,
-    color color,
-    player player,
-    gameid integer
+    gameid integer,
+    color character varying,
+    player integer
 );
 
 
@@ -160,6 +133,20 @@ CREATE FUNCTION loc_is_empty(locationid integer) RETURNS boolean
 ALTER FUNCTION public.loc_is_empty(locationid integer) OWNER TO skallaher;
 
 SET search_path = diplomacy, pg_catalog;
+
+--
+-- Name: color; Type: TABLE; Schema: diplomacy; Owner: skallaher; Tablespace: 
+--
+
+CREATE TABLE color (
+    name character varying NOT NULL,
+    r integer NOT NULL,
+    g integer NOT NULL,
+    b integer NOT NULL
+);
+
+
+ALTER TABLE diplomacy.color OWNER TO skallaher;
 
 --
 -- Name: faction_id_seq; Type: SEQUENCE; Schema: diplomacy; Owner: skallaher
@@ -274,6 +261,19 @@ CREATE TABLE ordertype (
 
 
 ALTER TABLE diplomacy.ordertype OWNER TO skallaher;
+
+--
+-- Name: player; Type: TABLE; Schema: diplomacy; Owner: skallaher; Tablespace: 
+--
+
+CREATE TABLE player (
+    firstname character varying,
+    lastname character varying,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE diplomacy.player OWNER TO skallaher;
 
 --
 -- Name: player_id_seq; Type: SEQUENCE; Schema: diplomacy; Owner: skallaher
@@ -453,6 +453,9 @@ ALTER TABLE ONLY unitorder ALTER COLUMN id SET DEFAULT nextval('unitorder_id_seq
 --
 
 COPY color (name, r, g, b) FROM stdin;
+red	255	0	0
+blue	0	0	255
+green	0	255	0
 \.
 
 
@@ -460,8 +463,9 @@ COPY color (name, r, g, b) FROM stdin;
 -- Data for Name: faction; Type: TABLE DATA; Schema: diplomacy; Owner: skallaher
 --
 
-COPY faction (id, name, color, player, gameid) FROM stdin;
-1	Tester	(RED,255,0,0)	(Joe,Schmoe,1)	1
+COPY faction (id, name, gameid, color, player) FROM stdin;
+2	Germany	2	red	1
+3	United States	2	green	3
 \.
 
 
@@ -469,7 +473,7 @@ COPY faction (id, name, color, player, gameid) FROM stdin;
 -- Name: faction_id_seq; Type: SEQUENCE SET; Schema: diplomacy; Owner: skallaher
 --
 
-SELECT pg_catalog.setval('faction_id_seq', 1, false);
+SELECT pg_catalog.setval('faction_id_seq', 3, true);
 
 
 --
@@ -478,6 +482,8 @@ SELECT pg_catalog.setval('faction_id_seq', 1, false);
 
 COPY game (gameid) FROM stdin;
 1
+2
+3
 \.
 
 
@@ -485,7 +491,7 @@ COPY game (gameid) FROM stdin;
 -- Name: game_gameid_seq; Type: SEQUENCE SET; Schema: diplomacy; Owner: skallaher
 --
 
-SELECT pg_catalog.setval('game_gameid_seq', 1, true);
+SELECT pg_catalog.setval('game_gameid_seq', 4, true);
 
 
 --
@@ -493,8 +499,7 @@ SELECT pg_catalog.setval('game_gameid_seq', 1, true);
 --
 
 COPY location (xpos, ypos, ispoi, id, type, owner) FROM stdin;
-1	1	f	7	1	1
-1	0	t	8	1	1
+0	0	f	10	1	2
 \.
 
 
@@ -502,7 +507,7 @@ COPY location (xpos, ypos, ispoi, id, type, owner) FROM stdin;
 -- Name: location_id_seq; Type: SEQUENCE SET; Schema: diplomacy; Owner: skallaher
 --
 
-SELECT pg_catalog.setval('location_id_seq', 8, true);
+SELECT pg_catalog.setval('location_id_seq', 10, true);
 
 
 --
@@ -529,6 +534,8 @@ COPY ordertype (id, name) FROM stdin;
 
 COPY player (firstname, lastname, id) FROM stdin;
 Joe	Schmoe	1
+Charles	Winston	2
+Calamity	Janet	3
 \.
 
 
@@ -536,7 +543,7 @@ Joe	Schmoe	1
 -- Name: player_id_seq; Type: SEQUENCE SET; Schema: diplomacy; Owner: skallaher
 --
 
-SELECT pg_catalog.setval('player_id_seq', 1, true);
+SELECT pg_catalog.setval('player_id_seq', 3, true);
 
 
 --
@@ -560,7 +567,7 @@ SELECT pg_catalog.setval('testunit_id_seq', 1, false);
 --
 
 COPY unit (id, isnaval, location, curorder, factionid) FROM stdin;
-7	f	8	2	1
+8	f	10	\N	2
 \.
 
 
@@ -568,7 +575,7 @@ COPY unit (id, isnaval, location, curorder, factionid) FROM stdin;
 -- Name: unit_id_seq; Type: SEQUENCE SET; Schema: diplomacy; Owner: skallaher
 --
 
-SELECT pg_catalog.setval('unit_id_seq', 7, true);
+SELECT pg_catalog.setval('unit_id_seq', 8, true);
 
 
 --
@@ -576,7 +583,7 @@ SELECT pg_catalog.setval('unit_id_seq', 7, true);
 --
 
 COPY unitorder (id, type, target) FROM stdin;
-2	1	7
+3	1	10
 \.
 
 
@@ -584,7 +591,7 @@ COPY unitorder (id, type, target) FROM stdin;
 -- Name: unitorder_id_seq; Type: SEQUENCE SET; Schema: diplomacy; Owner: skallaher
 --
 
-SELECT pg_catalog.setval('unitorder_id_seq', 2, true);
+SELECT pg_catalog.setval('unitorder_id_seq', 3, true);
 
 
 --
@@ -673,6 +680,22 @@ ALTER TABLE ONLY unitorder
 
 ALTER TABLE ONLY unit
     ADD CONSTRAINT curorder FOREIGN KEY (curorder) REFERENCES unitorder(id);
+
+
+--
+-- Name: faction_color_fkey; Type: FK CONSTRAINT; Schema: diplomacy; Owner: skallaher
+--
+
+ALTER TABLE ONLY faction
+    ADD CONSTRAINT faction_color_fkey FOREIGN KEY (color) REFERENCES color(name);
+
+
+--
+-- Name: faction_player_fkey; Type: FK CONSTRAINT; Schema: diplomacy; Owner: skallaher
+--
+
+ALTER TABLE ONLY faction
+    ADD CONSTRAINT faction_player_fkey FOREIGN KEY (player) REFERENCES player(id);
 
 
 --
