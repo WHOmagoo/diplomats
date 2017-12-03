@@ -12,7 +12,7 @@ class Singleton(type):
 
 class DB(metaclass=Singleton):
     def __init__(self):
-        self.conn = psycopg2.connect("dbname=diplomats user=skallaher")
+        self.conn = psycopg2.connect("dbname=diplomacy user=postgres password=password host=localhost")
         self.cur = self.conn.cursor()
         self.conn.commit()
         print("Initialized DB")
@@ -20,8 +20,9 @@ class DB(metaclass=Singleton):
     def __del__(self):
         self.cur.close()
         self.conn.close()
-    
+
     """ ============ CONSTRUCTORS ========== """
+
     def makeGame(self):
         self.cur.execute("INSERT INTO diplomacy.game default values;")
         self.conn.commit()
@@ -29,10 +30,8 @@ class DB(metaclass=Singleton):
 
         return self.cur.fetchone()[0]
 
-    def makeFaction(self, faction_name, color_name, player_id, game_id):
-        self.cur.execute("INSERT INTO diplomacy.faction (name, color, player, "
-                         "gameid) VALUES (%s, %s, %s, %s);", (faction_name, 
-                         color_name, player_id, game_id))
+    def makeFaction(self, faction_name, game_id):
+        self.cur.execute("INSERT INTO diplomacy.faction (gameid, name) VALUEs (%s, %s);", (game_id, faction_name))
         self.conn.commit()
         self.cur.execute("SELECT max(id) FROM diplomacy.faction;")
         return self.cur.fetchone()[0]
@@ -66,12 +65,17 @@ class DB(metaclass=Singleton):
 
     def makeLocation(self, x_pos, y_pos, is_poi, type_id, owner_faction_id):
         self.cur.execute("INSERT INTO diplomacy.location (xpos, ypos, ispoi, "
-                         "type, owner) VALUES (%s, %s, %s, %s, %s);", (x_pos, 
+                         "type, factionid) VALUES (%s, %s, %s, %s, %s);", (x_pos,
                          y_pos, is_poi, type_id, owner_faction_id))
         self.conn.commit()
         self.cur.execute("SELECT max(id) FROM diplomacy.location;")
         return self.cur.fetchone()[0]
 
+    # def makeLocType(self, name):
+    #     self.cur.execute("INSERT INTO diplomats.loctype (name) VALUES (%s);", (name))
+    #     self.conn.commit()
+    #     self.cur.execute("SELECT max(id) FROM diplomats.loctypes")
+    #     return self.cur.fetchone()[0]
 
     """ =========== GETTERS =============== """
 
@@ -107,3 +111,25 @@ class DB(metaclass=Singleton):
     def isEmpty(self, locId):
         self.cur.execute("SELECT * FROM loc_is_empty(%s);", locId)
         return self.cur.fetchone()
+
+    """ ========== MISC ========= """
+
+    def removeLocation(self, id):
+        self.cur.execute("DELETE FROM diplomacy.location WHERE id=%s;" % id)
+        self.conn.commit()
+
+    def removePlayer(self, id):
+        self.cur.execute("DELETE FROM diplomacy.player WHERE id=%s;" % id);
+        self.conn.commit()
+
+    def removeFaction(self, id):
+        self.cur.execute("DELETE FROM diplomacy.faction WHERE id=%s;" % id);
+        self.conn.commit()
+
+    def removeGame(self, id):
+        self.cur.execute("DELETE FROM diplomacy.game WHERE gameid=%s;" % id);
+        self.conn.commit()
+
+    def removeUnit(self, id):
+        self.cur.execute("DELETE FROM diplomacy.unit WHERE id=%s;" % id);
+        self.conn.commit()
