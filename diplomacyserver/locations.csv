@@ -1,0 +1,98 @@
+Off Map,coastal,FALSE
+Liverpool,coastal,TRUE
+Ireland,coastal,FALSE
+Wales,coastal,TRUE
+Edinburgh,coastal,TRUE
+London,coastal,TRUE
+Norway,coastal,FALSE
+Sweden,coastal,FALSE
+Finland,coastal,TRUE
+Vologda,landlocked,TRUE
+Leningrad,coastal,TRUE
+Smolensk,landlocked,TRUE
+Moscow,landlocked,FALSE
+Bellorussia,landlocked,FALSE
+Presov,landlocked,FALSE
+Kiev,coastal,FALSE
+Holland,coastal,TRUE
+Kiel,coastal,TRUE
+Berlin,coastal,TRUE
+Siliesia,landlocked,TRUE
+Ruhr,landlocked,TRUE
+Munich,landlocked,FALSE
+Belgium,coastal,FALSE
+Picardy,coastal,TRUE
+Brest,coastal,TRUE
+Paris,landlocked,TRUE
+Marseille,coastal,TRUE
+Gacony,coastal,FALSE
+Bilboa,coastal,TRUE
+Lugo,coastal,TRUE
+Portugal,coastal,FALSE
+Seville,coastal,TRUE
+Valancia,coastal,TRUE
+Barcelona,coastal,FALSE
+Ust,landlocked,FALSE
+Pechora,coastal,FALSE
+Komi,landlocked,TRUE
+Gorki,landlocked,TRUE
+Crimea,coastal,TRUE
+Rostov,coastal,TRUE
+Czechoslovakia,landlocked,FALSE
+Austria,coastal,TRUE
+Hungary,coastal,TRUE
+Bosnia,landlocked,TRUE
+Albania,coastal,TRUE
+Serbia,landlocked,FALSE
+Banat,coastal,FALSE
+Romania,coastal,TRUE
+Bulgaria,coastal,TRUE
+Macedonia,landlocked,TRUE
+Greece,coastal,TRUE
+Istanbul,coastal,TRUE
+Samsun,coastal,TRUE
+Kras,coastal,FALSE
+Izmir,coastal,TRUE
+Lebanon,landlocked,TRUE
+Israel,coastal,TRUE
+Jordan,coastal,FALSE
+Piedmont,coastal,FALSE
+Venice,coastal,FALSE
+Tuscany,coastal,FALSE
+Rome,coastal,TRUE
+Apulia,coastal,TRUE
+Naples,coastal,TRUE
+Sicily,coastal,TRUE
+Sardinia,coastal,TRUE
+Casablanca,coastal,FALSE
+Algiers,coastal,TRUE
+Setif,coastal,TRUE
+Aflou,coastal,TRUE
+Sahara,coastal,FALSE
+Fazzar,landlocked,FALSE
+Murzq,landlocked,FALSE
+Benghazi,coastal,FALSE
+Sallum,coastal,TRUE
+Tobruk,coastal,TRUE
+Cairo,coastal,FALSE
+Nile,coastal,TRUE
+Sawhaj,coastal,FALSE
+Crete,coastal,TRUE
+Irish Sea,ocean,FALSE
+North Sea,ocean,FALSE
+Baltic Sea,ocean,FALSE
+English Channel,ocean,FALSE
+Atlantic Ocean,ocean,FALSE
+Bay of Biscay,ocean,FALSE
+Gibraltar,ocean,FALSE
+Western Mediterranean,ocean,FALSE
+Gulf of Lyons,ocean,FALSE
+Tyrrhenian Sea,ocean,FALSE
+Ionian Sea,ocean,FALSE
+Adriatic Sea,ocean,FALSE
+Agean Sea,ocean,FALSE
+Eastern Mediterranean,ocean,FALSE
+Red Sea,ocean,FALSE
+Lake Cherkassy,ocean,FALSE
+West Black Sea,ocean,FALSE
+East Black Sea,ocean,FALSE
