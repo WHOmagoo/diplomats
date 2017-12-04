@@ -12,7 +12,7 @@ header{
 }
 
 .buffer{
-	display: table-cell;
+	display: inline-block;
 	vertical-align: middle;
 	height: 75px;
 	/*this is just a hack should fix later if i want to*/
@@ -50,4 +50,11 @@ header{
 	display: inline-block;
 	border-style: solid;
 	border-color:  #1c49c2;
+}
+
+.leaveButtonCnt{
+	text-align: center;
+	display: inline-block;
+	float: right;
+	height: 100%;
 }
