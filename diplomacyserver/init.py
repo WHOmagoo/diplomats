@@ -15,6 +15,7 @@ def parsecsv(fileName):
 
     return data
 
+
 # Reads the faction names from factions.csv and adds them to the database,
 # Returns a dictionary that converts names to ids
 def generateFactionDict(gameId):
@@ -26,6 +27,7 @@ def generateFactionDict(gameId):
         factionIdDict[faction] = db.makeFaction(faction, gameId)
 
     return factionIdDict
+
 
 # Reads the location data from locations.csv and adds them to the database
 # Returns a dictionary that converts location names to ids
@@ -63,6 +65,7 @@ def generateLocationDict(factionsDict):
 
     return locationIdDict
 
+
 # Generates the neighbors and adds them to the database, only the smaller id is added to save space and time
 def generateNeighbors(locationDict):
     db = DB()
@@ -76,6 +79,7 @@ def generateNeighbors(locationDict):
 
             if ida < idb:
                 db.makeNeighbors(ida,idb)
+
 
 def generateUnits(factionIdDict, locationIdLookup):
     db = DB()
@@ -107,6 +111,7 @@ def generateUnits(factionIdDict, locationIdLookup):
         unitIds.append(db.makeUnit(isnaval, name, faction));
 
     return unitIds;
+
 
 if __name__ == '__main__':
     start = datetime.datetime.now()

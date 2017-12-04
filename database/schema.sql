@@ -400,6 +400,20 @@ ALTER SEQUENCE unitorder_id_seq OWNED BY unitorder.id;
 
 
 --
+-- Name: neighbor; Type: TABLE; Schema: diplomacy; Owner: postgres
+--
+
+CREATE TABLE neighbor(
+    locida INTEGER NOT NULL,
+    locidb INTEGER NOT NULL,
+    UNIQUE (locida, locidb),
+    PRIMARY KEY(locida, locidb)
+);
+
+ALTER TABLE diplomacy.neighbor OWNER TO postgres;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: diplomacy; Owner: postgres
 --
 
@@ -766,6 +780,21 @@ ALTER TABLE ONLY location
 
 ALTER TABLE ONLY unitorder
     ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES ordertype(id);
+
+
+--
+-- Name: neighbor; Type: FK CONSTRAINT; Schema: diplomacy; Owner: postgres
+--
+
+ALTER TABLE ONLY neighbor
+    ADD CONSTRAINT locida FOREIGN KEY (locida) REFERENCES location(id);
+
+--
+-- Name: neighbor; Type: FK CONSTRAINT; Schema: diplomacy; Owner: postgres
+--
+
+ALTER TABLE ONLY neighbor
+    ADD CONSTRAINT locidb FOREIGN KEY (locidb) REFERENCES location(id);
 
 
 --
