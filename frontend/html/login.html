@@ -4,6 +4,7 @@
 <head>
 	<title>login</title>
 	<link rel="stylesheet" type="text/css" href="../style/login.css" media="screen" />
+	<script type="text/javascript" src="../js/login.js"></script>
 </head>
 <body>
 	<div class="pad">
@@ -20,8 +21,8 @@
 				<input type="text" name="password"><br>
 				</div>
 				<div class="subcrt">
-				<input type="submit" value="Submit">
-				<button type="button">Create Account</button>
+				<input type="submit" value="Submit" onclick="processFormSubmit()">
+				<button type="button" onclick="CreateAccount()">Create Account</button>
 				</div>
 			</form>
 		</div>

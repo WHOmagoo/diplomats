@@ -4,28 +4,29 @@
 <head>
 	<title>Sign up</title>
 	<link rel="stylesheet" type="text/css" href="../style/signup.css" media="screen" />
+	<script type="text/javascript" src="../js/signup.js"></script>
 </head>
 <body>
 	<div class="pad">
 		<div class="container">
 			<!--need to fill in action with post request url-->
-			<form action="" method="post">
+			<form name="signupForm" action="" method="post">
 				<h1>Sign Up</h1>
 				<div class="formElement">
 				User name:<br>
-				<input type="text" name="username"><br>
+				<input type="text" name="username" required><br>
 				</div>
 				<div class="formElement">
 				Password:<br>
-				<input type="text" name="password"><br>
+				<input type="text" name="password" required><br>
 				</div>
 				<div class="formElement">
 				Password(re-enter):<br>
-				<input type="text" name="passwordverify"><br>
+				<input type="text" name="passwordverify" required><br>
 				</div>
 				<div class="subcrt">
-				<input type="submit" value="Submit">
-				<button type="button">Cancel</button>
+				<input type="submit" value="Submit" onclick="processForm()">
+				<button type="button" onclick="cancel()">Cancel</button>
 				</div>
 			</form>
 		</div>
