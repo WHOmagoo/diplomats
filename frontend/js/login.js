@@ -1,18 +1,12 @@
-function processFormSubmit()
+function processForm()
 {
-	alert("Submit button was pressed");
 	//grab all of the items from the form
-	var username = document.signupForm.username;
-	var password = document.signupForm.password;
-	var confpassword = document.signupForm.passwordVerify;
+	var username = document.loginForm.username.value;
+	var password = document.loginForm.password.value;
 	
-	if(username == "" || password == "" || confpassword == "")
+	if(username == "" || password == "")
 	{
 		alert("Form not filled in");
-	}
-	if(password != confpassword)
-	{
-		alert("Passwords do not match!");
 	}
 
 
@@ -20,9 +14,30 @@ function processFormSubmit()
 	var url = "submitURL";
 	postRequest.open("POST",url, true);
 	postRequest.setRequestHeader("Content-type", "application/json");
+
+	postRequest.onreadystatechage = function() {
+		if(this.readyState == 4 && this.status== 200)
+		{
+			onSuccess();
+		}
+		if(this.readyState == 4 && this.status == 418)
+		{
+			alert("invalid credentials");
+		}
+	}
+
+	var data = JSON.stringify({"username":username, "password":password});
+	postRequest.send(data);
+
+	onSuccess();
 }
 
 function CreateAccount()
 {
 	window.location.href = "../html/signup.html";
+}
+
+function onSuccess()
+{
+	window.location.href = "../html/joingame.html";
 }

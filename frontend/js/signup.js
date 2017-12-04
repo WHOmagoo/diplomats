@@ -32,6 +32,8 @@ function processForm()
 	var data = JSON.stringify({"username": username, "password": password});
 	postRequest.send(data);
 
+	onSuccess();
+
 }
 
 function cancel()

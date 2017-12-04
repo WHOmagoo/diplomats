@@ -4,15 +4,16 @@
 <head>
 	<title>Join Game</title>
 	<link rel="stylesheet" type="text/css" href="../style/joingame.css" media="screen" />
+	<script type="text/javascript" src="../js/joingame.js"></script>
 </head>
 <body>
 	<header>
 		<div class="buffer">
 			<div class="contRules contButt">
-				<button type="button" class="rules">Rules</button>
+				<button type="button" class="rules" onclick="onRules()">Rules</button>
 			</div>
 			<div class="contLogout contButt">
-				<button type="button" class="logout">Logout</button>
+				<button type="button" class="logout" onclick="onLogout()">Logout</button>
 			</div>
 		</div>
 	</header>
@@ -20,14 +21,14 @@
 		<div class="gamebuf">
 			<div class="game">
 				<div class="gameContents">
-					<div class="usersinqueue">Users in queue 3/18 </div> 
+					<div class="usersinqueue">Users in queue 3/18 </div>
 					<div class="joinButtCont">
-						<button type="button" class="joinButt">Join Queue</button>
+						<button type="button" class="joinButt" onclick="onJoinQueue()">Join Queue</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 </body>
 </html>
