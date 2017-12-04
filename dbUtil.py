@@ -71,6 +71,16 @@ class DB(metaclass=Singleton):
         self.cur.execute("SELECT max(id) FROM diplomacy.location;")
         return self.cur.fetchone()[0]
 
+    def makeNeighbors(self, ida, idb):
+        if idb < ida:
+            temp = ida
+            ida = idb
+            idb = temp
+
+        self.cur.execute("INSERT INTO diplomacy.neighbor (locida, locidb) VALUES"
+                         " (%s, %s);", (ida, idb))
+        self.conn.commit();
+
     # def makeLocType(self, name):
     #     self.cur.execute("INSERT INTO diplomats.loctype (name) VALUES (%s);", (name))
     #     self.conn.commit()
@@ -112,6 +122,10 @@ class DB(metaclass=Singleton):
         self.cur.execute("SELECT * FROM loc_is_empty(%s);", locId)
         return self.cur.fetchone()
 
+    def getNeighbors(self, locId):
+        self.cur.execute("SELECT * FROM diplomacy.neighbor WHERE locida=%s OR locidb=%s", (locId, locId));
+        return self.cur.fetchall()
+
     """ ========== MISC ========= """
 
     def removeLocation(self, id):
@@ -133,3 +147,6 @@ class DB(metaclass=Singleton):
     def removeUnit(self, id):
         self.cur.execute("DELETE FROM diplomacy.unit WHERE id=%s;" % id);
         self.conn.commit()
+
+    def removeNeighbors(self, ida):
+        self.cur.execute("DELETE FROM diplomacy.neighbor WHERE locida=%s" % ida)
