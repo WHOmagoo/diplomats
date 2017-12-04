@@ -19,64 +19,35 @@ header{
     margin: 0px auto;
 }
 
-.mapSideCnt
-{
-	position: fixed;
-	width: 1920px;
-	height: 700px;
-}
-
 .sideBar{
-	display: inline-block;
-	/*float: right;*/
-	height: 700px;
+	display:inline-block;
+	width: 20%;
 	background-color: red;
-	position: absolute;
-    right: 0;
 	border-style: solid;
+	float: right;
+	height: 541px;
 }
 
 .mapCnt{
-	display: inline-block;
-	width: 100%;
-	height: 700px;
-	background-color: beige;
-	position: absolute;
-    left: 0;
-	border-style: solid;
+	 display:inline-block;;
+	 width: 79%;
+	 background-color: blue;
+	 border-style: solid;
+	 height: 541px;
+}
+
+.mapSideCnt{
+	text-align: center;
 }
 
 .bottomBar{
-	
-	position: absolute;
-	z-index: 100;
-	left: 0;
-	bottom: 0;
 	width: 100%;
-	height: 150px;
-	background-color: pink;
-	border-bottom-style: solid;
-	
-}
-
-.actionLogCont{
-	
-	display: inline-block;
-	float: bottom;
-	text-align: middle;
+	background-color: silver;
+	border-style: solid;
 }
 
 .team{
 	display: inline-block;
-	float: left;
-	height: 95%;
-	width: 100px;
-	background-color: green;
-	margin: 0px auto;
 	border-style: solid;
-}
-
-.map{
-	display: table-cell;
-	vertical-align: middle;
+	border-color:  #1c49c2;
 }
