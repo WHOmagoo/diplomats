@@ -52,15 +52,12 @@ class DB(metaclass=Singleton):
         self.cur.execute("INSERT INTO diplomacy.unit (isnaval, location, "
                          "curorder, factionid) VALUES (%s, %s, NULL, %s);",
                          (is_naval, location_id, faction_id))
+        self.cur.execute("UPDATE diplomacy.location SET factionid = %s WHERE id = %s;", (faction_id, location_id))
         self.conn.commit()
         self.cur.execute("SELECT max(id) FROM diplomacy.unit;")
         return self.cur.fetchone()[0]
 
-    def makeUnitOrder(self, type_id, target_id):
-        self.cur.execute("INSERT INTO diplomacy.unitorder (type, target) VALUES"
-                         " (%s, %s);", (type_id, target_id))
-        self.conn.commit()
-        self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
+
         return self.cur.fetchone()[0]
 
     def makeLocation(self, x_pos, y_pos, is_poi, type_id, owner_faction_id):
@@ -70,6 +67,18 @@ class DB(metaclass=Singleton):
         self.conn.commit()
         self.cur.execute("SELECT max(id) FROM diplomacy.location;")
         return self.cur.fetchone()[0]
+
+    def setOrder(self, unitId, orderId):
+        self.cur.execute("UPDATE diplomacy.unit SET curorder = %s WHERE id = %s", (orderId, unitId))
+        self.conn.commit()
+
+
+
+    # def makeLocType(self, name):
+    #     self.cur.execute("INSERT INTO diplomats.loctype (name) VALUES (%s);", (name))
+    #     self.conn.commit()
+    #     self.cur.execute("SELECT max(id) FROM diplomats.loctypes")
+    #     return self.cur.fetchone()[0]
 
     def makeNeighbors(self, ida, idb):
         if idb < ida:
@@ -81,11 +90,12 @@ class DB(metaclass=Singleton):
                          " (%s, %s);", (ida, idb))
         self.conn.commit();
 
-    # def makeLocType(self, name):
-    #     self.cur.execute("INSERT INTO diplomats.loctype (name) VALUES (%s);", (name))
-    #     self.conn.commit()
-    #     self.cur.execute("SELECT max(id) FROM diplomats.loctypes")
-    #     return self.cur.fetchone()[0]
+    def makeUnitOrder(self, type, target):
+        self.cur.execute("INSERT INTO diplomacy.unitorder (type, target) VALUES (%s, %s);", (type, target))
+        self.conn.commit()
+        self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
+        return self.cur.fetchone()
+
 
     """ =========== GETTERS =============== """
 
@@ -94,20 +104,20 @@ class DB(metaclass=Singleton):
         return self.cur.fetchall()
 
     def getOrigin(self, orderId):
-        self.cur.execute("SELECT * FROM get_origin(%s);", orderId)
+        self.cur.execute("SELECT * FROM get_origin(%s);" % orderId)
+        return self.cur.fetchone()
 
     def getDefenses(self, gameId):
         self.cur.execute("SELECT * FROM get_order_of_type(%s, 3);", gameId)
         return self.cur.fetchall()
 
     def getOrder(self, unitId):
-        self.cur.execute("SELECT unitorder.id FROM diplomacy.unitorder, "
-                         "diplomacy.unit WHERE unit.orderId = %s AND "
-                         "unitorder.id = %s;", (unitId, unitId))
+        self.cur.execute("SELECT curorder FROM diplomacy.unit WHERE id=%s" % unitId)
         return self.cur.fetchone()
 
     def getUnit(self, locId):
-        self.cur.execute("SELECT * FROM get_unit_at(%s);", locId)
+        self.cur.execute("SELECT * FROM diplomacy.unit WHERE id=%s;" % locId)
+        self.conn.commit()
         return self.cur.fetchone()
 
     def getOrdersAttacking(self, locId):
@@ -119,12 +129,31 @@ class DB(metaclass=Singleton):
         return self.cur.fetchall()
 
     def isEmpty(self, locId):
-        self.cur.execute("SELECT * FROM loc_is_empty(%s);", locId)
+        self.cur.execute("SELECT * FROM loc_is_empty(%s);" % locId)
         return self.cur.fetchone()
 
     def getNeighbors(self, locId):
-        self.cur.execute("SELECT * FROM diplomacy.neighbor WHERE locida=%s OR locidb=%s", (locId, locId));
+        self.cur.execute("WITH RECURSIVE neighborId(locId) AS ("    
+                         "SELECT locida FROM diplomacy.neighbor WHERE locidb = %s"
+                         " UNION"
+                         " SELECT locidb FROM diplomacy.neighbor WHERE locida = %s)"
+                         " SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId);", (locId, locId));
+        self.conn.commit()
         return self.cur.fetchall()
+
+
+    def getOrderData(self, unitId):
+        self.cur.execute("SELECT * FROM diplomacy.unitorder WHERE id IN (SELECT curorder FROM diplomacy.unit WHERE id=%s);" % unitId)
+        self.conn.commit
+        return self.cur.fetchone()
+
+    def getUnitLocation(self, unitid):
+        self.cur.execute("SELECT * FROM diplomacy.location WHERE id = (SELECT location FROM diplomacy.unit WHERE id = %s);" % unitid)
+        return self.cur.fetchone()
+
+    def updateUnitLocation(self, unitid, locId):
+        self.cur.execute("UPDATE diplomacy.unit SET location = %s WHERE id = %s", (locId, unitid));
+        self.conn.commit()
 
     """ ========== MISC ========= """
 

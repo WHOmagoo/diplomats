@@ -6,5 +6,36 @@ WHERE name='red';
 INSERT INTO diplomacy.faction (gameid, name, player, color) SELECT 18, 'none', player, color FROM diplomacy.player, diplomacy.color WHERE id=20 AND name='red';
 
 
-{'Piedmont': 745, 'Setif': 755, 'Sweden': 694, 'Samsun': 739, 'Red Sea': 781, 'Bulgaria': 735, 'Bilboa': 715, 'Israel': 743, 'East Black Sea': 784, 'Ionian Sea': 777, 'Banat': 733, 'Sicily': 751, 'Czechoslovakia': 727, 'Apulia': 749, 'Crete': 766, 'Off Map': 687, 'Romania': 734, 'Presov': 701, 'Wales': 690, 'Austria': 728, 'Greece': 737, 'Leningrad': 697, 'Crimea': 725, 'Bosnia': 730, 'Valancia': 719, 'Baltic Sea': 769, 'Siliesia': 706, 'Portugal': 717, 'Nile': 764, 'Picardy': 710, 'Izmir': 741, 'Komi': 723, 'Seville': 718, 'Murzq': 759, 'Gibraltar': 773, 'Brest': 711, 'Sahara': 757, 'Eastern Mediterranean': 780, 'Kiel': 704, 'Berlin': 705, 'Bay of Biscay': 772, 'Ruhr': 707, 'Marseille': 713, 'Cairo': 763, 'Gacony': 714, 'Kras': 740, 'Munich': 708, 'Irish Sea': 767, 'Naples': 750, 'North Sea': 768, 'West Black Sea': 783, 'Vologda': 696, 'Finland': 695, 'Ust': 721, 'Smolensk': 698, 'Kiev': 702, 'Norway': 693, 'Fazzar': 758, 'Lebanon': 742, 'Istanbul': 738, 'Sawhaj': 765, 'Tyrrhenian Sea': 776, 'Benghazi': 760, 'Rostov': 726, 'Macedonia': 736, 'Tuscany': 747, 'Holland': 703, 'Venice': 746, 'Bellorussia': 700, 'Adriatic Sea': 778, 'Algiers': 754, 'Moscow': 699, 'Aflou': 756, 'Barcelona': 720, 'Agean Sea': 779, 'Sallum': 761, 'Ireland': 689, 'Gorki': 724, 'Pechora': 722, 'Belgium': 709, 'Atlantic Ocean': 771, 'English Channel': 770, 'Western Mediterranean': 774, 'Liverpool': 688, 'Albania': 731, 'Edinburgh': 691, 'Rome': 748, 'Jordan': 744, 'Hungary': 729, 'Lugo': 716, 'Gulf of Lyons': 775, 'Tobruk': 762, 'Lake Cherkassy': 782, 'Serbia': 732, 'Sardinia': 752, 'Paris': 712, 'London': 692, 'Casablanca': 753}
+Gets all the attacks for a location assuming army
 
+WITH myNeighbor AS (
+    WITH RECURSIVE neighborId(locId) AS (
+        SELECT locida FROM diplomacy.neighbor WHERE locidb = 22638
+        UNION
+        SELECT locidb FROM diplomacy.neighbor WHERE locida = 22638)
+    SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId))
+SELECT id FROM myNeighbor WHERE factionid != (SELECT factionid FROM diplomacy.location WHERE id = 22638) AND (type = 1 OR type = 2);
+
+
+
+WITH myNeighbor AS (
+    WITH RECURSIVE neighborId(locId) AS (
+        SELECT locida FROM diplomacy.neighbor WHERE locidb = 22638
+        UNION
+        SELECT locidb FROM diplomacy.neighbor WHERE locida = 22638)
+    SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId)),
+    curLoc AS (SELECT * FROM diplomacy.location WHERE id = 22638),
+    isNavy AS (SELECT isnaval FROM diplomacy.unit WHERE location = 22638)
+
+    SELECT
+
+
+WITH RECURSIVE neighborId(locId) AS (
+SELECT locida FROM diplomacy.neighbor WHERE locidb = 27611
+UNION
+SELECT locidb FROM diplomacy.neighbor WHERE locida = 27611)
+SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId);
+
+
+INSERT INTO diplomacy.unitorder (type, target) VALUES (1, 28694);
+UPDATE diplomacy.unit SET curorder=3 WHERE id=2525;
