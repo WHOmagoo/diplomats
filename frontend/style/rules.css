@@ -1,0 +1,30 @@
+body{
+	background-color: navy;
+}
+
+header{
+	top: 0px;
+	width: 100%;
+	display: block;
+	height: 100px;
+	background-color: aqua;
+	text-align: center;
+	border-style: solid;
+}
+
+h1{
+	font-size: 60px;
+	margin: 0px auto;
+}
+
+.rulesCnt{
+	background-color: beige;
+	width: 100%;
+	height: 100%;
+	border-style: solid;
+}
+
+.rules{
+	width: 95%;
+	margin: 0px auto;
+}

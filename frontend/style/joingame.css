@@ -1,0 +1,75 @@
+body{
+	background-color: navy;
+}
+
+header{
+	top: 0px;
+	display: block;
+	height: 100px;
+	background-color: aqua;
+	border-style: solid;
+	width: 100%;
+}
+
+.contButt{
+	margin: 25px;
+}
+
+.contRules{
+	float: left;
+}
+
+.contLogout{
+	float: right;
+}
+
+.buffer{
+	display: table-cell;
+	vertical-align: middle;
+	height: 100px;
+	/*this is just a hack should fix later if i want to*/
+	width: 1910px;
+}
+
+.gameContainer
+{
+	width: 100%;
+	height: 600px;
+	background-color: beige;
+	border-style: solid;
+}
+
+.gamebuf
+{
+	display: table-cell;
+	vertical-align: middle;
+	height: 100px;
+	width: 1910px;
+}
+
+.game{
+	width: 50%;
+	height: 75px;
+	background-color: LightCoral;
+	margin: 0px auto;
+	border-style: solid;
+	border-radius: 25px;
+}
+
+.gameContents{
+	display: table-cell;
+	vertical-align: middle;
+	height: 75px;
+	width: 1000px;
+}
+
+.usersinqueue{
+	float: left;
+	font-size: 25px;
+	margin: 25px;
+}
+
+.joinButtCont{
+	float: right;
+	margin: 25px;
+}
