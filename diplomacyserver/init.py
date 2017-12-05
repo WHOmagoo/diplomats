@@ -2,6 +2,7 @@ from dbUtil import DB
 import csv
 import datetime
 
+from diplomacyserver.OrderValidator import *
 
 locationNameToId = {}
 locationIdToName = {}
@@ -9,6 +10,7 @@ unitNameToId = {}
 unitIdToName = {}
 factionNameToId = {}
 factionIdToName = {}
+db = DB()
 
 ordertypes = {'Attack':1, 'a':1, 'Support':2, 's':2, 'Defend':3, 'd':3, 'Move':4, 'm':4, 'Stay':5, 's':5}
 
@@ -27,7 +29,7 @@ def parsecsv(fileName):
 # Reads the faction names from factions.csv and adds them to the database,
 # Returns a dictionary that converts names to ids
 def generateFactionDict(gameId):
-    db = DB()
+    # db = DB()
     factions = parsecsv('factions.csv')
 
     for faction in factions[0]:
@@ -39,15 +41,17 @@ def generateFactionDict(gameId):
 # Reads the location data from locations.csv and adds them to the database
 # Returns a dictionary that converts location names to ids
 def generateLocationDict():
-    db = DB()
+    # db = DB()
     locations = parsecsv('locations.csv')
 
     locationIdDict = {}
 
     for row in locations:
         name = row[0]
-        type_id = row[1]
-        is_poi = row[2]
+        xpos = row[1]
+        ypos = row[2]
+        type_id = row[3]
+        is_poi = row[4]
 
         if is_poi == 'TRUE':
             is_poi = True
@@ -67,7 +71,7 @@ def generateLocationDict():
             print("There was an error, " + type_id)
             break;
 
-        locID = db.makeLocation(0, 0, is_poi, type_id, factionNameToId['None'])
+        locID = db.makeLocation(xpos, ypos, is_poi, type_id, factionNameToId['None'])
         locationNameToId[name] = locID
         locationIdToName[locID] = name
 
@@ -76,7 +80,7 @@ def generateLocationDict():
 
 # Generates the neighbors and adds them to the database, only the smaller id is added to save space and time
 def generateNeighbors():
-    db = DB()
+    # db = DB()
     neighbors = parsecsv('neighbors.csv')
 
     for row in neighbors:
@@ -89,7 +93,7 @@ def generateNeighbors():
                 db.makeNeighbors(ida,idb)
 
 def generateUnits():
-    db = DB()
+    # db = DB()
     units = parsecsv('units.csv')
     unitIds = {}
 
@@ -97,6 +101,7 @@ def generateUnits():
         location = unit[0]
         isnaval = unit[1]
         faction = unit[2]
+
         if isnaval == 'navy':
             isnaval = True
         elif isnaval == 'army':
@@ -122,7 +127,7 @@ def generateUnits():
         unitIdToName[id] = unit[0]
 
 def createGame():
-    db = DB()
+    # db = DB()
 
     gameId = db.makeGame()
 
@@ -132,7 +137,7 @@ def createGame():
     generateUnits()
 
 def getAttackable(unitId):
-    db = DB()
+    # db = DB()
     unit = db.getUnit(unitId)
     neighbors = db.getNeighbors(unit[2])
 
@@ -152,7 +157,7 @@ def getAttackable(unitId):
     print(neighbors)
 
 def makeOrder(unitid, type, target):
-    db = DB()
+    # db = DB()
     locationOrigin = db.getUnitLocation(unitid)
     neighbors = getNeighbors(locationOrigin[3])
 
@@ -163,13 +168,12 @@ def makeOrder(unitid, type, target):
         print("Target is not in neighbors")
 
 def resolveOrders():
-    db = DB()
+    # db = DB()
     orders = []
     for unit, id in unitNameToId.items():
         order = db.getOrderData(id)
         if order is not None:
             orders.append(order)
-
 
     success = []
     for order in orders:
@@ -177,15 +181,10 @@ def resolveOrders():
             success.append(order)
 
     for order in success:
-        origin = db.getOrigin(order[2])
-        attackingId = order([2])
+        origin = db.getOrigin(order[0])
+        attackingId = order[2]
 
         db.updateUnitLocation(origin, attackingId)
-
-
-
-    print(orders)
-
 
 
 def getOrderType(name):
@@ -198,7 +197,7 @@ def getOrderType(name):
     return id
 
 def getNeighbors(locationId):
-    db = DB()
+    # db = DB()
     neighbors = db.getNeighbors(locationId)
     result = []
     for e in neighbors:
@@ -214,6 +213,17 @@ def printLocations(locationList):
     print(result)
 
 
+def updateGame():
+    unitNameToId.clear()
+    unitIdToName.clear()
+    for key, value in locationIdToName.items():
+        unit = db.getUnit(key)
+        if unit is not None:
+            unitNameToId[value] = unit[0]
+            unitIdToName[unit[0]] = value
+
+    print(unitNameToId)
+
 
 
 def removeGame(gameData):
@@ -224,6 +234,7 @@ if __name__ == '__main__':
     # result = input('Enter a command: ')
     # print(result)
     gameData = createGame()
+    updateGame()
     # locationDict = gameData[2]
     # unitDict = gameData[3]
 
@@ -249,21 +260,26 @@ if __name__ == '__main__':
                 break;
             elif command[0] == 'order' or command[0] == 'o':
                 try:
-                    location = command[1].replace(',', ' ')
+                    origin = command[1].replace(',', ' ')
                     type = command[2]
                     target = command[3].replace(',', ' ')
 
-                    location = unitNameToId[location]
+
+                    origin = unitNameToId[origin]
                     type = ordertypes[type]
                     target = locationNameToId[target]
 
-                    makeOrder(location, type, target)
+                    validateAttack(origin, target, type)
+
+                    makeOrder(origin, type, target)
                 except KeyError:
                     print("One or more of the inputs was incorrect")
             elif command[0] == 'confirm':
                 resolveOrders()
+                updateGame()
             else:
                 print("Command not recognized")
+
         except IndexError:
             print("Wrong number of parameters for command " + command)
 

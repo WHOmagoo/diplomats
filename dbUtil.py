@@ -104,7 +104,8 @@ class DB(metaclass=Singleton):
         return self.cur.fetchall()
 
     def getOrigin(self, orderId):
-        self.cur.execute("SELECT * FROM get_origin(%s);" % orderId)
+        # self.cur.execute("SELECT * FROM get_origin(%s);" % orderId)
+        self.cur.execute("SELECT id FROM diplomacy.unit WHERE curorder=%s" % orderId)
         return self.cur.fetchone()
 
     def getDefenses(self, gameId):
@@ -116,7 +117,7 @@ class DB(metaclass=Singleton):
         return self.cur.fetchone()
 
     def getUnit(self, locId):
-        self.cur.execute("SELECT * FROM diplomacy.unit WHERE id=%s;" % locId)
+        self.cur.execute("SELECT * FROM diplomacy.unit WHERE location=%s;" % locId)
         self.conn.commit()
         return self.cur.fetchone()
 
@@ -129,8 +130,8 @@ class DB(metaclass=Singleton):
         return self.cur.fetchall()
 
     def isEmpty(self, locId):
-        self.cur.execute("SELECT * FROM loc_is_empty(%s);" % locId)
-        return self.cur.fetchone()
+        self.cur.execute("SELECT * FROM diplomacy.unit WHERE location = %s;" % locId)
+        return self.cur.fetchone() is None
 
     def getNeighbors(self, locId):
         self.cur.execute("WITH RECURSIVE neighborId(locId) AS ("    
@@ -140,7 +141,6 @@ class DB(metaclass=Singleton):
                          " SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId);", (locId, locId));
         self.conn.commit()
         return self.cur.fetchall()
-
 
     def getOrderData(self, unitId):
         self.cur.execute("SELECT * FROM diplomacy.unitorder WHERE id IN (SELECT curorder FROM diplomacy.unit WHERE id=%s);" % unitId)
@@ -154,6 +154,14 @@ class DB(metaclass=Singleton):
     def updateUnitLocation(self, unitid, locId):
         self.cur.execute("UPDATE diplomacy.unit SET location = %s WHERE id = %s", (locId, unitid));
         self.conn.commit()
+
+    def getAttackable(self, unitId):
+        self.cur.execute("WITH RECURSIVE neighborId(locId) AS ("
+            "SELECT locida FROM diplomacy.neighbor WHERE locidb = %s"
+            " UNION"
+            " SELECT locidb FROM diplomacy.neighbor WHERE locida = %s)"
+            " SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId);", (locId, locId))
+
 
     """ ========== MISC ========= """
 
