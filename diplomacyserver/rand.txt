@@ -1,0 +1,11 @@
+WITH RECURSIVE neighborId(locId) AS (
+    SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = 252)
+    UNION
+    SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = 252))
+SELECT * FROM diplomacy.location WHERE
+  id IN (SELECT locId FROM neighborId)
+  AND (type = 2
+  OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=252))
+  OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=252)))
+  AND
+    (NOT ispoi OR factionid = (SELECT factionid FROM diplomacy.unit WHERE id = 252));
