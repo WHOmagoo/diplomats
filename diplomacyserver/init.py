@@ -1,6 +1,7 @@
 import csv
-from dbUtil import DB
-from OrderValidator import *
+
+from diplomacyserver import OrderValidator
+from diplomacyserver.dbUtil import DB
 
 locationNameToId = {}
 locationIdToName = {}
@@ -134,26 +135,6 @@ def createGame():
     generateNeighbors()
     generateUnits()
 
-def getAttackable(unitId):
-    # db = DB()
-    unit = db.getUnit(unitId)
-    neighbors = db.getNeighbors(unit[2])
-
-    drop = []
-
-    for loc in neighbors:
-        if loc[5] == unit[4]:
-            drop.append(loc)
-        elif unit[1] and loc[4] == 1:
-            drop.append(loc)
-        elif not unit[1] and loc[4] == 3:
-            drop.append(loc)
-
-    for loc in drop:
-        neighbors.remove(loc)
-
-    print(neighbors)
-
 def makeOrder(unitid, type, target):
     # db = DB()
     locationOrigin = db.getUnitLocation(unitid)
@@ -196,7 +177,7 @@ def getOrderType(name):
 
 def getNeighbors(locationId):
     # db = DB()
-    neighbors = db.getNeighbors(locationId)
+    neighbors = db.getNeighborsFromLocation(locationId)
     result = []
     for e in neighbors:
         result.append(e[3])
@@ -267,11 +248,51 @@ if __name__ == '__main__':
                     type = ordertypes[type]
                     target = locationNameToId[target]
 
-                    validateAttack(origin, target)
-
                     makeOrder(origin, type, target)
                 except KeyError:
                     print("One or more of the inputs was incorrect")
+            elif command[0] == 'a':
+                origin = command[1].replace(',', ' ')
+                origin = unitNameToId[origin]
+                attackable = OrderValidator.getAttackable(origin)
+                for id in attackable:
+                    print(locationIdToName[id[0]] + ", ",)
+
+                print()
+
+            elif command[0] == 'd':
+                origin = command[1].replace(',', ' ')
+                origin = unitNameToId[origin]
+                for id in OrderValidator.getDefendable(origin):
+                    print(locationIdToName[id[0]] + ", ",)
+
+                print()
+            elif command[0] == 's':
+                origin = command[1].replace(',', ' ')
+                origin = unitNameToId[origin]
+                for id in OrderValidator.getSupportable(origin):
+                    print(locationIdToName[id[0]] + ", ",)
+
+                print()
+                pass
+            elif command[0] == 'm':
+                origin = command[1].replace(',', ' ')
+                origin = unitNameToId[origin]
+                for id in OrderValidator.getMoveable(origin):
+                    print(locationIdToName[id[0]] + ", ",)
+
+                print()
+                pass
+            elif command[0] == 'aic':
+                origin = command[1].replace(',', ' ')
+                origin = unitNameToId[origin]
+                secondary = command[2].replace(',', ' ')
+                secondary = unitNameToId[secondary]
+                for id in OrderValidator.getAttackableInCommon(origin, secondary):
+                    print(locationIdToName[id[0]] + ", ",)
+
+                print()
+                pass
             elif command[0] == 'confirm':
                 resolveOrders()
                 updateGame()
@@ -279,7 +300,9 @@ if __name__ == '__main__':
                 print("Command not recognized")
 
         except IndexError:
-            print("Wrong number of parameters for command " + command)
+            print("Wrong number of parameters for command " + str(command))
+        except KeyError:
+            print("Something was misspelled in "  + str(command))
 
 
     # print(gameData)

@@ -1,23 +1,7 @@
-WITH attackablea AS(
-    WITH neighbors AS(
-        WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=%s)),
-        b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=%s))
-        SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
-        SELECT * FROM neighbors WHERE
-            (type = 2
-            OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
-            OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
-            AND
-            (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = %s))),
-    attackableb AS(
-         WITH neighbors AS(
-             WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=%s)),
-             b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=%s))
-             SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
-             SELECT * FROM neighbors WHERE
-                 (type = 2
-                 OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
-                 OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
-                 AND
-                 (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = %s)))
-    (SELECT * FROM attackablea) INTERSECT (SELECT * FROM attackableb);
+            UPDATE diplomacy.location SET factionid = (SELECT
+                id FROM diplomacy.faction WHERE
+                  gameid = (SELECT
+                    gameid FROM diplomacy.faction WHERE
+                      id = (SELECT factionid FROM diplomacy.unit WHERE id = %s))
+                  AND name = 'None')
+                WHERE NOT ispoi AND id = (SELECT location FROM diplomacy.unit WHERE id = %s);
