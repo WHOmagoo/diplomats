@@ -1,8 +1,6 @@
-from dbUtil import DB
 import csv
-import datetime
-
-from diplomacyserver.OrderValidator import *
+from dbUtil import DB
+from OrderValidator import *
 
 locationNameToId = {}
 locationIdToName = {}
@@ -269,7 +267,7 @@ if __name__ == '__main__':
                     type = ordertypes[type]
                     target = locationNameToId[target]
 
-                    validateAttack(origin, target, type)
+                    validateAttack(origin, target)
 
                     makeOrder(origin, type, target)
                 except KeyError:
