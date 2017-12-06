@@ -156,11 +156,56 @@ class DB(metaclass=Singleton):
         self.conn.commit()
 
     def getAttackable(self, unitId):
-        self.cur.execute("WITH RECURSIVE neighborId(locId) AS ("
-            "SELECT locida FROM diplomacy.neighbor WHERE locidb = %s"
-            " UNION"
-            " SELECT locidb FROM diplomacy.neighbor WHERE locida = %s)"
-            " SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId);", (locId, locId))
+        self.cur.execute(
+            """WITH RECURSIVE neighborId(locId) AS (
+                SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = %s)
+                UNION
+                SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = %s))
+            SELECT * FROM diplomacy.location WHERE
+              id IN (SELECT locId FROM neighborId)
+              AND
+                (type = 2
+                OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
+                OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
+              AND factionid != (SELECT factionid FROM diplomacy.unit WHERE id=%s);""",
+            (unitId, unitId,unitId,unitId,unitId))
+        return self.cur.fetchall()
+
+    def getDefendable(self, unitId):
+        self.cur.execute(
+            """
+            WITH RECURSIVE neighborId(locId) AS (
+              SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = %s)
+              UNION
+              SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = %s))
+            SELECT * FROM diplomacy.location WHERE
+              id IN (SELECT locId FROM neighborId)
+              AND
+                (type = 2
+                OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
+                OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
+              AND id IN (SELECT location FROM diplomacy.unit);
+            """, (unitId, unitId, unitId, unitId)
+        )
+        return self.cur.fetchall()
+
+    def getMoveable(self, unitId):
+        self.cur.execute(
+            """
+            WITH RECURSIVE neighborId(locId) AS (
+              SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = %s)
+              UNION
+              SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = %s))
+            SELECT * FROM diplomacy.location WHERE
+              id IN (SELECT locId FROM neighborId)
+              AND (type = 2
+              OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
+              OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
+                AND
+                (NOT ispoi OR factionid = (SELECT factionid FROM diplomacy.unit WHERE id = %s));
+            """
+        )
+        return self.cur.fetchall()
 
 
     """ ========== MISC ========= """

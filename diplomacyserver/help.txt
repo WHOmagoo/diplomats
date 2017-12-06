@@ -37,18 +37,24 @@ SELECT locidb FROM diplomacy.neighbor WHERE locida = 27611)
 SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId);
 
 
-INSERT INTO diplomacy.unitorder (type, target) VALUES (1, 28694);
+INSERT INTO diplomacy.unitorder (type, target) VALUES (1, 28964);
 UPDATE diplomacy.unit SET curorder=3 WHERE id=2525;
+
+TODO getSupportable
+TODO getCommonAttackable
+TODO moveable
+
+Defendable
 
 
 WITH RECURSIVE neighborId(locId) AS (
-    SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = 4580)
+    SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = 89)
     UNION
-    SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = 4580))
-SELECT * FROM diplomacy.location
-    WHERE
-    id IN (SELECT locId FROM neighborId)
-    AND (type = 2
-        OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=4580))
-        OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=4580)))
-    AND factionid != (SELECT factionid FROM diplomacy.unit WHERE id=4580);
+    SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = 89))
+SELECT * FROM diplomacy.location WHERE
+  id IN (SELECT locId FROM neighborId)
+  AND (type = 2
+  OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=89))
+  OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=89)))
+  AND
+    (NOT ispoi OR factionid = (SELECT factionid FROM diplomacy.unit WHERE id = 89));
