@@ -34,7 +34,6 @@ header{
 	 background-color: blue;
 	 border-style: solid;
 	 height: 541px;
-    position: relative;
 }
 
 .mapSideCnt{
@@ -71,4 +70,23 @@ header{
     top:0px;
     left:50px;
     height: 100%;
+    z-index: 3;
+}
+/*teams*/
+.team1{
+    background-color: red;
+    z-index: 1;
+}
+
+/*countries*/
+.IrishSea{
+    position: absolute;
+    top: 17%;
+    left: 12%;
+    height: 40px;
+    width: 40px;
+}
+
+.circleBase{
+    border-radius: 50%;
 }
