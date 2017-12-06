@@ -61,7 +61,9 @@ header{
 }
 
 .map{
-    position: relative;
+    position: absolute;
+    top: 0px;
+    left: 50px;
     height: 100%;
 }
 
@@ -72,6 +74,37 @@ header{
     height: 100%;
     z-index: 3;
 }
+
+.circleBase{
+    border-radius: 50%;
+}
+
+.army{
+    height: 90%;
+}
+
+.navy{
+    height: 90%;
+    position: relative;
+    top: 7%;
+}
+
+/*country sizes*/
+.small{
+    height: 20px;
+    width: 20px;
+}
+
+.medium{
+    height: 40px;
+    width: 40px;
+}
+
+.large{
+    height: 60px;
+    width: 60px;
+}
+
 /*teams*/
 .team1{
     background-color: red;
@@ -81,12 +114,501 @@ header{
 /*countries*/
 .IrishSea{
     position: absolute;
-    top: 17%;
-    left: 12%;
-    height: 40px;
-    width: 40px;
+    top: 90px;
+    left: 150px;
+
 }
 
-.circleBase{
-    border-radius: 50%;
+.Jordan{
+
+    position: absolute;
+    top: 430px;
+    left: 870px;
 }
+
+.RedSea{
+    position: absolute;
+    top: 445px;
+    left: 800px;
+}
+
+.Nile{
+    position: absolute;
+    top: 452px;
+    left: 720px;
+}
+
+.Sawhaj{
+    position: absolute;
+    top: 465px;
+    left: 650px;
+}
+
+.Tobruk{
+    position: absolute;
+    top: 410px;
+    left: 650px;
+}
+
+.Sallum{
+    position: absolute;
+    top: 435px;
+    left: 585px;
+}
+.Bengasi{
+    position: absolute;
+    top: 425px;
+    left: 490px;
+}
+.Murzq {
+    position:absolute;
+    top: 465px;
+    left: 510px;
+}
+.Fazzar {
+    position:absolute;
+    top: 450px;
+    left: 425px;
+}
+.Setif {
+    position:absolute;
+    top: 395px;
+    left: 405px;
+}
+.Sahara {
+    position:absolute;
+    top: 450px;
+    left: 375px;
+}
+.Aflou {
+    position:absolute;
+    top: 445px;
+    left: 315px;
+}
+.Casablanca {
+    position:absolute;
+    top: 425px;
+    left: 180px;
+}
+.Algeirs {
+    position:absolute;
+    top: 405px;
+    left: 290px;
+}
+.WesternMediterranean {
+    position:absolute;
+    top: 360px;
+    left: 300px;
+}
+.Gibraltar {
+    position:absolute;
+    top: 393px;
+    left: 137px;
+}
+.AtlanticOcean {
+    position:absolute;
+    top: 215px;
+    left: 135px;
+}
+
+.Portugal {
+    position:absolute;
+    top: 310px;
+    left: 145px;
+}
+.Lugo {
+    position:absolute;
+    top: 300px;
+    left: 190px;
+}
+.Seville {
+    position:absolute;
+    top: 345px;
+    left: 190px;
+}
+.Ireland {
+    position:absolute;
+    top: 167px;
+    left: 150px;
+}
+
+.EnglishChannel {
+    position:absolute;
+    top: 170px;
+    left: 295px;
+}
+.Wales {
+    position:absolute;
+    top: 135px;
+    left: 255px;
+}
+.Liverpool {
+    position:absolute;
+    top: 90px;
+    left: 265px;
+}
+.Edinburgh {
+    position:absolute;
+    top: 90px;
+    left: 300px;
+}
+.London {
+    position:absolute;
+    top: 120px;
+    left: 320px;
+}
+.NorthSea {
+    position:absolute;
+    top: 120px;
+    left: 370px;
+}
+.Belgium{
+    position: absolute;
+    top: 192px;
+    left: 380px;
+}
+.Picardy{
+    position: absolute;
+    top: 200px;
+    left: 330px;
+}
+.Paris{
+    position: absolute;
+    top: 240px;
+    left: 345px;
+}
+.Marseille{
+    position: absolute;
+    top: 278px;
+    left: 342px;
+}
+.GulfOfLyons{
+    position: absolute;
+    top: 296px;
+    left: 374px;
+}
+.Sardinia{
+    position: absolute;
+    top: 323px;
+    left: 400px;
+}
+.TyrrhenianSea{
+    position: absolute;
+    top: 323px;
+    left: 440px;
+}
+.Barcelona{
+    position: absolute;
+    top: 315px;
+    left: 282px;
+}
+.Valancia{
+    position: absolute;
+    top: 320px;
+    left: 245px;
+}
+.Bilboa{
+    position: absolute;
+    top: 293px;
+    left: 235px;
+}
+.BayOfBiscay{
+    position: absolute;
+    top: 235px;
+    left: 210px;
+}
+.Gacony{
+    position: absolute;
+    top: 243px;
+    left: 278px;
+}
+
+.Brest{
+    position: absolute;
+    top: 210px;
+    left: 270px;
+}
+.Sicily{
+    position: absolute;
+    top: 385px;
+    left: 557px;
+}
+
+.Naples{
+    position: absolute;
+    top: 335px;
+    left: 540px;
+}
+.Apulia{
+    position: absolute;
+    top: 310px;
+    left: 545px;
+}
+.IonianSea{
+    position: absolute;
+    top: 340px;
+    left: 590px;
+}
+.Rome{
+    position: absolute;
+    top: 310px;
+    left: 490px;
+}
+.Venice{
+    position: absolute;
+    top: 282px;
+    left: 490px;
+}
+.Tuscany{
+    position: absolute;
+    top: 290px;
+    left: 450px;
+}
+.Piedmont{
+    position: absolute;
+    top: 260px;
+    left: 430px;
+}
+.AdriaticSea{
+    position: absolute;
+    top: 255px;
+    left: 520px;
+}
+.Ruhr{
+    position: absolute;
+    top: 190px;
+    left: 435px;
+}
+.Munich{
+    position: absolute;
+    top: 190px;
+    left: 480px;
+}
+.Kiel{
+    position: absolute;
+    top: 110px;
+    left: 455px;
+}
+.BalticSea{
+    position: absolute;
+    top: 83px;
+    left: 555px;
+}
+.Finland{
+    position: absolute;
+    top: 70px;
+    left: 605px;
+}
+.Leningrad{
+    position: absolute;
+    top: 103px;
+    left: 615px;
+}
+.Bellorussia{
+    position: absolute;
+    top: 135px;
+    left: 615px;
+}
+.Presov{
+    position: absolute;
+    top: 169px;
+    left: 615px;
+}
+.Kiev{
+    position: absolute;
+    top: 169px;
+    left: 670px;
+}
+.Smolensk{
+    position: absolute;
+    top: 127px;
+    left: 683px;
+}
+.Moscow{
+    position: absolute;
+    top: 135px;
+    left: 750px;
+}
+.Ust{
+    position: absolute;
+    top: 78px;
+    left: 737px;
+}
+.Vologda{
+    position: absolute;
+    top: 90px;
+    left: 690px;
+}
+.Komi{
+    position: absolute;
+    top: 92px;
+    left: 835px;
+}
+.Gorki{
+    position: absolute;
+    top: 125px;
+    left: 811px;
+}
+.Crimea{
+    position: absolute;
+    top: 195px;
+    left: 797px;
+}
+.Rostav{
+    position: absolute;
+    top: 185px;
+    left: 890px;
+}
+.LakeCherkassy{
+    position: absolute;
+    top: 190px;
+    left: 710px;
+}
+.Romania{
+    position: absolute;
+    top: 230px;
+    left: 700px;
+}
+.Banat{
+    position: absolute;
+    top: 225px;
+    left: 655px;
+}
+.Hungary{
+    position: absolute;
+    top: 215px;
+    left: 613px;
+}
+.Bosnia{
+    position: absolute;
+    top: 235px;
+    left: 570px;
+}
+.Austria{
+    position: absolute;
+    top: 220px;
+    left: 510px;
+}
+.Czechoslovakia{
+    position: absolute;
+    top: 190px;
+    left: 540px;
+}
+.Siliesia{
+    position: absolute;
+    top: 160px;
+    left: 540px;
+}
+.Berlin{
+    position: absolute;
+    top: 133px;
+    left: 525px;
+}
+.Sweden{
+    position: absolute;
+    top: 63px;
+    left: 500px;
+}
+.Norway{
+    position: absolute;
+    top: 58px;
+    left: 420px;
+}
+.Pechora{
+    position: absolute;
+    top: 62px;
+    left: 855px;
+}
+.EastBlackSea{
+    position: absolute;
+    top: 175px;
+    left: 835px;
+}
+.WestBlackSea{
+    position: absolute;
+    top: 235px;
+    left: 765px;
+}
+.Bulgaria{
+    position: absolute;
+    top: 260px;
+    left: 710px;
+}
+.Macedonia{
+    position: absolute;
+    top: 275px;
+    left: 665px;
+}
+.Greece{
+    position: absolute;
+    top: 320px;
+    left: 665px;
+}
+.Albania{
+    position: absolute;
+    top: 297px;
+    left: 615px;
+}
+.Serbia{
+    position: absolute;
+    top: 244px;
+    left: 615px;
+}
+.AgeanSea{
+    position: absolute;
+    top: 293px;
+    left: 720px;
+}
+.Crete{
+    position: absolute;
+    top: 365px;
+    left: 727px;
+}
+.Cairo{
+    position: absolute;
+    top: 423px;
+    left: 730px;
+}
+.Israel{
+    position: absolute;
+    top: 380px;
+    left: 860px;
+}
+.EasternMediterranean{
+    position: absolute;
+    top: 345px;
+    left: 835px;
+}
+.Izmir{
+    position: absolute;
+    top: 294px;
+    left: 825px;
+}
+.Istanbul{
+    position: absolute;
+    top: 265px;
+    left: 795px;
+}
+.Samsun{
+    position: absolute;
+    top: 253px;
+    left: 860px;
+}
+.Kras{
+    position: absolute;
+    top: 245px;
+    left: 910px;
+}
+.Lebanon{
+    position: absolute;
+    top: 312px;
+    left: 875px;
+}
+.Holland{
+    position: absolute;
+    top: 147px;
+    left: 420px;
+}
+
+
+
