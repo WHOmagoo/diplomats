@@ -89,6 +89,10 @@ header{
     top: 7%;
 }
 
+.ordered{
+    border-style: solid;
+}
+
 /*country sizes*/
 .small{
     height: 20px;
@@ -109,6 +113,18 @@ header{
 .team1{
     background-color: red;
     z-index: 1;
+}
+
+.team2 {
+    background-color: green;
+}
+
+.team3{
+    background-color: white;
+}
+.team4{
+    background-color: black;
+    color: white;
 }
 
 /*countries*/
@@ -155,7 +171,7 @@ header{
     top: 435px;
     left: 585px;
 }
-.Bengasi{
+.Benghazi{
     position: absolute;
     top: 425px;
     left: 490px;
@@ -190,7 +206,7 @@ header{
     top: 425px;
     left: 180px;
 }
-.Algeirs {
+.Algiers {
     position:absolute;
     top: 405px;
     left: 290px;
@@ -282,7 +298,7 @@ header{
     top: 278px;
     left: 342px;
 }
-.GulfOfLyons{
+.GulfofLyons{
     position: absolute;
     top: 296px;
     left: 374px;
@@ -312,7 +328,7 @@ header{
     top: 293px;
     left: 235px;
 }
-.BayOfBiscay{
+.BayofBiscay{
     position: absolute;
     top: 235px;
     left: 210px;
@@ -454,7 +470,7 @@ header{
     top: 195px;
     left: 797px;
 }
-.Rostav{
+.Rostov{
     position: absolute;
     top: 185px;
     left: 890px;
