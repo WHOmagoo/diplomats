@@ -1,98 +1,98 @@
-Off Map,coastal,FALSE
-Liverpool,coastal,TRUE
-Ireland,coastal,FALSE
-Wales,coastal,TRUE
-Edinburgh,coastal,TRUE
-London,coastal,TRUE
-Norway,coastal,FALSE
-Sweden,coastal,FALSE
-Finland,coastal,TRUE
-Vologda,landlocked,TRUE
-Leningrad,coastal,TRUE
-Smolensk,landlocked,TRUE
-Moscow,landlocked,FALSE
-Bellorussia,landlocked,FALSE
-Presov,landlocked,FALSE
-Kiev,coastal,FALSE
-Holland,coastal,TRUE
-Kiel,coastal,TRUE
-Berlin,coastal,TRUE
-Siliesia,landlocked,TRUE
-Ruhr,landlocked,TRUE
-Munich,landlocked,FALSE
-Belgium,coastal,FALSE
-Picardy,coastal,TRUE
-Brest,coastal,TRUE
-Paris,landlocked,TRUE
-Marseille,coastal,TRUE
-Gacony,coastal,FALSE
-Bilboa,coastal,TRUE
-Lugo,coastal,TRUE
-Portugal,coastal,FALSE
-Seville,coastal,TRUE
-Valancia,coastal,TRUE
-Barcelona,coastal,FALSE
-Ust,landlocked,FALSE
-Pechora,coastal,FALSE
-Komi,landlocked,TRUE
-Gorki,landlocked,TRUE
-Crimea,coastal,TRUE
-Rostov,coastal,TRUE
-Czechoslovakia,landlocked,FALSE
-Austria,coastal,TRUE
-Hungary,coastal,TRUE
-Bosnia,landlocked,TRUE
-Albania,coastal,TRUE
-Serbia,landlocked,FALSE
-Banat,coastal,FALSE
-Romania,coastal,TRUE
-Bulgaria,coastal,TRUE
-Macedonia,landlocked,TRUE
-Greece,coastal,TRUE
-Istanbul,coastal,TRUE
-Samsun,coastal,TRUE
-Kras,coastal,FALSE
-Izmir,coastal,TRUE
-Lebanon,landlocked,TRUE
-Israel,coastal,TRUE
-Jordan,coastal,FALSE
-Piedmont,coastal,FALSE
-Venice,coastal,FALSE
-Tuscany,coastal,FALSE
-Rome,coastal,TRUE
-Apulia,coastal,TRUE
-Naples,coastal,TRUE
-Sicily,coastal,TRUE
-Sardinia,coastal,TRUE
-Casablanca,coastal,FALSE
-Algiers,coastal,TRUE
-Setif,coastal,TRUE
-Aflou,coastal,TRUE
-Sahara,coastal,FALSE
-Fazzar,landlocked,FALSE
-Murzq,landlocked,FALSE
-Benghazi,coastal,FALSE
-Sallum,coastal,TRUE
-Tobruk,coastal,TRUE
-Cairo,coastal,FALSE
-Nile,coastal,TRUE
-Sawhaj,coastal,FALSE
-Crete,coastal,TRUE
-Irish Sea,ocean,FALSE
-North Sea,ocean,FALSE
-Baltic Sea,ocean,FALSE
-English Channel,ocean,FALSE
-Atlantic Ocean,ocean,FALSE
-Bay of Biscay,ocean,FALSE
-Gibraltar,ocean,FALSE
-Western Mediterranean,ocean,FALSE
-Gulf of Lyons,ocean,FALSE
-Tyrrhenian Sea,ocean,FALSE
-Ionian Sea,ocean,FALSE
-Adriatic Sea,ocean,FALSE
-Agean Sea,ocean,FALSE
-Eastern Mediterranean,ocean,FALSE
-Red Sea,ocean,FALSE
-Lake Cherkassy,ocean,FALSE
-West Black Sea,ocean,FALSE
-East Black Sea,ocean,FALSE
+Off Map,15,75,coastal,FALSE
+Liverpool,202,103,coastal,TRUE
+Ireland,83,213,coastal,FALSE
+Wales,201,166,coastal,TRUE
+Edinburgh,249,89,coastal,TRUE
+London,261,151,coastal,TRUE
+Norway,368,48,coastal,FALSE
+Sweden,457,59,coastal,FALSE
+Finland,576,72,coastal,TRUE
+Vologda,665,99,landlocked,TRUE
+Leningrad,584,122,coastal,TRUE
+Smolensk,660,158,landlocked,TRUE
+Moscow,727,167,landlocked,FALSE
+Bellorussia,581,171,landlocked,FALSE
+Presov,584,221,landlocked,FALSE
+Kiev,643,218,coastal,FALSE
+Holland,367,182,coastal,TRUE
+Kiel,423,167,coastal,TRUE
+Berlin,483,166,coastal,TRUE
+Siliesia,487,206,landlocked,TRUE
+Ruhr,389,239,landlocked,TRUE
+Munich,435,255,landlocked,FALSE
+Belgium,325,232,coastal,FALSE
+Picardy,280,262,coastal,TRUE
+Brest,217,280,coastal,TRUE
+Paris,295,324,landlocked,TRUE
+Marseille,289,376,coastal,TRUE
+Gacony,226,351,coastal,FALSE
+Bilboa,173,383,coastal,TRUE
+Lugo,127,412,coastal,TRUE
+Portugal,77,449,coastal,FALSE
+Seville,125,500,coastal,TRUE
+Valancia,182,464,coastal,TRUE
+Barcelona,237,414,coastal,FALSE
+Ust,741,83,landlocked,FALSE
+Pechora,893,68,coastal,FALSE
+Komi,821,106,landlocked,TRUE
+Gorki,823,153,landlocked,TRUE
+Crimea,764,220,coastal,TRUE
+Rostov,868,216,coastal,TRUE
+Czechoslovakia,497,248,landlocked,FALSE
+Austria,471,294,coastal,TRUE
+Hungary,577,270,coastal,TRUE
+Bosnia,533,296,landlocked,TRUE
+Albania,569,395,coastal,TRUE
+Serbia,581,348,landlocked,FALSE
+Banat,625,298,coastal,FALSE
+Romania,679,307,coastal,TRUE
+Bulgaria,693,355,coastal,TRUE
+Macedonia,636,378,landlocked,TRUE
+Greece,632,448,coastal,TRUE
+Istanbul,764,372,coastal,TRUE
+Samsun,841,349,coastal,TRUE
+Kras,901,356,coastal,FALSE
+Izmir,763,426,coastal,TRUE
+Lebanon,879,464,landlocked,TRUE
+Israel,833,538,coastal,TRUE
+Jordan,867,592,coastal,FALSE
+Piedmont,386,353,coastal,FALSE
+Venice,444,379,coastal,FALSE
+Tuscany,406,398,coastal,FALSE
+Rome,449,429,coastal,TRUE
+Apulia,513,423,coastal,TRUE
+Naples,509,468,coastal,TRUE
+Sicily,495,536,coastal,TRUE
+Sardinia,344,468,coastal,TRUE
+Casablanca,117,597,coastal,FALSE
+Algiers,241,565,coastal,TRUE
+Setif,358,553,coastal,TRUE
+Aflou,185,635,coastal,TRUE
+Sahara,320,653,coastal,FALSE
+Fazzar,388,648,landlocked,FALSE
+Murzq,473,657,landlocked,FALSE
+Benghazi,446,598,coastal,FALSE
+Sallum,544,612,coastal,TRUE
+Tobruk,625,567,coastal,TRUE
+Cairo,714,592,coastal,FALSE
+Nile,711,634,coastal,TRUE
+Sawhaj,613,661,coastal,FALSE
+Crete,710,516,coastal,TRUE
+Irish Sea,107,92,ocean,FALSE
+North Sea,315,98,ocean,FALSE
+Baltic Sea,516,99,ocean,FALSE
+English Channel,211,229,ocean,FALSE
+Atlantic Ocean,79,295,ocean,FALSE
+Bay of Biscay,151,314,ocean,FALSE
+Gibraltar,61,549,ocean,FALSE
+Western Mediterranean,261,495,ocean,FALSE
+Gulf of Lyons,271,446,ocean,FALSE
+Tyrrhenian Sea,416,475,ocean,FALSE
+Ionian Sea,562,488,ocean,FALSE
+Adriatic Sea,481,347,ocean,FALSE
+Agean Sea,692,420,ocean,FALSE
+Eastern Mediterranean,800,474,ocean,FALSE
+Red Sea,788,646,ocean,FALSE
+Lake Cherkassy,696,245,ocean,FALSE
+West Black Sea,782,313,ocean,FALSE
+East Black Sea,841,283,ocean,FALSE
