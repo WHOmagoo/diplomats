@@ -134,12 +134,13 @@ class DB(metaclass=Singleton):
         return self.cur.fetchone() is None
 
     def getNeighbors(self, locId):
-        self.cur.execute("WITH RECURSIVE neighborId(locId) AS ("    
-                         "SELECT locida FROM diplomacy.neighbor WHERE locidb = %s"
-                         " UNION"
-                         " SELECT locidb FROM diplomacy.neighbor WHERE locida = %s)"
-                         " SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId);", (locId, locId));
-        self.conn.commit()
+        self.cur.execute("""
+            WITH neighbors AS(
+                WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=250)),
+                b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=250))
+                SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+            SELECT * FROM neighbors;""", (locId, locId));
+        self    .conn.commit()
         return self.cur.fetchall()
 
     def getOrderData(self, unitId):
@@ -157,36 +158,36 @@ class DB(metaclass=Singleton):
 
     def getAttackable(self, unitId):
         self.cur.execute(
-            """WITH RECURSIVE neighborId(locId) AS (
-                SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = %s)
-                UNION
-                SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = %s))
-            SELECT * FROM diplomacy.location WHERE
-              id IN (SELECT locId FROM neighborId)
+            """
+            WITH neighbors AS(
+              WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=%s)),
+              b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=%s))
+              SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+              SELECT * FROM neighbors WHERE
+            (type = 2
+              OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
+              OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
               AND
-                (type = 2
-                OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
-                OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
-              AND factionid != (SELECT factionid FROM diplomacy.unit WHERE id=%s);""",
-            (unitId, unitId,unitId,unitId,unitId))
+                (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = %s));""",
+            (unitId, unitId, unitId, unitId, unitId))
+
         return self.cur.fetchall()
 
     def getDefendable(self, unitId):
         self.cur.execute(
             """
-            WITH RECURSIVE neighborId(locId) AS (
-              SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = %s)
-              UNION
-              SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = %s))
-            SELECT * FROM diplomacy.location WHERE
-              id IN (SELECT locId FROM neighborId)
-              AND
+            WITH neighbors AS(
+                WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=%s)),
+                b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=%s))
+                SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+            SELECT * FROM neighbors WHERE
                 (type = 2
-                OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
-                OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
-              AND id IN (SELECT location FROM diplomacy.unit);
-            """, (unitId, unitId, unitId, unitId)
-        )
+                  OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
+                  OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
+                AND
+                    id IN (SELECT location FROM diplomacy.unit);
+            
+            """, (unitId, unitId, unitId, unitId))
         return self.cur.fetchall()
 
     def getMoveable(self, unitId):
@@ -205,6 +206,63 @@ class DB(metaclass=Singleton):
                 (NOT ispoi OR factionid = (SELECT factionid FROM diplomacy.unit WHERE id = %s));
             """
         )
+        return self.cur.fetchall()
+
+    def getAttackable(self, unitId):
+        self.cur.execute(
+            """
+            WITH attackable AS(
+                WITH neighbors AS(
+                    WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=%s)),
+                    b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=%s))
+                    SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+                    SELECT * FROM neighbors WHERE
+                        (type = 2
+                            OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
+                            OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
+                         AND
+                        (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = %s))),
+                secondneighbors AS(
+                    WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida IN (SELECT id FROM attackable)),
+                    b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb IN (SELECT id FROM attackable))
+                    SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+                SELECT * FROM secondneighbors WHERE
+                  id IN (SELECT location FROM diplomacy.unit)
+                  AND id != (SELECT location FROM diplomacy.unit WHERE id=%s);
+            """,
+            (unitId, unitId, unitId, unitId, unitId, unitId)
+        )
+
+        return self.cur.fetchall()
+
+    def getAttackableInCommon(self, unitId1, unitId2):
+        self.cur.execute(
+            """
+            WITH attackablea AS(
+                WITH neighbors AS(
+                    WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=%s)),
+                    b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=%s))
+                    SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+                    SELECT * FROM neighbors WHERE
+                        (type = 2
+                        OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
+                        OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
+                        AND
+                        (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = %s))),
+                attackableb AS(
+                     WITH neighbors AS(
+                         WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=%s)),
+                         b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=%s))
+                         SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+                         SELECT * FROM neighbors WHERE
+                             (type = 2
+                             OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=%s))
+                             OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=%s)))
+                             AND
+                             (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = %s)))
+                (SELECT * FROM attackablea) INTERSECT (SELECT * FROM attackableb);
+            """,
+            (unitId1, unitId1, unitId1, unitId1, unitId1, unitId2, unitId2, unitId2, unitId2, unitId2))
         return self.cur.fetchall()
 
 
