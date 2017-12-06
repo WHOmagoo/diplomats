@@ -1,11 +1,23 @@
-WITH RECURSIVE neighborId(locId) AS (
-    SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = 252)
-    UNION
-    SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = 252))
-SELECT * FROM diplomacy.location WHERE
-  id IN (SELECT locId FROM neighborId)
-  AND (type = 2
-  OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=252))
-  OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=252)))
-  AND
-    (NOT ispoi OR factionid = (SELECT factionid FROM diplomacy.unit WHERE id = 252));
+WITH attackablea AS(
+    WITH neighbors AS(
+        WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=252)),
+        b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=252))
+        SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+        SELECT * FROM neighbors WHERE
+            (type = 2
+            OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=252))
+            OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=252)))
+            AND
+            (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = 252))),
+    attackableb AS(
+         WITH neighbors AS(
+             WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=251)),
+             b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=251))
+             SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+             SELECT * FROM neighbors WHERE
+                 (type = 2
+                 OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=251))
+                 OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=251)))
+                 AND
+                 (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = 251)))
+    (SELECT * FROM attackablea) INTERSECT (SELECT * FROM attackableb);
