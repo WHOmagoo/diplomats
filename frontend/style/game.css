@@ -29,15 +29,17 @@ header{
 }
 
 .mapCnt{
-	 display:inline-block;;
+	 display:inline-block;
 	 width: 79%;
 	 background-color: blue;
 	 border-style: solid;
 	 height: 541px;
+    position: relative;
 }
 
 .mapSideCnt{
 	text-align: center;
+    position: relative;
 }
 
 .bottomBar{
@@ -57,4 +59,16 @@ header{
 	display: inline-block;
 	float: right;
 	height: 100%;
+}
+
+.map{
+    position: relative;
+    height: 100%;
+}
+
+.mapOverlay{
+    position: absolute;
+    top:0px;
+    left:50px;
+    height: 100%;
 }
