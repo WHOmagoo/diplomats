@@ -191,6 +191,90 @@ def printLocations(locationList):
 
     print(result)
 
+def resolveOrders():
+    undeterminedOrders = []
+    actionableOrders = []
+    orderAtLocation = {}
+    for key, val in unitIdToName.items():
+        order = db.getOrderData(key)
+        undeterminedOrders.append(order)
+        orderAtLocation[db.getUnitLocation(key)] = order
+
+    undeterminedLastSize = 0
+    while undeterminedLastSize != len(undeterminedOrders) or len(undeterminedOrders) == 0:
+        buffer = []
+        for order in undeterminedOrders:
+            if order[1] == 1:
+                try:
+                    buffer.append(orderAtLocation[order[2]])
+                except KeyError:
+                    pass
+
+        for order in undeterminedOrders:
+            if order not in buffer:
+                actionableOrders.append(order)
+
+        undeterminedLastSize = len(undeterminedOrders)
+        undeterminedOrders = buffer
+
+        print("Total Length:" + str(len(actionableOrders) + len(undeterminedOrders)) +
+              ", Actionable Orders Length:" + str(len(actionableOrders)) +
+              ', Undetermined Orders Length:' + str(len(undeterminedOrders)))
+
+
+    attacks = []
+    supports = []
+    defenses = []
+    moves = []
+    stay = []
+
+    locationIdToAttacking = {}
+
+    for order in actionableOrders:
+        if order[1] == 1:
+            attacks.append((order, 1))
+        if order[1] == 2:
+            supports.append(order)
+        if order[1] == 3:
+            defenses.append(order)
+        if order[1] == 4:
+            moves.append(order)
+        if order[1] == 5:
+            stay.append(order)
+
+    locationIdToAttackStrength = {}
+
+    for attack in attacks:
+        originLocation = db.getOrigin(attack[0])
+        locationIdToAttacking[originLocation] = attack[2]
+        locationIdToAttackStrength[originLocation] = 1
+
+    for support in supports:
+        try:
+            if support[2] == locationIdToAttacking[3]:
+                locationIdToAttacking[support[2]] += 1
+        except KeyError:
+            pass
+
+    locationToDefenseStrength = {}
+
+    for id, name in unitIdToName:
+        locationToDefenseStrength[db.getUnitLocation(id)] = 1;
+
+    for defense in defenses:
+        locationToDefenseStrength[defense[2]] += 1
+
+    for location, attacking in locationIdToAttacking:
+        if locationIdToAttackStrength[location] > locationToDefenseStrength[location]:
+            pass
+
+
+# 1 Attack
+# 2 Support
+# 3 Defend
+# 4 MoveOrder
+# 5 Stay
+
 
 def updateGame():
     unitNameToId.clear()
@@ -256,7 +340,7 @@ if __name__ == '__main__':
                 origin = unitNameToId[origin]
                 attackable = OrderValidator.getAttackable(origin)
                 for id in attackable:
-                    print(locationIdToName[id[0]] + ", ",)
+                    print(locationIdToName[id[0]] + ", ", end="")
 
                 print()
 
@@ -264,14 +348,14 @@ if __name__ == '__main__':
                 origin = command[1].replace(',', ' ')
                 origin = unitNameToId[origin]
                 for id in OrderValidator.getDefendable(origin):
-                    print(locationIdToName[id[0]] + ", ",)
+                    print(locationIdToName[id[0]] + ", ", end="")
 
                 print()
             elif command[0] == 's':
                 origin = command[1].replace(',', ' ')
                 origin = unitNameToId[origin]
                 for id in OrderValidator.getSupportable(origin):
-                    print(locationIdToName[id[0]] + ", ",)
+                    print(locationIdToName[id[0]] + ", ", end="")
 
                 print()
                 pass
@@ -279,7 +363,7 @@ if __name__ == '__main__':
                 origin = command[1].replace(',', ' ')
                 origin = unitNameToId[origin]
                 for id in OrderValidator.getMoveable(origin):
-                    print(locationIdToName[id[0]] + ", ",)
+                    print(locationIdToName[id[0]] + ", ", end="")
 
                 print()
                 pass
@@ -289,7 +373,7 @@ if __name__ == '__main__':
                 secondary = command[2].replace(',', ' ')
                 secondary = unitNameToId[secondary]
                 for id in OrderValidator.getAttackableInCommon(origin, secondary):
-                    print(locationIdToName[id[0]] + ", ",)
+                    print(locationIdToName[id[0]] + ", ", end="")
 
                 print()
                 pass
