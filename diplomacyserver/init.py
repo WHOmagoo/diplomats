@@ -25,7 +25,7 @@ def getGame():
 
             factionToUnits[db.getFaction(id)][2] += 1
         except KeyError:
-            factionToUnits[db.getFaction(id)] = [[],[], 1]
+            factionToUnits[db.getFaction(id)] = [[],[], 1, db.getFactionName(db.getFaction(id))]
             if db.isNaval(id):
                 factionToUnits[db.getFaction(id)][1].append(name)
             else:

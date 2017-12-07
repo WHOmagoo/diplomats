@@ -17,6 +17,7 @@ CORS(app)
 
 @app.route(defUrl + 'send_order', methods=['POST'])
 def send_order():
+    data = request.json
     if request.is_json:
         # content will contain a dictionary describing the order
         content = request.get_json()
@@ -29,7 +30,7 @@ def send_order():
             #order is not ok
             return 418
     else:
-        return 418
+        return jsonify({"status":418})
 
 # recives a faction name in a json and returns 200 when all other players
 # have confirmed orders
@@ -54,16 +55,11 @@ def getGame():
     out = []
     for team in data:
         temp = json.dumps(team[0])
-        out.append({"army": team[0], "navy": team[1], "score": team[2]})
+        out.append({"army": team[0], "navy": team[1], "score": team[2], "name": team[3]})
 
     # return jsonify({"teams":[{"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":3},
     # {"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":2}], 'status':200})
     return jsonify({"teams": out, "status":200})
-
-
-@app.route(defUrl + 'send_order', methods=['POST'])
-def reciveOrder():
-    print("hi")
 
 if __name__ == '__main__':
     init.createGame()

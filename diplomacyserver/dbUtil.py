@@ -169,6 +169,11 @@ class DB(metaclass=Singleton):
         self.cur.execute("SELECT * FROM diplomacy.location WHERE id = (SELECT location FROM diplomacy.unit WHERE id = %s);" % unitid)
         return self.cur.fetchone()
 
+    def getFactionName(self, factionid):
+        self.cur.execute("SELECT name FROM diplomacy.faction WHERE id = %s" % factionid)
+        result = self.cur.fetchone()
+        return result[0]
+
     def updateUnitLocation(self, unitid, locId):
         self.cur.execute("""
             UPDATE diplomacy.location SET factionid = (SELECT
