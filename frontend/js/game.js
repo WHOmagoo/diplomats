@@ -95,6 +95,7 @@ function test()
 
 function updateBoard(json)
 {
+    removeUnits();
     //parse through all the teams
     for(var teamIndex in json.teams) {
         //fill army
@@ -238,6 +239,15 @@ function onConfirmOrders()
         {
             alert("failed to confirm orders");
         })
+}
+
+//removes the units from the board
+function removeUnits()
+{
+    for(var index in countries)
+    {
+        removeUnit(countries[index]);
+    }
 }
 
 
