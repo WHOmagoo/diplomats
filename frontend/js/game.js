@@ -180,7 +180,7 @@ function updateScore(teamNum, score)
 //other functions/////////////////////////////////////////////////////////////////////////////////
 function onSubmit()
 {
-    var url = "api/send_order";
+    var url = "/api/send_order";
 
 
     var form = $(".sendOrderForm");
@@ -225,6 +225,19 @@ function onSubmit()
         function () {
             alert("Invalid Order");
         });
+}
+
+function onConfirmOrders()
+{
+    var url = "/api/confirm_order";
+    makePostRequest(url,{},
+        function (data) {
+            updateBoard(data);
+        },
+        function ()
+        {
+            alert("failed to confirm orders");
+        })
 }
 
 
