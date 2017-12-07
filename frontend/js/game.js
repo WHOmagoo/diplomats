@@ -11,6 +11,11 @@ var countries = ["OffMap", "Liverpool", "Ireland", "Wales", "Edinburgh", "London
     "TyrrhenianSea", "IonianSea", "AdriaticSea", "AgeanSea", "EasternMediterranean", "RedSea", "LakeCherkassy",
     "WestBlackSea", "EastBlackSea"];
 
+
+$(".sendOrderForm").submit(function(e) {
+    e.preventDefault();
+});
+
 function onLeave()
 {
 	window.location.href = "../html/joingame.html"
@@ -21,6 +26,15 @@ function onLeave()
 function loadGame()
 {
     //sends a get request for the board
+
+    //fill select options
+    var selectCountries = $("#selectCountries");
+    var targetCountries = $("#targetCountries");
+    for(var index in countries.sort())
+    {
+        selectCountries.append('<option value="' + countries[index] + '">' + countries[index] + '</option>');
+        targetCountries.append('<option value="' + countries[index] + '">' + countries[index] + '</option>');
+    }
 
 }
 
@@ -108,4 +122,56 @@ function removeTeam(country)
     country.removeClass("team2");
     country.removeClass("team3");
     country.removeClass("team4");
+}
+
+//updates the score based on the team number and score
+function updateScore(teamNum, score)
+{
+    var team = $(".team.team" + teamNum);
+    team.children().className("teamScore").text("test");
+    team.children;
+}
+
+//other functions/////////////////////////////////////////////////////////////////////////////////
+function onSubmit()
+{
+    //https://stackoverflow.com/questions/24468459/sending-a-json-to-server-and-retrieving-a-json-in-return-without-jquery
+    var postrqst = new XMLHttpRequest();
+    var url = "url";
+
+    postrqst.open("POST", url, true);
+    postrqst.setRequestHeader("Content-type", "application/json");
+    postrqst.onreadystatechage = function (){
+        if (postrqst.readyState === 4 && postrqst.status === 200)
+        {
+            unitOrdered(select);
+        }
+        else if(postrqst.readyState === 4 && postrqst.status === 418)
+        {
+            alert("Invalid order");
+        }
+    }
+
+    var form = $(".sendOrderForm");
+
+
+    form.submit(function(e) {
+        e.preventDefault();
+    });
+
+    //selected country
+    var select = document.getElementById("selectCountries");
+    select = select.options[select.selectedIndex].text;
+
+    //action
+    var action = document.getElementById("action");
+    action = action.options[action.selectedIndex].value;
+
+    //targeted country
+    var target = document.getElementById("targetCountries");
+    target = target.options[target.selectedIndex].text;
+
+    //need to send selected country action and target with post request
+    var json = JSON.stringify({"select":select, "action":action, "target":target});
+    postrqst.send(json);
 }

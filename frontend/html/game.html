@@ -397,15 +397,22 @@
 	        </div>
 	        <div class="orderCont">
 	            <div class="sendOrderCont">
-	                <form action="" method="post">
-	                    <div class="formElement">
-	                        Order:<br>
-	                        <input type="text" name="order"><br>
-	                    </div>
-	                    <div class="submitCont">
-	                        <input type="submit" value="submit order">
-	                    </div>
-	                </form>
+                    <form class="sendOrderForm">
+                        <select id="selectCountries">
+                            <!--countries get generated in here !-->
+                        </select><br>
+                        <select id="action">
+                            <option value="attack">attacks</option>
+                            <option value="support">supports</option>
+                            <option value="defend">defends</option>
+                            <option value="move">moves to</option>
+                            <option value="stay">stays</option>
+                        </select><br>
+                        <select id="targetCountries">
+                            <!--countries get generated in here !-->
+                        </select><br>
+                        <input type="submit" value="Submit Order" onclick="onSubmit()">
+                    </form>
 	            </div>
 	            <div class="ConfirmOrderCont">
 	                <button class="ConfirmOrdersButton" type="Button" onclick="test()">Confirm Orders</button>
