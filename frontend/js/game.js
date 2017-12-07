@@ -213,7 +213,7 @@ function onSubmit()
         attack = attack.options[attack.selectedIndex].text;
 
         //need to send selected country action and target with post request
-        var json = JSON.stringify({"select":select, "action":action, "target":target, "attack":attack});
+        var json = {"select":select, "action":action, "target":target, "attack":attack};
     }
     else
     {
@@ -222,7 +222,7 @@ function onSubmit()
         target = target.options[target.selectedIndex].text;
 
         //need to send selected country action and target with post request
-        var json = JSON.stringify({"select": select, "action": action, "target": target});
+        var json = {"select": select, "action": action, "target": target};
     }
     makePostRequest(url, json,
         function () {
