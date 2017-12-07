@@ -13,6 +13,9 @@ db = DB()
 
 ordertypes = {'Attack':1, 'a':1, 'Support':2, 's':2, 'Defend':3, 'd':3, 'Move':4, 'm':4, 'Stay':5, 's':5}
 
+def GetGame():
+    return [(["Liverpool", "Ireland"], ["Irish Sea"], 3)]
+
 def parsecsv(fileName):
     data = []
     with open(fileName) as csvFile:
@@ -315,7 +318,7 @@ def updateGame():
 def removeGame(gameData):
     pass
 
-if __name__ == '__main__':
+def game():
 
     # result = input('Enter a command: ')
     # print(result)
@@ -330,7 +333,7 @@ if __name__ == '__main__':
 
 
 
-    while True:
+    while False:
         command = input('Command: ')
         command = command.split(" ", 3)
 

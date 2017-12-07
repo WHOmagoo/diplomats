@@ -174,3 +174,12 @@ WITH neighbors AS(
             OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=250))
             OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=250)))
         AND factionid = (SELECT factionid FROM diplomacy.unit WHERE id=250)
+
+{
+    "teams": [
+        {"army":[lugo, irishsea],
+        "navy":[name, name2],
+        score},
+
+        {next team}
+}
