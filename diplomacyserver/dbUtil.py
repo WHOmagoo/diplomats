@@ -293,6 +293,13 @@ class DB(metaclass=Singleton):
             (unitId1, unitId1, unitId1, unitId1, unitId1, unitId2, unitId2, unitId2, unitId2, unitId2))
         return self.cur.fetchall()
 
+    def getFaction(self, unitId):
+        self.cur.execute("SELECT factionid FROM diplomacy.unit WHERE id = %s" % unitId)
+        return self.cur.fetchone()
+
+    def isNaval(self, unitId):
+        self.cur.execute("SELECT isnaval FROM diplomacy.unit WHERE id = %s" % unitId)
+        return self.cur.fetchone()
 
     """ ========== MISC ========= """
 
