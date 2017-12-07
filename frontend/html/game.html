@@ -402,20 +402,26 @@
                             <!--countries get generated in here !-->
                         </select><br>
                         <select id="action">
-                            <option value="attack">attacks</option>
-                            <option value="support">supports</option>
+                            <option value="attack" selected>attacks</option>
+                            <option id="support" value="support">supports</option>
                             <option value="defend">defends</option>
                             <option value="move">moves to</option>
                             <option value="stay">stays</option>
                         </select><br>
                         <select id="targetCountries">
-                            <!--countries get generated in here !-->
+                            <!--countries get generated in here -->
                         </select><br>
+                        <div class="attackCountriesCnt">
+                            Attack On:<br>
+                            <select id="attackCountries">
+                                <!--countries get generated in here -->
+                            </select>
+                        </div>
                         <input type="submit" value="Submit Order" onclick="onSubmit()">
                     </form>
 	            </div>
 	            <div class="ConfirmOrderCont">
-	                <button class="ConfirmOrdersButton" type="Button" onclick="test()">Confirm Orders</button>
+	                <button class="ConfirmOrdersButton" type="Button" onclick="onConfirmOrders()">Confirm Orders</button>
 	            </div>
 	        </div>
 	    </div>
@@ -443,5 +449,16 @@
 <script type="text/javascript">
 	clearBoard();
 	loadGame();
+    $("#action").change(function () {
+        var selected = $("#action option:selected").text();
+        if(selected === "supports")
+        {
+            $(".attackCountriesCnt").show();
+        }
+        else
+        {
+            $(".attackCountriesCnt").hide();
+        }
+    });
 </script>
 </html>

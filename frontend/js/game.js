@@ -12,9 +12,6 @@ var countries = ["OffMap", "Liverpool", "Ireland", "Wales", "Edinburgh", "London
     "WestBlackSea", "EastBlackSea"];
 
 
-$(".sendOrderForm").submit(function(e) {
-    e.preventDefault();
-});
 
 function onLeave()
 {
@@ -26,42 +23,32 @@ function onLeave()
 function loadGame()
 {
 
-    console.log("Loading Game")
-    //sends a get request for the board
-    var getrqst = new XMLHttpRequest();
+    console.log("Loading Game");
 
     var url = "/api/get_game";
 
     makeGetRequest(url, function (data) {
-        //var json = JSON.parse(getrqst.responseText);
         updateBoard(data);
     }, function () {
-        console.log("failure")
+        console.log("failure");
         console.log()
-    })
+    });
 
-    // getrqst.open("GET", url, true);
-    // getrqst.setRequestHeader("Content-type", "application/json");
-    // getrqst.onreadystatechage = function () {
-    //     console.log(getreqst.responseText)
-    //     if(getrqst.readyState === 4 && getrqst.status === 200) {
-    //         var json = JSON.parse(getrqst.responseText);
-    //         updateBoard(json);
-    //     }
-    // };
 
     //fill select options
     var selectCountries = $("#selectCountries");
     var targetCountries = $("#targetCountries");
+    var attackCountries = $("#attackCountries");
     for(var index in countries.sort())
     {
         selectCountries.append('<option value="' + countries[index] + '">' + countries[index] + '</option>');
         targetCountries.append('<option value="' + countries[index] + '">' + countries[index] + '</option>');
+        attackCountries.append('<option value="' + countries[index] + '">' + countries[index] + '</option>');
     }
 
 }
 
-var apiUrl = 'http://127.0.0.1:5000'
+var apiUrl = 'http://127.0.0.1:5000';
 
 var makeGetRequest = function(url, onSuccess, onFailure) {
     $.ajax({
@@ -69,6 +56,17 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
         url: apiUrl + url,
         dataType: "json",
         success: onSuccess,
+        error: onFailure
+    });
+};
+
+var makePostRequest = function(url, data, onSuccesss, onFailure)
+{
+    $.ajax({
+        type: 'Post',
+        url: apiUrl + url,
+        dataType: "json",
+        success: onSuccesss,
         error: onFailure
     });
 };
@@ -82,6 +80,7 @@ function clearBoard()
         removeTeam(countries[index]);
         removeUnit(countries[index]);
     }
+    $(".attackCountriesCnt").hide();
 
 }
 
@@ -89,13 +88,14 @@ function test()
 {
     var test = {"teams":
             [{"army":["Lugo","IrishSea","London"],"navy":["NorthSea","Wales"],"score":"25"},
-                {"army":["Lugo","IrishSea","London"],"navy":["NorthSea","Wales"],"score":"25"}],};
+             {"army":["Paris","Nile","Kiev"],"navy":["AtlanticOcean","Wales"],"score":"25"}]};
     //send a get request for the inital positions
     updateBoard(test);
 }
 
 function updateBoard(json)
 {
+    removeUnits();
     //parse through all the teams
     for(var teamIndex in json.teams) {
         //fill army
@@ -175,34 +175,16 @@ function removeTeam(country)
 //updates the score based on the team number and score
 function updateScore(teamNum, score)
 {
-    var team = $(".team.team" + teamNum);
-    team.children().className("teamScore").text("test");
-    team.children;
+    $(".team.team"+teamNum +" .teamScore").text("score: " + score);
 }
 
 //other functions/////////////////////////////////////////////////////////////////////////////////
 function onSubmit()
 {
-    //https://stackoverflow.com/questions/24468459/sending-a-json-to-server-and-retrieving-a-json-in-return-without-jquery
-    var postrqst = new XMLHttpRequest();
-    var url = "url";
+    var url = "/api/send_order";
 
-    postrqst.open("POST", url, true);
-    postrqst.setRequestHeader("Content-type", "application/json");
-    postrqst.onreadystatechage = function (){
-        if (postrqst.readyState === 4 && postrqst.status === 200)
-        {
-            unitOrdered(select);
-        }
-        else if(postrqst.readyState === 4 && postrqst.status === 418)
-        {
-            alert("Invalid order");
-        }
-    };
 
     var form = $(".sendOrderForm");
-
-
     form.submit(function(e) {
         e.preventDefault();
     });
@@ -215,11 +197,61 @@ function onSubmit()
     var action = document.getElementById("action");
     action = action.options[action.selectedIndex].value;
 
-    //targeted country
-    var target = document.getElementById("targetCountries");
-    target = target.options[target.selectedIndex].text;
+    if(action === "support")
+    {
+        //targeted country
+        var target = document.getElementById("targetCountries");
+        target = target.options[target.selectedIndex].text;
 
-    //need to send selected country action and target with post request
-    var json = JSON.stringify({"select":select, "action":action, "target":target});
-    postrqst.send(json);
+        //supporting attack on a country
+        var attack = document.getElementById("attackCountries");
+        attack = attack.options[attack.selectedIndex].text;
+
+        //need to send selected country action and target with post request
+        var json = JSON.stringify({"select":select, "action":action, "target":target, "attack":attack});
+    }
+    else
+    {
+        //targeted country
+        var target = document.getElementById("targetCountries");
+        target = target.options[target.selectedIndex].text;
+
+        //need to send selected country action and target with post request
+        var json = JSON.stringify({"select": select, "action": action, "target": target});
+    }
+    makePostRequest(url, json,
+        function () {
+            unitOrdered(select);
+        },
+        function () {
+            alert("Invalid Order");
+        });
 }
+
+function onConfirmOrders()
+{
+    var url = "/api/confirm_order";
+    makePostRequest(url,{},
+        function (data) {
+            updateBoard(data);
+        },
+        function ()
+        {
+            alert("failed to confirm orders");
+        })
+}
+
+//removes the units from the board
+function removeUnits()
+{
+    for(var index in countries)
+    {
+        removeUnit(countries[index]);
+    }
+}
+
+
+
+
+
+
