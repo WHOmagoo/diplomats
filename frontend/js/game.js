@@ -63,8 +63,10 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
 var makePostRequest = function(url, data, onSuccesss, onFailure)
 {
     $.ajax({
-        type: 'Post',
+        type: 'POST',
         url: apiUrl + url,
+        data: JSON.stringify(data),
+        contentType: "application/json",
         dataType: "json",
         success: onSuccesss,
         error: onFailure
