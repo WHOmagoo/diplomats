@@ -138,34 +138,8 @@ def createGame():
     generateNeighbors()
     generateUnits()
 
-    updateGame()
-
 def makeOrder(unitid, type, target):
     # db = DB()
-    if type == 1: #attack
-        if OrderValidator.validateAttack(unitid, target):
-            orderId = makeOrder(unitid, type, target)
-            db.setOrder(unitid, orderId)
-        else:
-            print("Invalid Order for " + str(unitid) + ", 1, " + str(target))
-    if type == 2: #support
-        print("Incorrect number of parameters for a support")
-    if type == 3: #defend
-        if OrderValidator.validateDefend(origin, target):
-            orderId = makeOrder(unitid, type, target)
-            db.setOrder(unitid, orderId)
-        pass
-    if type == 4: #move
-        if OrderValidator.validateMove(unitid, target):
-            orderId = makeOrder(unitid, type, target)
-            db.setOrder(unitid, orderId)
-    if type == 5:
-        makeOrder(unitid, type, unitid)
-
-    else:
-        print("Invalid order type")
-
-
     locationOrigin = db.getUnitLocation(unitid)
     neighbors = getNeighbors(locationOrigin[3])
 
@@ -175,24 +149,7 @@ def makeOrder(unitid, type, target):
     else:
         print("Target is not in neighbors")
 
-def makeOrder(unitid, type, target, secondaryTarget):
-    if type == 2:
-        if OrderValidator.validateSupport(unitid, target, secondaryTarget):
-            orderid = db.makeUnitOrder(unitid, target, secondaryTarget)
-            db.setOrder(unitid,orderid)
-    else:
-        makeOrder(unitid, type, target)
-
-    # locationOrigin = db.getUnitLocation(unitid)
-    # neighbors = getNeighbors(locationOrigin[3])
-    #
-    # if target in neighbors:
-    #     order = db.makeUnitOrder(type, target)
-    #     db.setOrder(unitid, order)
-
-    pass
-
-def resolveOrdersOld():
+def resolveOrders():
     # db = DB()
     orders = []
     for unit, id in unitNameToId.items():
@@ -237,7 +194,7 @@ def printLocations(locationList):
 
     print(result)
 
-def resolveOrders():
+def resolveOrdersBackup():
     undeterminedOrders = []
     actionableOrders = []
     orderAtLocation = {}
@@ -334,24 +291,6 @@ def resolveOrders():
         if len(attacksWithStrength) == 1:
             strongestAttacks.append(attacksWithStrength[0])
 
-    dislodged = []
-
-    for attack in strongestAttacks:
-        attacked = attack[2]
-        if not db.isEmpty(attacked):
-            dislodged.append(db.getUnit(attacked))
-
-        db.updateUnitLocation(attack[0], attack[2])
-
-    for move in moves:
-        moveTo = attack[2]
-        if db.isEmpty(moveTo):
-            db.updateUnitLocation(move[0], move[2])
-
-
-
-
-
 
 
 
@@ -379,11 +318,11 @@ def updateGame():
 def removeGame(gameData):
     pass
 
-if __name__ == '__main__':
+def game():
 
     # result = input('Enter a command: ')
     # print(result)
-    createGame()
+    gameData = createGame()
     updateGame()
     # locationDict = gameData[2]
     # unitDict = gameData[3]
@@ -394,9 +333,9 @@ if __name__ == '__main__':
 
 
 
-    while True:
+    while False:
         command = input('Command: ')
-        command = command.split(" ", 4)
+        command = command.split(" ", 3)
 
         try:
             if command[0] == 'list' or command[0] == 'l':

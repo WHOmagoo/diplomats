@@ -55,5 +55,5 @@ def getGame():
     return jsonify({"teams": out, "status":200})
 
 if __name__ == '__main__':
-    init.game()
+    init.createGame()
     app.run()

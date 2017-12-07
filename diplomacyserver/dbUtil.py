@@ -96,6 +96,12 @@ class DB(metaclass=Singleton):
         self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
         return self.cur.fetchone()
 
+    def makeUnitOrder(self, type, target, secondaryTarget):
+        self.cur.execute("INSERT INTO diplomacy.unitorder (type, target, secondarytarget) VALUES (%s, %s, %s);", (type, target, secondaryTarget))
+        self.conn.commit()
+        self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
+        return self.cur.fetchone()
+
 
     """ =========== GETTERS =============== """
 
