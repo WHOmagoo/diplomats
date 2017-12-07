@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 from diplomacyserver import init
+
+
 app = Flask(__name__)
 
 defUrl = '/api/'
@@ -42,10 +44,14 @@ def confirm_orders():
 
 @app.route(defUrl + 'get_game', methods=['GET'])
 def getGame():
+    print("Game data requested")
     data = init.getGame()
 
+    out = []
     for team in data:
-        jsonify({'army':team[0], 'navy':team[1], 'score':team[2]})
+        out.append(str(jsonify({'army':json.dumps(team[0]), 'navy':json.dumps(team[1]), 'score':team[2]}).data))
+
+    return jsonify({'teams':json.dumps(out), 'status':200})
 
 if __name__ == '__main__':
     init.game()

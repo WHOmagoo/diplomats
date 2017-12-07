@@ -13,8 +13,8 @@ db = DB()
 
 ordertypes = {'Attack':1, 'a':1, 'Support':2, 's':2, 'Defend':3, 'd':3, 'Move':4, 'm':4, 'Stay':5, 's':5}
 
-def GetGame():
-    return [(["Liverpool", "Ireland"], ["Irish Sea"], 3)]
+def getGame():
+    return [(["Liverpool", "Ireland"], ["Irish Sea"], 3), (["Casablanca"], ["Atlantic Ocean"], 1)]
 
 def parsecsv(fileName):
     data = []
