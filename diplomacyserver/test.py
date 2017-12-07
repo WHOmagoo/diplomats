@@ -1,6 +1,6 @@
 import csv
 
-from OrderValidator import *
+from diplomacyserver import OrderValidator
 from diplomacyserver.dbUtil import DB
 
 locationNameToId = {}
@@ -11,35 +11,10 @@ factionNameToId = {}
 factionIdToName = {}
 db = DB()
 
-ordertypes = {'attack':1, 'a':1, 'support':2, 's':2, 'defend':3, 'd':3, 'move':4, 'm':4, 'stay':5, 's':5}
+ordertypes = {'Attack':1, 'a':1, 'Support':2, 's':2, 'Defend':3, 'd':3, 'Move':4, 'm':4, 'Stay':5, 's':5}
 
 def getGame():
-    factionToUnits = {}
-
-    for id, name in unitIdToName.items():
-        try:
-            if db.isNaval(id):
-                factionToUnits[db.getFaction(id)][1].append(name)
-            else:
-                factionToUnits[db.getFaction(id)][0].append(name)
-
-            factionToUnits[db.getFaction(id)][2] += 1
-        except KeyError:
-            factionToUnits[db.getFaction(id)] = [[],[], 1, db.getFactionName(db.getFaction(id))]
-            if db.isNaval(id):
-                factionToUnits[db.getFaction(id)][1].append(name)
-            else:
-                factionToUnits[db.getFaction(id)][0].append(name)
-
-    result = []
-
-    for key, val in factionToUnits.items():
-        result.append(val)
-
-    return result
-
-
-    # [(["Liverpool", "Ireland"], ["IrishSea"], 3), (["Casablanca"], ["AtlanticOcean"], 1)]
+    return [(["Liverpool", "Ireland"], ["IrishSea"], 3), (["Casablanca"], ["AtlanticOcean"], 1)]
 
 def parsecsv(fileName):
     data = []
@@ -163,52 +138,18 @@ def createGame():
     generateNeighbors()
     generateUnits()
 
-    updateGame()
-
-def validateOrder(unitid, type, target, secondaryTarget=None):
+def makeOrder(unitid, type, target):
     # db = DB()
-    if type == 1: #attack
-        if validateAttack(unitid, target):
-            orderId = db.makeUnitOrder(type, target)
-            db.setOrder(unitid, orderId)
-            return True
-        else:
-            print("Invalid Order for " + str(unitid) + ", 1, " + str(target))
-    if type == 2: #support
-        if validateSupport(unitid, target, secondaryTarget):
-            orderid = db.makeUnitOrder(unitid, target, secondaryTarget)
-            db.setOrder(unitid,orderid)
-            return True
-    if type == 3: #defend
-        if validateDefend(origin, target):
-            orderId = db.makeUnitOrder(unitid, type, target)
-            db.setOrder(unitid, orderId)
-            return True
-        pass
-    if type == 4: #move
-        if validateMove(unitid, target):
-            orderId = db.makeUnitOrder(unitid, type, target)
-            db.setOrder(unitid, orderId)
-            return True
-    if type == 5:
-        db.makeUnitOrder(unitid, type, unitid)
-        return True
-    else:
-        print("Invalid order type")
-        return False
-
     locationOrigin = db.getUnitLocation(unitid)
+    neighbors = getNeighbors(locationOrigin[3])
 
-    # locationOrigin = db.getUnitLocation(unitid)
-    # neighbors = getNeighbors(locationOrigin[3])
-    #
-    # if target in neighbors:
-    #     order = db.makeUnitOrder(type, target)
-    #     db.setOrder(unitid, order)
+    if target in neighbors:
+        order = db.makeUnitOrder(type, target)
+        db.setOrder(unitid, order)
+    else:
+        print("Target is not in neighbors")
 
-    pass
-
-def resolveOrdersOld():
+def resolveOrders():
     # db = DB()
     orders = []
     for unit, id in unitNameToId.items():
@@ -253,7 +194,7 @@ def printLocations(locationList):
 
     print(result)
 
-def resolveOrders():
+def resolveOrdersBackup():
     undeterminedOrders = []
     actionableOrders = []
     orderAtLocation = {}
@@ -350,24 +291,6 @@ def resolveOrders():
         if len(attacksWithStrength) == 1:
             strongestAttacks.append(attacksWithStrength[0])
 
-    dislodged = []
-
-    for attack in strongestAttacks:
-        attacked = attack[2]
-        if not db.isEmpty(attacked):
-            dislodged.append(db.getUnit(attacked))
-
-        db.updateUnitLocation(attack[0], attack[2])
-
-    for move in moves:
-        moveTo = attack[2]
-        if db.isEmpty(moveTo):
-            db.updateUnitLocation(move[0], move[2])
-
-
-
-
-
 
 
 
@@ -395,11 +318,11 @@ def updateGame():
 def removeGame(gameData):
     pass
 
-if __name__ == '__main__':
+def game():
 
     # result = input('Enter a command: ')
     # print(result)
-    createGame()
+    gameData = createGame()
     updateGame()
     # locationDict = gameData[2]
     # unitDict = gameData[3]
@@ -410,9 +333,9 @@ if __name__ == '__main__':
 
 
 
-    while True:
+    while False:
         command = input('Command: ')
-        command = command.split(" ", 4)
+        command = command.split(" ", 3)
 
         try:
             if command[0] == 'list' or command[0] == 'l':

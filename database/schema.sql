@@ -372,7 +372,8 @@ ALTER SEQUENCE unit_id_seq OWNED BY unit.id;
 CREATE TABLE unitorder (
     id integer NOT NULL,
     type integer,
-    target integer
+    target integer,
+    secondarytarget integer
 );
 
 

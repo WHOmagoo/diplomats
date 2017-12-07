@@ -227,11 +227,15 @@ function onSubmit()
         var json = {"select": select, "action": action, "target": target};
     }
     makePostRequest(url, json,
-        function () {
-            unitOrdered(select);
+        function (data) {
+            if (data.status == 200) {
+                unitOrdered(select);
+            } else {
+                alert("Invalid Order was entered");
+            }
         },
         function () {
-            alert("Invalid Order");
+            alert("Server Error");
         });
 }
 

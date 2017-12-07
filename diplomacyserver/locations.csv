@@ -1,4 +1,4 @@
-Off Map,15,75,coastal,FALSE
+OffMap,15,75,coastal,FALSE
 Liverpool,202,103,coastal,TRUE
 Ireland,83,213,coastal,FALSE
 Wales,201,166,coastal,TRUE
@@ -78,21 +78,21 @@ Cairo,714,592,coastal,FALSE
 Nile,711,634,coastal,TRUE
 Sawhaj,613,661,coastal,FALSE
 Crete,710,516,coastal,TRUE
-Irish Sea,107,92,ocean,FALSE
-North Sea,315,98,ocean,FALSE
-Baltic Sea,516,99,ocean,FALSE
-English Channel,211,229,ocean,FALSE
-Atlantic Ocean,79,295,ocean,FALSE
-Bay of Biscay,151,314,ocean,FALSE
+IrishSea,107,92,ocean,FALSE
+NorthSea,315,98,ocean,FALSE
+BalticSea,516,99,ocean,FALSE
+EnglishChannel,211,229,ocean,FALSE
+AtlanticOcean,79,295,ocean,FALSE
+BayofBiscay,151,314,ocean,FALSE
 Gibraltar,61,549,ocean,FALSE
-Western Mediterranean,261,495,ocean,FALSE
-Gulf of Lyons,271,446,ocean,FALSE
-Tyrrhenian Sea,416,475,ocean,FALSE
-Ionian Sea,562,488,ocean,FALSE
-Adriatic Sea,481,347,ocean,FALSE
-Agean Sea,692,420,ocean,FALSE
-Eastern Mediterranean,800,474,ocean,FALSE
-Red Sea,788,646,ocean,FALSE
-Lake Cherkassy,696,245,ocean,FALSE
-West Black Sea,782,313,ocean,FALSE
-East Black Sea,841,283,ocean,FALSE
+WesternMediterranean,261,495,ocean,FALSE
+GulfofLyons,271,446,ocean,FALSE
+TyrrhenianSea,416,475,ocean,FALSE
+IonianSea,562,488,ocean,FALSE
+AdriaticSea,481,347,ocean,FALSE
+AgeanSea,692,420,ocean,FALSE
+EasternMediterranean,800,474,ocean,FALSE
+RedSea,788,646,ocean,FALSE
+LakeCherkassy,696,245,ocean,FALSE
+WestBlackSea,782,313,ocean,FALSE
+EastBlackSea,841,283,ocean,FALSE

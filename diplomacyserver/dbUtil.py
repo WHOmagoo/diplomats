@@ -96,6 +96,19 @@ class DB(metaclass=Singleton):
         self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
         return self.cur.fetchone()
 
+    def makeUnitOrder(self, type, target, secondaryTarget = None):
+
+        if secondaryTarget is None:
+            self.cur.execute("INSERT INTO diplomacy.unitorder (type, target) VALUES (%s, %s);", (type, target))
+            self.conn.commit()
+            self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
+            return self.cur.fetchone()
+        else:
+            self.cur.execute("INSERT INTO diplomacy.unitorder (type, target, secondarytarget) VALUES (%s, %s, %s);", (type, target, secondaryTarget))
+            self.conn.commit()
+            self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
+            return self.cur.fetchone()
+
 
     """ =========== GETTERS =============== """
 
@@ -163,6 +176,11 @@ class DB(metaclass=Singleton):
         self.cur.execute("SELECT * FROM diplomacy.location WHERE id = (SELECT location FROM diplomacy.unit WHERE id = %s);" % unitid)
         return self.cur.fetchone()
 
+    def getFactionName(self, factionid):
+        self.cur.execute("SELECT name FROM diplomacy.faction WHERE id = %s" % factionid)
+        result = self.cur.fetchone()
+        return result[0]
+
     def updateUnitLocation(self, unitid, locId):
         self.cur.execute("""
             UPDATE diplomacy.location SET factionid = (SELECT
@@ -192,7 +210,8 @@ class DB(metaclass=Singleton):
                 (ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = %s));""",
             (unitId, unitId, unitId, unitId, unitId))
 
-        return self.cur.fetchall()
+        result = self.cur.fetchall()
+        return result
 
     def getDefendable(self, unitId):
         self.cur.execute(
@@ -287,6 +306,13 @@ class DB(metaclass=Singleton):
             (unitId1, unitId1, unitId1, unitId1, unitId1, unitId2, unitId2, unitId2, unitId2, unitId2))
         return self.cur.fetchall()
 
+    def getFaction(self, unitId):
+        self.cur.execute("SELECT factionid FROM diplomacy.unit WHERE id = %s" % unitId)
+        return self.cur.fetchone()
+
+    def isNaval(self, unitId):
+        self.cur.execute("SELECT isnaval FROM diplomacy.unit WHERE id = %s" % unitId)
+        return self.cur.fetchone()[0]
 
     """ ========== MISC ========= """
 

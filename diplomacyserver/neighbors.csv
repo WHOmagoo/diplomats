@@ -1,98 +1,98 @@
-Off Map,Norway,Sweden,Pechora,Kras,Jordan,Sawhaj,Murzq,Fazzar,Sahara,Portugal,Ireland,Irish Sea,East Black Sea,Red Sea,Gibraltar,Atlantic Ocean
-Liverpool,Edinburgh,Wales,Irish Sea
-Ireland,Off Map,Wales,Irish Sea,English Channel,Atlantic Ocean
-Wales,Liverpool,Edinburgh,London,Ireland,Irish Sea,English Channel
-Edinburgh,Liverpool,Wales,London,Norway,North Sea,Irish Sea
-London,Wales,Edinburgh,Belgium,North Sea,English Channel
-Norway,Edinburgh,Off Map,Sweden,Irish Sea,North Sea
-Sweden,Norway,Finland,Off Map,Vologda,Ust,Pechora,North Sea,Baltic Sea
-Finland,Vologda,Leningrad,Baltic Sea,Sweden
+OffMap,Norway,Sweden,Pechora,Kras,Jordan,Sawhaj,Murzq,Fazzar,Sahara,Portugal,Ireland,IrishSea,EastBlackSea,RedSea,Gibraltar,AtlanticOcean
+Liverpool,Edinburgh,Wales,IrishSea
+Ireland,OffMap,Wales,IrishSea,EnglishChannel,AtlanticOcean
+Wales,Liverpool,Edinburgh,London,Ireland,IrishSea,EnglishChannel
+Edinburgh,Liverpool,Wales,London,Norway,NorthSea,IrishSea
+London,Wales,Edinburgh,Belgium,NorthSea,EnglishChannel
+Norway,Edinburgh,OffMap,Sweden,IrishSea,NorthSea
+Sweden,Norway,Finland,OffMap,Vologda,Ust,Pechora,NorthSea,BalticSea
+Finland,Vologda,Leningrad,BalticSea,Sweden
 Vologda,Sweden,Ust,Moscow,Smolensk,Finland,Komi,Leningrad
-Leningrad,Finland,Berlin,Smolensk,Vologda,Baltic Sea,Bellorussia
+Leningrad,Finland,Berlin,Smolensk,Vologda,BalticSea,Bellorussia
 Smolensk,Leningrad,Vologda,Moscow,Kiev,Bellorussia
 Moscow,Vologda,Komi,Crimea,Kiev,Smolensk
 Bellorussia,Leningrad,Smolensk,Kiev,Presov,Siliesia,Berlin
 Presov,Bellorussia,Kiev,Siliesia,Czechoslovakia,Hungary
-Kiev,Presov,Bellorussia,Smolensk,Moscow,Hungary,East Black Sea,Lake Cherkassy,Crimea
-Holland,Kiel,Ruhr,North Sea
-Kiel,Holland,North Sea,Berlin,Siliesia,Ruhr,Baltic Sea
-Berlin,Kiel,Siliesia,Leningrad,Baltic Sea,Bellorussia
+Kiev,Presov,Bellorussia,Smolensk,Moscow,Hungary,EastBlackSea,LakeCherkassy,Crimea
+Holland,Kiel,Ruhr,NorthSea
+Kiel,Holland,NorthSea,Berlin,Siliesia,Ruhr,BalticSea
+Berlin,Kiel,Siliesia,Leningrad,BalticSea,Bellorussia
 Siliesia,Kiel,Berlin,Ruhr,Munich,Czechoslovakia,Bellorussia,Presov
 Ruhr,Holland,Kiel,Austria,Siliesia,Munich
 Munich,Ruhr,Siliesia,Czechoslovakia,Austria
-Belgium,London,North Sea,Picardy,English Channel
-Picardy,Belgium,Brest,Paris,Marseille,English Channel
-Brest,Picardy,Paris,Marseille,English Channel,Bay of Biscay,Gacony
+Belgium,London,NorthSea,Picardy,EnglishChannel
+Picardy,Belgium,Brest,Paris,Marseille,EnglishChannel
+Brest,Picardy,Paris,Marseille,EnglishChannel,BayofBiscay,Gacony
 Paris,Picardy,Marseille,Brest
-Marseille,Paris,Picardy,Gacony,Barcelona,Brest,Gulf of Lyons
-Gacony,Brest,Marseille,Bilboa,Barcelona,Bay of Biscay
-Bilboa,Gacony,Barcelona,Valancia,Lugo,Bay of Biscay
-Lugo,Bilboa,Valancia,Seville,Portugal,Atlantic Ocean,Bay of Biscay
-Portugal,Lugo,Atlantic Ocean,Seville,Off Map,Gibraltar
-Seville,Portugal,Valancia,Lugo,Casablanca,Gibraltar,Western Mediterranean
-Valancia,Seville,Lugo,Bilboa,Western Mediterranean,Barcelona,Gulf of Lyons
-Barcelona,Bilboa,Gacony,Valancia,Gulf of Lyons,Marseille
+Marseille,Paris,Picardy,Gacony,Barcelona,Brest,GulfofLyons
+Gacony,Brest,Marseille,Bilboa,Barcelona,BayofBiscay
+Bilboa,Gacony,Barcelona,Valancia,Lugo,BayofBiscay
+Lugo,Bilboa,Valancia,Seville,Portugal,AtlanticOcean,BayofBiscay
+Portugal,Lugo,AtlanticOcean,Seville,OffMap,Gibraltar
+Seville,Portugal,Valancia,Lugo,Casablanca,Gibraltar,WesternMediterranean
+Valancia,Seville,Lugo,Bilboa,WesternMediterranean,Barcelona,GulfofLyons
+Barcelona,Bilboa,Gacony,Valancia,GulfofLyons,Marseille
 Ust,Pechora,Komi,Vologda,Sweden
-Pechora,Ust,Off Map,Komi,Rostov,East Black Sea,Sweden
+Pechora,Ust,OffMap,Komi,Rostov,EastBlackSea,Sweden
 Komi,Ust,Pechora,Gorki,Rostov,Crimea,Vologda,Moscow
 Gorki,Komi,Crimea,Rostov
-Crimea,Rostov,Gorki,Komi,Moscow,Kiev,East Black Sea
-Rostov,Pechora,Kras,Komi,Gorki,East Black Sea,Crimea
+Crimea,Rostov,Gorki,Komi,Moscow,Kiev,EastBlackSea
+Rostov,Pechora,Kras,Komi,Gorki,EastBlackSea,Crimea
 Czechoslovakia,Siliesia,Munich,Austria,Hungary,Presov
-Austria,Ruhr,Munich,Czechoslovakia,Hungary,Bosnia,Albania,Adriatic Sea
-Hungary,Czechoslovakia,Presov,Kiev,Banat,Serbia,Albania,Lake Cherkassy,Bosnia,Austria
+Austria,Ruhr,Munich,Czechoslovakia,Hungary,Bosnia,Albania,AdriaticSea
+Hungary,Czechoslovakia,Presov,Kiev,Banat,Serbia,Albania,LakeCherkassy,Bosnia,Austria
 Bosnia,Austria,Hungary,Albania
-Albania,Hungary,Adriatic Sea,Austria,Bosnia,Serbia,Greece
+Albania,Hungary,AdriaticSea,Austria,Bosnia,Serbia,Greece
 Serbia,Hungary,Albania,Banat,Romania,Greece
-Banat,Hungary,Serbia,Romania,Lake Cherkassy
-Romania,Banat,Bulgaria,Macedonia,Greece,West Black Sea,Serbia,Lake Cherkassy
-Bulgaria,Romania,Macedonia,West Black Sea,Agean Sea,Greece,Istanbul
+Banat,Hungary,Serbia,Romania,LakeCherkassy
+Romania,Banat,Bulgaria,Macedonia,Greece,WestBlackSea,Serbia,LakeCherkassy
+Bulgaria,Romania,Macedonia,WestBlackSea,AgeanSea,Greece,Istanbul
 Macedonia,Bulgaria,Romania,Greece
-Greece,Macedonia,Bulgaria,Romania,Adriatic Sea,Albania,Serbia,Agean Sea
-Istanbul,Bulgaria,Samsun,Agean Sea,West Black Sea,Izmir,East Black Sea
-Samsun,Istanbul,Kras,Izmir,Lebanon,East Black Sea
-Kras,Samsun,Lebanon,Jordan,Off Map,East Black Sea,Rostov
-Izmir,Istanbul,Eastern Mediterranean,Agean Sea,Samsun,Lebanon,Israel
+Greece,Macedonia,Bulgaria,Romania,AdriaticSea,Albania,Serbia,AgeanSea
+Istanbul,Bulgaria,Samsun,AgeanSea,WestBlackSea,Izmir,EastBlackSea
+Samsun,Istanbul,Kras,Izmir,Lebanon,EastBlackSea
+Kras,Samsun,Lebanon,Jordan,OffMap,EastBlackSea,Rostov
+Izmir,Istanbul,EasternMediterranean,AgeanSea,Samsun,Lebanon,Israel
 Lebanon,Izmir,Israel,Jordan,Samsun,Kras
-Israel,Izmir,Lebanon,Eastern Mediterranean,Jordan,Cairo,Red Sea
-Jordan,Israel,Lebanon,Kras,Off Map,Red Sea
-Piedmont,Tuscany,Venice,Gulf of Lyons,Tyrrhenian Sea
-Venice,Tuscany,Adriatic Sea,Piedmont,Apulia,Rome,Ionian Sea
-Tuscany,Piedmont,Venice,Rome,Tyrrhenian Sea
-Rome,Tuscany,Naples,Apulia,Venice,Tyrrhenian Sea
-Apulia,Venice,Rome,Naples,Ionian Sea
-Naples,Apulia,Rome,Sicily,Ionian Sea,Tyrrhenian Sea
-Sicily,Benghazi,Naples,Tyrrhenian Sea,Ionian Sea
-Sardinia,Algiers,Tyrrhenian Sea,Western Mediterranean
-Casablanca,Algiers,Seville,Aflou,Western Mediterranean,Gibraltar
-Algiers,Western Mediterranean,Casablanca,Setif,Sardinia,Aflou,Tyrrhenian Sea
-Setif,Algiers,Aflou,Sahara,Fazzar,Tyrrhenian Sea,Benghazi
+Israel,Izmir,Lebanon,EasternMediterranean,Jordan,Cairo,RedSea
+Jordan,Israel,Lebanon,Kras,OffMap,RedSea
+Piedmont,Tuscany,Venice,GulfofLyons,TyrrhenianSea
+Venice,Tuscany,AdriaticSea,Piedmont,Apulia,Rome,IonianSea
+Tuscany,Piedmont,Venice,Rome,TyrrhenianSea
+Rome,Tuscany,Naples,Apulia,Venice,TyrrhenianSea
+Apulia,Venice,Rome,Naples,IonianSea
+Naples,Apulia,Rome,Sicily,IonianSea,TyrrhenianSea
+Sicily,Benghazi,Naples,TyrrhenianSea,IonianSea
+Sardinia,Algiers,TyrrhenianSea,WesternMediterranean
+Casablanca,Algiers,Seville,Aflou,WesternMediterranean,Gibraltar
+Algiers,WesternMediterranean,Casablanca,Setif,Sardinia,Aflou,TyrrhenianSea
+Setif,Algiers,Aflou,Sahara,Fazzar,TyrrhenianSea,Benghazi
 Aflou,Casablanca,Algiers,Setif,Sahara,Gibraltar
-Sahara,Aflou,Setif,Fazzar,Off Map,Gibraltar
-Fazzar,Off Map,Sahara,Murzq,Setif,Benghazi
-Murzq,Benghazi,Fazzar,Sawhaj,Sallum,Off Map
-Benghazi,Setif,Tyrrhenian Sea,Fazzar,Murzq,Sallum,Sicily,Ionian Sea
-Sallum,Sawhaj,Tobruk,Nile,Benghazi,Murzq,Ionian Sea
-Tobruk,Sallum,Nile,Cairo,Crete,Eastern Mediterranean,Ionian Sea
-Cairo,Israel,Nile,Tobruk,Eastern Mediterranean,Red Sea
-Nile,Cairo,Tobruk,Sallum,Red Sea,Sawhaj
-Sawhaj,Off Map,Sallum,Murzq,Nile,Red Sea
-Crete,Tobruk,Ionian Sea,Eastern Mediterranean
-Irish Sea,Edinburgh,Ireland,Liverpool,Norway,Off Map,Wales,North Sea,English Channel
-North Sea,Belgium,Edinburgh,Holland,Kiel,London,Norway,English Channel,Irish Sea,Sweden,Baltic Sea
-Baltic Sea,Berlin,Finland,Kiel,Sweden,North Sea,Leningrad
-English Channel,Belgium,Brest,Ireland,Irish Sea,London,Picardy,Wales,Bay of Biscay,Atlantic Ocean,North Sea
-Atlantic Ocean,Bay of Biscay,Gibraltar,Ireland,Lugo,Off Map,Portugal,English Channel
-Bay of Biscay,Bilboa,Brest,Gacony,Lugo,Atlantic Ocean,English Channel
-Gibraltar,Aflou,Casablanca,Off Map,Portugal,Seville,Western Mediterranean,Atlantic Ocean
-Western Mediterranean,Algiers,Casablanca,Sardinia,Gulf of Lyons,Seville,Valancia,Gibraltar,Tyrrhenian Sea
-Gulf of Lyons,Barcelona,Marseille,Piedmont,Valancia,Western Mediterranean,Tyrrhenian Sea
-Tyrrhenian Sea,Algiers,Benghazi,Naples,Piedmont,Rome,Sardinia,Setif,Sicily,Tuscany,Ionian Sea,Gulf of Lyons,Western Mediterranean
-Ionian Sea,Apulia,Tyrrhenian Sea,Adriatic Sea,Benghazi,Crete,Naples,Sallum,Sicily,Tobruk,Venice,Agean Sea,Eastern Mediterranean
-Adriatic Sea,Albania,Austria,Greece,Venice,Agean Sea,Ionian Sea
-Agean Sea,West Black Sea,Adriatic Sea,Bulgaria,Greece,Istanbul,Izmir,Eastern Mediterranean,Ionian Sea
-Eastern Mediterranean,Cairo,Ionian Sea,Agean Sea,Red Sea,Crete,Israel,Izmir,Tobruk
-Red Sea,Cairo,Israel,Jordan,Nile,Off Map,Eastern Mediterranean,Sawhaj
-Lake Cherkassy,Banat,Hungary,Kiev,Romania,West Black Sea,East Black Sea
-West Black Sea,Bulgaria,Istanbul,Romania,Agean Sea,East Black Sea,Lake Cherkassy
-East Black Sea,Crimea,Kiev,West Black Sea,Istanbul,Lake Cherkassy,Kras,Off Map,Pechora,Rostov,Samsun
+Sahara,Aflou,Setif,Fazzar,OffMap,Gibraltar
+Fazzar,OffMap,Sahara,Murzq,Setif,Benghazi
+Murzq,Benghazi,Fazzar,Sawhaj,Sallum,OffMap
+Benghazi,Setif,TyrrhenianSea,Fazzar,Murzq,Sallum,Sicily,IonianSea
+Sallum,Sawhaj,Tobruk,Nile,Benghazi,Murzq,IonianSea
+Tobruk,Sallum,Nile,Cairo,Crete,EasternMediterranean,IonianSea
+Cairo,Israel,Nile,Tobruk,EasternMediterranean,RedSea
+Nile,Cairo,Tobruk,Sallum,RedSea,Sawhaj
+Sawhaj,OffMap,Sallum,Murzq,Nile,RedSea
+Crete,Tobruk,IonianSea,EasternMediterranean
+IrishSea,Edinburgh,Ireland,Liverpool,Norway,OffMap,Wales,NorthSea,EnglishChannel
+NorthSea,Belgium,Edinburgh,Holland,Kiel,London,Norway,EnglishChannel,IrishSea,Sweden,BalticSea
+BalticSea,Berlin,Finland,Kiel,Sweden,NorthSea,Leningrad
+EnglishChannel,Belgium,Brest,Ireland,IrishSea,London,Picardy,Wales,BayofBiscay,AtlanticOcean,NorthSea
+AtlanticOcean,BayofBiscay,Gibraltar,Ireland,Lugo,OffMap,Portugal,EnglishChannel
+BayofBiscay,Bilboa,Brest,Gacony,Lugo,AtlanticOcean,EnglishChannel
+Gibraltar,Aflou,Casablanca,OffMap,Portugal,Seville,WesternMediterranean,AtlanticOcean
+WesternMediterranean,Algiers,Casablanca,Sardinia,GulfofLyons,Seville,Valancia,Gibraltar,TyrrhenianSea
+GulfofLyons,Barcelona,Marseille,Piedmont,Valancia,WesternMediterranean,TyrrhenianSea
+TyrrhenianSea,Algiers,Benghazi,Naples,Piedmont,Rome,Sardinia,Setif,Sicily,Tuscany,IonianSea,GulfofLyons,WesternMediterranean
+IonianSea,Apulia,TyrrhenianSea,AdriaticSea,Benghazi,Crete,Naples,Sallum,Sicily,Tobruk,Venice,AgeanSea,EasternMediterranean
+AdriaticSea,Albania,Austria,Greece,Venice,AgeanSea,IonianSea
+AgeanSea,WestBlackSea,AdriaticSea,Bulgaria,Greece,Istanbul,Izmir,EasternMediterranean,IonianSea
+EasternMediterranean,Cairo,IonianSea,AgeanSea,RedSea,Crete,Israel,Izmir,Tobruk
+RedSea,Cairo,Israel,Jordan,Nile,OffMap,EasternMediterranean,Sawhaj
+LakeCherkassy,Banat,Hungary,Kiev,Romania,WestBlackSea,EastBlackSea
+WestBlackSea,Bulgaria,Istanbul,Romania,AgeanSea,EastBlackSea,LakeCherkassy
+EastBlackSea,Crimea,Kiev,WestBlackSea,Istanbul,LakeCherkassy,Kras,OffMap,Pechora,Rostov,Samsun
