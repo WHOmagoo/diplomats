@@ -32,24 +32,23 @@ function loadGame()
 
     var url = "/api/get_game";
 
-    makeGetRequest(url, function () {
-        console.log("success")
-        var json = JSON.parse(getrqst.responseText);
-        updateBoard(json);
+    makeGetRequest(url, function (data) {
+        //var json = JSON.parse(getrqst.responseText);
+        updateBoard(data);
     }, function () {
         console.log("failure")
         console.log()
     })
 
-    getrqst.open("GET", url, true);
-    getrqst.setRequestHeader("Content-type", "application/json");
-    getrqst.onreadystatechage = function () {
-        console.log(getreqst.responseText)
-        if(getrqst.readyState === 4 && getrqst.status === 200) {
-            var json = JSON.parse(getrqst.responseText);
-            updateBoard(json);
-        }
-    };
+    // getrqst.open("GET", url, true);
+    // getrqst.setRequestHeader("Content-type", "application/json");
+    // getrqst.onreadystatechage = function () {
+    //     console.log(getreqst.responseText)
+    //     if(getrqst.readyState === 4 && getrqst.status === 200) {
+    //         var json = JSON.parse(getrqst.responseText);
+    //         updateBoard(json);
+    //     }
+    // };
 
     //fill select options
     var selectCountries = $("#selectCountries");

@@ -49,10 +49,10 @@ def getGame():
     out = []
     for team in data:
         temp = json.dumps(team[0])
-        out.append(jsonify({"army": team[0], "navy": team[1], "score": team[2]}))
+        out.append({"army": team[0], "navy": team[1], "score": team[2]})
 
-    return jsonify({"teams":[{"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":3},{"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":2}], 'status':200})
-    # return jsonify({"teams": out, "status":200})
+    # return jsonify({"teams":[{"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":3},{"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":2}], 'status':200})
+    return jsonify({"teams": out, "status":200})
 
 if __name__ == '__main__':
     init.game()
