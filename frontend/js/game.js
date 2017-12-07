@@ -26,6 +26,18 @@ function onLeave()
 function loadGame()
 {
     //sends a get request for the board
+    var getrqst = new XMLHttpRequest();
+
+    var url = "url";
+
+    getrqst.open("GET", url, true);
+    getrqst.setRequestHeader("Content-type", "application/json");
+    getrqst.onreadystatechage = function () {
+        if(getrqst.readyState === 4 && getrqst.status === 200) {
+            var json = JSON.parse(getrqst.responseText);
+            updateBoard(json);
+        }
+    };
 
     //fill select options
     var selectCountries = $("#selectCountries");
@@ -52,22 +64,35 @@ function clearBoard()
 
 function test()
 {
-    var test = {"team1":{"army":["Lugo","IrishSea","London"],"navy":["NorthSea"]}};
+    var test = {"teams":
+            [{"army":["Lugo","IrishSea","London"],"navy":["NorthSea","Wales"],"score":"25"},
+                {"army":["Lugo","IrishSea","London"],"navy":["NorthSea","Wales"],"score":"25"}],};
     //send a get request for the inital positions
     updateBoard(test);
 }
 
 function updateBoard(json)
 {
-
-    for(var index in json.team1.army)
-    {
-        removeUnit(json.team1.army[index]);
-        //document.getElementsByClassName(json.team1.army[index]).remove();
-        addNavy(json.team1.army[index]);
-        changeTeam(json.team1.army[index], 3);
-        unitOrdered(json.team1.army[index]);
+    //parse through all the teams
+    for(var teamIndex in json.teams) {
+        //fill army
+        for (var index in json.teams[teamIndex].army)
+        {
+            removeUnit(json.teams[teamIndex].army[index]);
+            addArmy(json.teams[teamIndex].army[index]);
+            changeTeam(json.teams[teamIndex].army[index], Number(teamIndex) + 1);
+        }
+        //fill navy
+        for (var index in json.teams[teamIndex].navy)
+        {
+            removeUnit(json.teams[teamIndex].navy[index]);
+            addNavy(json.teams[teamIndex].navy[index]);
+            changeTeam(json.teams[teamIndex].navy[index], Number(teamIndex) + 1);
+        }
+        updateScore(Number(teamIndex) + 1, Number(json.teams[teamIndex].score));
     }
+
+
 
 }
 
@@ -150,7 +175,7 @@ function onSubmit()
         {
             alert("Invalid order");
         }
-    }
+    };
 
     var form = $(".sendOrderForm");
 
