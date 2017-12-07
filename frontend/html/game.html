@@ -4,51 +4,444 @@
 <head>
 	<title>Game</title>
 	<link rel="stylesheet" type="text/css" href="../style/game.css" media="screen" />
+	<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../js/game.js"></script>
 </head>
 <body>
 	<header>
 		<div class="buffer">
             <h1>DIPLOMATS</h1>
 		</div>
+		<div class="leaveButtonCnt">
+			<button type="button" onclick="onLeave()">Leave</button>
+		</div>
 	</header>
 	<div class="mapSideCnt">
-		<div class="mapCnt">
-			<div class="map">
-				<img src="../sources/placeholder.png" alt="placeholder map">
+	    <div class="mapCnt">
+			<img class="map" src="../sources/Map.png" alt="placeholder map">
+			<img class="mapOverlay" src="../sources/MapText.png">
+			<!--all the countries-->
+			<div class="IrishSea team1 circleBase medium">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
 			</div>
-		</div>
-		<div class="sideBar">
-			<div class="leaveButtCont">
-				<button type="button">Leave Game</button>
+			<div class="Jordan team1 circleBase medium">
+				<!--need to put an image if an army or navy is here-->
+				<img class="navy" src="../sources/Navy.png">
 			</div>
-			<!--may remove later-->
-			<div class="actionLogCont">
-				
+			<div class="RedSea team1 circleBase medium">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
 			</div>
-			<div class="orderCont">
-				<div class="sendOrderCont">
-					<form action="" method="post">
-						<div class="formElement">
-							Order:<br>
-							<input type="text" name="order"><br>
-						</div>
-						<div class="submitCont">
-							<input type="submit" value="Submit">
-						</div>
-					</form>
-				</div>
-				<div class="ConfirmOrderCont">
-					<button class="ConfirmOrderButton" type="Button">Confirm Order</button>
-				</div>
+			<div class="Nile team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
 			</div>
-		</div>
+			<div class="Sawhaj team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Tobruk team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Sallum team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Benghazi team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Murzq team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Fazzar team1 circleBase medium">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Setif team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Sahara team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Aflou team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Casablanca team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Algiers team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="WesternMediterranean team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Gibraltar team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="AtlanticOcean team1 circleBase medium">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Portugal team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Lugo team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Seville team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Ireland team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="EnglishChannel team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Wales team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Liverpool team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Edinburgh team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="London team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="NorthSea team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Belgium team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Picardy team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Paris team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Marseille team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="GulfofLyons team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Sardinia team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="TyrrhenianSea team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Barcelona team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Valancia team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Bilboa team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="BayofBiscay team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Gacony team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Gacony team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Brest team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+			<div class="Sicily team1 circleBase small">
+				<!--need to put an image if an army or navy is here-->
+				<img class="army" src="../sources/Army.png">
+			</div>
+            <div class="Naples team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Apulia team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="IonianSea team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Rome team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Venice team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Tuscany team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Piedmont team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="AdriaticSea team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Ruhr team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Munich team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Kiel team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="BalticSea team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Finland team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Leningrad team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Bellorussia team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Presov team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Kiev team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Smolensk team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Moscow team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Ust team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Vologda team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Komi team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Gorki team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Crimea team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Rostov team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="LakeCherkassy team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Romania team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Banat team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+                <img class="army" src="../sources/Army.png">
+            </div>
+            <div class="Hungary team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Bosnia team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Austria team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Czechoslovakia team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Siliesia team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Berlin team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Sweden team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Norway team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Pechora team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="EastBlackSea team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="WestBlackSea team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Bulgaria team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Macedonia team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Greece team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Albania team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Serbia team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="AgeanSea team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Crete team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Cairo team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Israel team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="EasternMediterranean team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Izmir team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Istanbul team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Samsun team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Kras team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Lebanon team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+            <div class="Holland team1 circleBase small">
+                <!--need to put an image if an army or navy is here-->
+            </div>
+	    </div>
+	    <div class="sideBar">
+	        <div class="leaveButtCont">
+
+	        </div>
+	        <!--may remove later-->
+	        <div class="actionLogCont">
+
+	        </div>
+	        <div class="orderCont">
+	            <div class="sendOrderCont">
+                    <form class="sendOrderForm">
+                        <select id="selectCountries">
+                            <!--countries get generated in here !-->
+                        </select><br>
+                        <select id="action">
+                            <option value="attack">attacks</option>
+                            <option value="support">supports</option>
+                            <option value="defend">defends</option>
+                            <option value="move">moves to</option>
+                            <option value="stay">stays</option>
+                        </select><br>
+                        <select id="targetCountries">
+                            <!--countries get generated in here !-->
+                        </select><br>
+                        <input type="submit" value="Submit Order" onclick="onSubmit()">
+                    </form>
+	            </div>
+	            <div class="ConfirmOrderCont">
+	                <button class="ConfirmOrdersButton" type="Button" onclick="test()">Confirm Orders</button>
+	            </div>
+	        </div>
+	    </div>
 	</div>
     <div class="bottomBar">
-        <div class="team">
-            <div class="teamName">Team: best team</div>
+        <div class="team team1">
+            <div class="teamName">Team: best team1</div>
+            <div class="teamScore">Score: 418</div>
+        </div>
+		<div class="team team2">
+            <div class="teamName">Team: best team2</div>
             <div class="teamScore">Score: 666</div>
         </div>
+		<div class="team team3">
+            <div class="teamName">Team: best team3</div>
+            <div class="teamScore">Score: 42</div>
+        </div>
+		<div class="team team4">
+			<div class="teamName">Team: best team4</div>
+			<div class="teamScore">Score: 42</div>
+		</div>
     </div>
 
 </body>
+<script type="text/javascript">
+	clearBoard();
+	loadGame();
+</script>
 </html>
