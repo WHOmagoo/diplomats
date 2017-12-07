@@ -44,14 +44,15 @@ def confirm_orders():
 
 @app.route(defUrl + 'get_game', methods=['GET'])
 def getGame():
-    print("Game data requested")
     data = init.getGame()
 
     out = []
     for team in data:
-        out.append(str(jsonify({'army':json.dumps(team[0]), 'navy':json.dumps(team[1]), 'score':team[2]}).data))
+        temp = json.dumps(team[0])
+        out.append(jsonify({"army": team[0], "navy": team[1], "score": team[2]}))
 
-    return jsonify({'teams':json.dumps(out), 'status':200})
+    return jsonify({"teams":[{"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":3},{"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":2}], 'status':200})
+    # return jsonify({"teams": out, "status":200})
 
 if __name__ == '__main__':
     init.game()
