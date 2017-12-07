@@ -299,7 +299,7 @@ class DB(metaclass=Singleton):
 
     def isNaval(self, unitId):
         self.cur.execute("SELECT isnaval FROM diplomacy.unit WHERE id = %s" % unitId)
-        return self.cur.fetchone()
+        return self.cur.fetchone()[0]
 
     """ ========== MISC ========= """
 

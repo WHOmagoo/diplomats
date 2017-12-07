@@ -16,25 +16,30 @@ ordertypes = {'Attack':1, 'a':1, 'Support':2, 's':2, 'Defend':3, 'd':3, 'Move':4
 def getGame():
     factionToUnits = {}
 
-    for id, name in unitIdToName:
+    for id, name in unitIdToName.items():
         try:
             if db.isNaval(id):
                 factionToUnits[db.getFaction(id)][1].append(name)
             else:
                 factionToUnits[db.getFaction(id)][0].append(name)
 
-            factionToUnits[db.getFaction(id)][3] += 1
+            factionToUnits[db.getFaction(id)][2] += 1
         except KeyError:
-            factionToUnits[db.getFaction(id)] = ([],[], 1)
+            factionToUnits[db.getFaction(id)] = [[],[], 1]
             if db.isNaval(id):
                 factionToUnits[db.getFaction(id)][1].append(name)
             else:
                 factionToUnits[db.getFaction(id)][0].append(name)
 
-    return factionToUnits
+    result = []
+
+    for key, val in factionToUnits.items():
+        result.append(val)
+
+    return result
 
 
-# [(["Liverpool", "Ireland"], ["IrishSea"], 3), (["Casablanca"], ["AtlanticOcean"], 1)]
+    # [(["Liverpool", "Ireland"], ["IrishSea"], 3), (["Casablanca"], ["AtlanticOcean"], 1)]
 
 def parsecsv(fileName):
     data = []
