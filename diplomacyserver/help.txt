@@ -1,0 +1,185 @@
+GET NEIGHBORS
+
+WITH neighbors AS(
+    WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=250)),
+    b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=250))
+    SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+    SELECT * FROM neighbors;
+
+
+GET ATTACKABLE
+
+WITH neighbors AS(
+    WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=250)),
+    b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=250))
+    SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+    SELECT * FROM neighbors WHERE
+        (type = 2
+          OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=250))
+          OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=250)))
+          AND
+            (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = 250));
+
+
+
+GET DEFENDABLE
+
+    WITH neighbors AS(
+        WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=250)),
+        b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=250))
+        SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+    SELECT * FROM neighbors WHERE
+        (type = 2
+          OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=250))
+          OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=250)))
+        AND
+            id IN (SELECT location FROM diplomacy.unit);
+
+
+GET SUPPORTABLE
+
+WITH attackable AS(
+    WITH neighbors AS(
+        WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=250)),
+        b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=250))
+        SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+        SELECT * FROM neighbors WHERE
+            (type = 2
+                OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=250))
+                OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=250)))
+             AND
+            (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = 250))),
+    secondneighbors AS(
+        WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida IN (SELECT id FROM attackable)),
+        b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb IN (SELECT id FROM attackable))
+        SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+    SELECT * FROM secondneighbors WHERE id IN (SELECT location FROM diplomacy.unit) AND id != (SELECT location FROM diplomacy.unit WHERE id=250);
+
+GET ATTACKABLE  IN COMMON
+
+WITH attackablea AS(
+    WITH neighbors AS(
+        WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=250)),
+        b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=250))
+        SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+        SELECT * FROM neighbors WHERE
+            (type = 2
+            OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=250))
+            OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=250)))
+            AND
+            (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = 250))),
+    attackableb AS(
+         WITH neighbors AS(
+             WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id=251)),
+             b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id=251))
+             SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+             SELECT * FROM neighbors WHERE
+                 (type = 2
+                 OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=251))
+                 OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=251)))
+                 AND
+                 (NOT ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = 251)))
+    (SELECT * FROM attackablea) INTERSECT (SELECT * FROM attackableb);
+
+
+
+
+INSERT INTO diplomacy.faction (gameid, name, color)
+SELECT 1, 'none', color
+FROM diplomacy.color
+WHERE name='red';
+
+INSERT INTO diplomacy.faction (gameid, name, player, color) SELECT 18, 'none', player, color FROM diplomacy.player, diplomacy.color WHERE id=20 AND name='red';
+
+
+Gets all the attacks for a location assuming army
+
+WITH myNeighbor AS (
+    WITH RECURSIVE neighborId(locId) AS (
+        SELECT locida FROM diplomacy.neighbor WHERE locidb = 22638
+        UNION
+        SELECT locidb FROM diplomacy.neighbor WHERE locida = 22638)
+    SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId))
+SELECT id FROM myNeighbor WHERE factionid != (SELECT factionid FROM diplomacy.location WHERE id = 22638) AND (type = 1 OR type = 2);
+
+
+
+WITH myNeighbor AS (
+    WITH RECURSIVE neighborId(locId) AS (
+        SELECT locida FROM diplomacy.neighbor WHERE locidb = 22638
+        UNION
+        SELECT locidb FROM diplomacy.neighbor WHERE locida = 22638)
+    SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId)),
+    curLoc AS (SELECT * FROM diplomacy.location WHERE id = 22638),
+    isNavy AS (SELECT isnaval FROM diplomacy.unit WHERE location = 22638)
+
+    SELECT
+
+
+WITH RECURSIVE neighborId(locId) AS (
+SELECT locida FROM diplomacy.neighbor WHERE locidb = 27611
+UNION
+SELECT locidb FROM diplomacy.neighbor WHERE locida = 27611)
+SELECT * FROM diplomacy.location WHERE location.id IN (SELECT locId FROM neighborId);
+
+
+INSERT INTO diplomacy.unitorder (type, target) VALUES (1, 28964);
+UPDATE diplomacy.unit SET curorder=3 WHERE id=2525;
+
+TODO getSupportable
+TODO getCommonAttackable
+TODO moveable
+
+Defendable
+
+
+WITH RECURSIVE neighborId(locId) AS (
+    SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = 89)
+    UNION
+    SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = 89)),
+SELECT * FROM diplomacy.location WHERE
+  id IN (SELECT locId FROM neighborId)
+  AND (type = 2
+  OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=89))
+  OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=89)))
+  AND
+    (NOT ispoi OR factionid = (SELECT factionid FROM diplomacy.unit WHERE id = 89));
+
+
+WITH attackable AS (
+    WITH RECURSIVE neighborId(locId) AS (
+        SELECT locida FROM diplomacy.neighbor WHERE locidb = (SELECT location FROM diplomacy.unit WHERE id = 250)
+        UNION
+        SELECT locidb FROM diplomacy.neighbor WHERE locida = (SELECT location FROM diplomacy.unit WHERE id = 250))
+    SELECT * FROM diplomacy.location WHERE
+      id IN (SELECT locId FROM neighborId)
+      AND (type = 2
+        OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=250))
+        OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=250)))
+      AND
+        (factionid != (SELECT factionid FROM diplomacy.unit WHERE id = 250))),
+    RECURSIVE neighborsofattackable(locid) AS (
+        SELECT locida FROM diplomacy.neighbor WHERE locidb IN (SELECT id FROM attackable)
+        UNION
+        SELECT locidb FROM diplomacy.neighbor WHERE locida IN (SELECT id FROM attackable))
+    SELECT id FROM neighborsofattackable;
+
+
+WITH neighbors AS(
+    WITH a AS (SELECT locidb FROM diplomacy.neighbor WHERE locida=250),
+    b AS (SELECT locida FROM diplomacy.neighbor WHERE locidb=250)
+    SELECT * FROM diplomacy.location WHERE id IN (SELECT * FROM b UNION SELECT * FROM a))
+    SELECT * FROM neighbors WHERE
+        (type = 2
+            OR (type = 3 AND (SELECT isnaval FROM diplomacy.unit WHERE id=250))
+            OR (type = 1 AND NOT (SELECT isnaval FROM diplomacy.unit WHERE id=250)))
+        AND factionid = (SELECT factionid FROM diplomacy.unit WHERE id=250)
+
+{
+    "teams": [
+        {"army":[lugo, irishsea],
+        "navy":[name, name2],
+        score},
+
+        {next team}
+}
