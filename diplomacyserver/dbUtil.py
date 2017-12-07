@@ -96,11 +96,18 @@ class DB(metaclass=Singleton):
         self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
         return self.cur.fetchone()
 
-    def makeUnitOrder(self, type, target, secondaryTarget):
-        self.cur.execute("INSERT INTO diplomacy.unitorder (type, target, secondarytarget) VALUES (%s, %s, %s);", (type, target, secondaryTarget))
-        self.conn.commit()
-        self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
-        return self.cur.fetchone()
+    def makeUnitOrder(self, type, target, secondaryTarget = None):
+
+        if secondaryTarget is None:
+            self.cur.execute("INSERT INTO diplomacy.unitorder (type, target) VALUES (%s, %s);", (type, target))
+            self.conn.commit()
+            self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
+            return self.cur.fetchone()
+        else:
+            self.cur.execute("INSERT INTO diplomacy.unitorder (type, target, secondarytarget) VALUES (%s, %s, %s);", (type, target, secondaryTarget))
+            self.conn.commit()
+            self.cur.execute("SELECT max(id) FROM diplomacy.unitorder;")
+            return self.cur.fetchone()
 
 
     """ =========== GETTERS =============== """
@@ -203,7 +210,8 @@ class DB(metaclass=Singleton):
                 (ispoi OR factionid != (SELECT factionid FROM diplomacy.unit WHERE id = %s));""",
             (unitId, unitId, unitId, unitId, unitId))
 
-        return self.cur.fetchall()
+        result = self.cur.fetchall()
+        return result
 
     def getDefendable(self, unitId):
         self.cur.execute(

@@ -19,13 +19,33 @@ def getSupportable(origin):
     return db.getSupportable(origin)
 
 def validateAttack(origin, target):
-    return target in db.getAttackable(origin)
+    result = db.getAttackable(origin)
+    for el in result:
+        if target == el[0]:
+            return True
+
+    return False
 
 def validateSupport(origin, target, supporting):
-    return target in db.getAttackableInCommon(origin, supporting)
+    result = db.getAttackableInCommon(origin, supporting)
+    for el in result:
+        if target == el[0]:
+            return True
+
+    return False
 
 def validateMove(origin, target):
-    return target in db.getMoveable(origin)
+    result =  db.getMoveable(origin)
+    for el in result:
+        if target == el[0]:
+            return True
+
+    return False
 
 def validateDefend(origin, target):
-    return target in db.getDefendable(origin)
+    result = db.getDefendable(origin)
+    for el in result:
+        if target == el[0]:
+            return True
+
+    return False

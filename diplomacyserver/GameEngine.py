@@ -16,18 +16,37 @@ CORS(app)
 
 @app.route(defUrl + 'send_order', methods=['POST'])
 def send_order():
-    data = request.data
-    if request.is_json():
+    if request.is_json:
         # content will contain a dictionary describing the order
         content = request.get_json()
+
+        try:
+            action = content['action']
+            origin = content['select']
+            target = content['target']
+            assisting = None
+
+            if action == 'support':
+                assisting = content['attack']
+                assisting = init.locationNameToId[assisting]
+
+            origin = init.unitNameToId[origin]
+            target = init.locationNameToId[target]
+            action = init.ordertypes[action]
+
+            valid = init.validateOrder(origin, action, target, assisting)
+
+        except KeyError:
+            valid = False
+
         # validate_order will return true if the order is valid
         # valid = validate_order(content)
         if valid:
             #order is ok
-            return 200
+            return jsonify({"status":200})
         else:
             #order is not ok
-            return 418
+            return jsonify({"status":418})
     else:
         return jsonify({"status":418})
 

@@ -1,6 +1,6 @@
 import csv
 
-from diplomacyserver import OrderValidator
+from OrderValidator import *
 from diplomacyserver.dbUtil import DB
 
 locationNameToId = {}
@@ -11,7 +11,7 @@ factionNameToId = {}
 factionIdToName = {}
 db = DB()
 
-ordertypes = {'Attack':1, 'a':1, 'Support':2, 's':2, 'Defend':3, 'd':3, 'Move':4, 'm':4, 'Stay':5, 's':5}
+ordertypes = {'attack':1, 'a':1, 'support':2, 's':2, 'defend':3, 'd':3, 'move':4, 'm':4, 'stay':5, 's':5}
 
 def getGame():
     factionToUnits = {}
@@ -165,48 +165,39 @@ def createGame():
 
     updateGame()
 
-def makeOrder(unitid, type, target):
+def validateOrder(unitid, type, target, secondaryTarget=None):
     # db = DB()
     if type == 1: #attack
-        if OrderValidator.validateAttack(unitid, target):
-            orderId = makeOrder(unitid, type, target)
+        if validateAttack(unitid, target):
+            orderId = db.makeUnitOrder(type, target)
             db.setOrder(unitid, orderId)
+            return True
         else:
             print("Invalid Order for " + str(unitid) + ", 1, " + str(target))
     if type == 2: #support
-        print("Incorrect number of parameters for a support")
-    if type == 3: #defend
-        if OrderValidator.validateDefend(origin, target):
-            orderId = makeOrder(unitid, type, target)
-            db.setOrder(unitid, orderId)
-        pass
-    if type == 4: #move
-        if OrderValidator.validateMove(unitid, target):
-            orderId = makeOrder(unitid, type, target)
-            db.setOrder(unitid, orderId)
-    if type == 5:
-        makeOrder(unitid, type, unitid)
-
-    else:
-        print("Invalid order type")
-
-
-    locationOrigin = db.getUnitLocation(unitid)
-    neighbors = getNeighbors(locationOrigin[3])
-
-    if target in neighbors:
-        order = db.makeUnitOrder(type, target)
-        db.setOrder(unitid, order)
-    else:
-        print("Target is not in neighbors")
-
-def makeOrder(unitid, type, target, secondaryTarget):
-    if type == 2:
-        if OrderValidator.validateSupport(unitid, target, secondaryTarget):
+        if validateSupport(unitid, target, secondaryTarget):
             orderid = db.makeUnitOrder(unitid, target, secondaryTarget)
             db.setOrder(unitid,orderid)
+            return True
+    if type == 3: #defend
+        if validateDefend(origin, target):
+            orderId = db.makeUnitOrder(unitid, type, target)
+            db.setOrder(unitid, orderId)
+            return True
+        pass
+    if type == 4: #move
+        if validateMove(unitid, target):
+            orderId = db.makeUnitOrder(unitid, type, target)
+            db.setOrder(unitid, orderId)
+            return True
+    if type == 5:
+        db.makeUnitOrder(unitid, type, unitid)
+        return True
     else:
-        makeOrder(unitid, type, target)
+        print("Invalid order type")
+        return False
+
+    locationOrigin = db.getUnitLocation(unitid)
 
     # locationOrigin = db.getUnitLocation(unitid)
     # neighbors = getNeighbors(locationOrigin[3])
