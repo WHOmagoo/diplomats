@@ -190,12 +190,28 @@ function onSubmit()
     var action = document.getElementById("action");
     action = action.options[action.selectedIndex].value;
 
-    //targeted country
-    var target = document.getElementById("targetCountries");
-    target = target.options[target.selectedIndex].text;
+    if(action === "support")
+    {
+        //targeted country
+        var target = document.getElementById("targetCountries");
+        target = target.options[target.selectedIndex].text;
 
-    //need to send selected country action and target with post request
-    var json = JSON.stringify({"select":select, "action":action, "target":target});
+        //supporting attack on a country
+        var attack = document.getElementById("attackCountries");
+        attack = attack.options[attack.selectedIndex].text;
+
+        //need to send selected country action and target with post request
+        var json = JSON.stringify({"select":select, "action":action, "target":target, "attack":attack});
+    }
+    else
+    {
+        //targeted country
+        var target = document.getElementById("targetCountries");
+        target = target.options[target.selectedIndex].text;
+
+        //need to send selected country action and target with post request
+        var json = JSON.stringify({"select": select, "action": action, "target": target});
+    }
     postrqst.send(json);
 }
 
