@@ -14,11 +14,10 @@ CORS(app)
 # recives and validates order
 # order is of the form JSON: {“unitID”= int,”targetName”=string, “orderType”=string }
 
-
 @app.route(defUrl + 'send_order', methods=['POST'])
 def send_order():
-    data = request.json
-    if request.is_json:
+    data = request.data
+    if request.is_json():
         # content will contain a dictionary describing the order
         content = request.get_json()
         # validate_order will return true if the order is valid
