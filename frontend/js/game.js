@@ -23,29 +23,17 @@ function onLeave()
 function loadGame()
 {
 
-    console.log("Loading Game")
-    //sends a get request for the board
-    var getrqst = new XMLHttpRequest();
+    console.log("Loading Game");
 
     var url = "/api/get_game";
 
     makeGetRequest(url, function (data) {
-        //var json = JSON.parse(getrqst.responseText);
         updateBoard(data);
     }, function () {
-        console.log("failure")
+        console.log("failure");
         console.log()
-    })
+    });
 
-    // getrqst.open("GET", url, true);
-    // getrqst.setRequestHeader("Content-type", "application/json");
-    // getrqst.onreadystatechage = function () {
-    //     console.log(getreqst.responseText)
-    //     if(getrqst.readyState === 4 && getrqst.status === 200) {
-    //         var json = JSON.parse(getrqst.responseText);
-    //         updateBoard(json);
-    //     }
-    // };
 
     //fill select options
     var selectCountries = $("#selectCountries");
@@ -60,7 +48,7 @@ function loadGame()
 
 }
 
-var apiUrl = 'http://127.0.0.1:5000'
+var apiUrl = 'http://127.0.0.1:5000';
 
 var makeGetRequest = function(url, onSuccess, onFailure) {
     $.ajax({
@@ -68,6 +56,17 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
         url: apiUrl + url,
         dataType: "json",
         success: onSuccess,
+        error: onFailure
+    });
+};
+
+var makePostRequest = function(url, data, onSuccesss, onFailure)
+{
+    $.ajax({
+        type: 'Post',
+        url: apiUrl + url,
+        dataType: "json",
+        success: onSuccesss,
         error: onFailure
     });
 };
@@ -181,26 +180,10 @@ function updateScore(teamNum, score)
 //other functions/////////////////////////////////////////////////////////////////////////////////
 function onSubmit()
 {
-    //https://stackoverflow.com/questions/24468459/sending-a-json-to-server-and-retrieving-a-json-in-return-without-jquery
-    var postrqst = new XMLHttpRequest();
-    var url = "url";
+    var url = "api/send_order";
 
-    postrqst.open("POST", url, true);
-    postrqst.setRequestHeader("Content-type", "application/json");
-    postrqst.onreadystatechage = function (){
-        if (postrqst.readyState === 4 && postrqst.status === 200)
-        {
-            unitOrdered(select);
-        }
-        else if(postrqst.readyState === 4 && postrqst.status === 418)
-        {
-            alert("Invalid order");
-        }
-    };
 
     var form = $(".sendOrderForm");
-
-
     form.submit(function(e) {
         e.preventDefault();
     });
@@ -235,7 +218,13 @@ function onSubmit()
         //need to send selected country action and target with post request
         var json = JSON.stringify({"select": select, "action": action, "target": target});
     }
-    postrqst.send(json);
+    makePostRequest(url, json,
+        function () {
+            unitOrdered(select);
+        },
+        function () {
+            alert("Invalid Order");
+        });
 }
 
 
