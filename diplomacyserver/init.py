@@ -191,7 +191,7 @@ def printLocations(locationList):
 
     print(result)
 
-def resolveOrders():
+def resolveOrders2():
     undeterminedOrders = []
     actionableOrders = []
     orderAtLocation = {}
@@ -264,9 +264,32 @@ def resolveOrders():
     for defense in defenses:
         locationToDefenseStrength[defense[2]] += 1
 
+    successfullAttacks = {}
+
     for location, attacking in locationIdToAttacking:
         if locationIdToAttackStrength[location] > locationToDefenseStrength[location]:
-            pass
+            if attacking in successfullAttacks.items():
+                successfullAttacks[attacking].append((location, locationIdToAttackStrength[location]))
+            else:
+                successfullAttacks[attacking] = [(location, locationIdToAttackStrength[location])]
+
+    strongestAttacks = []
+
+    for location, attacksOnLocation in successfullAttacks.items():
+        bestAttackStrength = 0
+        attacksWithStrength = []
+        for attack in attacksOnLocation:
+            if attack[0] > bestAttackStrength:
+                bestAttackStrength = attack[0]
+                attacksWithStrength = [attack]
+            elif attack[0] == bestAttackStrength:
+                attacksWithStrength.append(attack)
+
+        if len(attacksWithStrength) == 1:
+            strongestAttacks.append(attacksWithStrength[0])
+
+
+
 
 
 # 1 Attack
