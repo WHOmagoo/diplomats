@@ -250,6 +250,16 @@ function removeUnits()
     }
 }
 
+//populates the board
+function populate()
+{
+    for(var index in countries)
+    {
+        changeTeam(countries[index], 4);
+    }
+
+}
+
 
 
 

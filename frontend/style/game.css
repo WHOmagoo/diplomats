@@ -123,8 +123,34 @@ header{
     background-color: white;
 }
 .team4{
-    background-color: black;
-    color: white;
+    background-color: grey;
+}
+.team5{
+    background-color: indigo;
+}
+.team6{
+    background-color: deeppink;
+}
+.team7{
+    background-color: yellow;
+}
+.team8{
+    background-color: aqua;
+}
+.team9{
+    background-color: brown;
+}
+.team10{
+    background-color: orangered;
+}
+.team10{
+    background-color: lightcoral;
+}
+.team11{
+    background-color: darkcyan;
+}
+.team11{
+    background-color: saddlebrown;
 }
 
 /*countries*/
