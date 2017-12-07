@@ -87,8 +87,8 @@ function clearBoard()
 function test()
 {
     var test = {"teams":
-            [{"army":["Lugo","IrishSea","London"],"navy":["NorthSea","Wales"],"score":"25"},
-             {"army":["Paris","Nile","Kiev"],"navy":["AtlanticOcean","Wales"],"score":"25"}]};
+            [{"army":["Lugo","IrishSea","London"],"navy":["NorthSea","Wales"],"score":"25","name":"batman"},
+             {"army":["Paris","Nile","Kiev"],"navy":["AtlanticOcean","Wales"],"score":"25","name":"notbatman"}]};
     //send a get request for the inital positions
     updateBoard(test);
 }
@@ -98,6 +98,11 @@ function updateBoard(json)
     removeUnits();
     //parse through all the teams
     for(var teamIndex in json.teams) {
+        
+        //generate teams
+        $(".bottomBar").append(
+        '<div class="team team' + (Number(teamIndex) + 1) +'"><div class="teamName">Team: '+ json.teams[teamIndex].name +'</div><div class="teamScore">Score: 0</div></div>');
+
         //fill army
         for (var index in json.teams[teamIndex].army)
         {
