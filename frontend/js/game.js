@@ -12,9 +12,6 @@ var countries = ["OffMap", "Liverpool", "Ireland", "Wales", "Edinburgh", "London
     "WestBlackSea", "EastBlackSea"];
 
 
-$(".sendOrderForm").submit(function(e) {
-    e.preventDefault();
-});
 
 function onLeave()
 {
@@ -42,10 +39,12 @@ function loadGame()
     //fill select options
     var selectCountries = $("#selectCountries");
     var targetCountries = $("#targetCountries");
+    var attackCountries = $("#attackCountries");
     for(var index in countries.sort())
     {
         selectCountries.append('<option value="' + countries[index] + '">' + countries[index] + '</option>');
         targetCountries.append('<option value="' + countries[index] + '">' + countries[index] + '</option>');
+        attackCountries.append('<option value="' + countries[index] + '">' + countries[index] + '</option>');
     }
 
 }
@@ -59,6 +58,7 @@ function clearBoard()
         removeTeam(countries[index]);
         removeUnit(countries[index]);
     }
+    $(".attackCountriesCnt").hide();
 
 }
 
@@ -66,7 +66,7 @@ function test()
 {
     var test = {"teams":
             [{"army":["Lugo","IrishSea","London"],"navy":["NorthSea","Wales"],"score":"25"},
-                {"army":["Lugo","IrishSea","London"],"navy":["NorthSea","Wales"],"score":"25"}],};
+             {"army":["Paris","Nile","Kiev"],"navy":["AtlanticOcean","Wales"],"score":"25"}]};
     //send a get request for the inital positions
     updateBoard(test);
 }
@@ -152,9 +152,7 @@ function removeTeam(country)
 //updates the score based on the team number and score
 function updateScore(teamNum, score)
 {
-    var team = $(".team.team" + teamNum);
-    team.children().className("teamScore").text("test");
-    team.children;
+    $(".team.team"+teamNum +" .teamScore").text("score: " + score);
 }
 
 //other functions/////////////////////////////////////////////////////////////////////////////////
@@ -200,3 +198,9 @@ function onSubmit()
     var json = JSON.stringify({"select":select, "action":action, "target":target});
     postrqst.send(json);
 }
+
+
+
+
+
+
