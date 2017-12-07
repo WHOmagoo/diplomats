@@ -1,0 +1,7 @@
+            UPDATE diplomacy.location SET factionid = (SELECT
+                id FROM diplomacy.faction WHERE
+                  gameid = (SELECT
+                    gameid FROM diplomacy.faction WHERE
+                      id = (SELECT factionid FROM diplomacy.unit WHERE id = %s))
+                  AND name = 'None')
+                WHERE NOT ispoi AND id = (SELECT location FROM diplomacy.unit WHERE id = %s);

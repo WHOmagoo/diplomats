@@ -1,10 +1,15 @@
-from flask import Flask
-from flask import request
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 import json
+from diplomacyserver import init
+
 
 app = Flask(__name__)
 
 defUrl = '/api/'
+
+app = Flask(__name__)
+CORS(app)
 
 #recives and validates order
 #order is of the form JSON: {“unitID”= int,”targetName”=string, “orderType”=string }
@@ -36,3 +41,19 @@ def confirm_orders():
         return 200
     else:
         return 418
+
+@app.route(defUrl + 'get_game', methods=['GET'])
+def getGame():
+    data = init.getGame()
+
+    out = []
+    for team in data:
+        temp = json.dumps(team[0])
+        out.append({"army": team[0], "navy": team[1], "score": team[2]})
+
+    # return jsonify({"teams":[{"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":3},{"army": ["Portugal", "Ireland"], "navy":["Atlantic Ocean"], "score":2}], 'status':200})
+    return jsonify({"teams": out, "status":200})
+
+if __name__ == '__main__':
+    init.game()
+    app.run()

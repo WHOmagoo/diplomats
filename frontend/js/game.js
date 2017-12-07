@@ -22,19 +22,30 @@ function onLeave()
 //loads the game
 function loadGame()
 {
+
+    console.log("Loading Game")
     //sends a get request for the board
     var getrqst = new XMLHttpRequest();
 
-    var url = "url";
+    var url = "/api/get_game";
 
-    getrqst.open("GET", url, true);
-    getrqst.setRequestHeader("Content-type", "application/json");
-    getrqst.onreadystatechage = function () {
-        if(getrqst.readyState === 4 && getrqst.status === 200) {
-            var json = JSON.parse(getrqst.responseText);
-            updateBoard(json);
-        }
-    };
+    makeGetRequest(url, function (data) {
+        //var json = JSON.parse(getrqst.responseText);
+        updateBoard(data);
+    }, function () {
+        console.log("failure")
+        console.log()
+    })
+
+    // getrqst.open("GET", url, true);
+    // getrqst.setRequestHeader("Content-type", "application/json");
+    // getrqst.onreadystatechage = function () {
+    //     console.log(getreqst.responseText)
+    //     if(getrqst.readyState === 4 && getrqst.status === 200) {
+    //         var json = JSON.parse(getrqst.responseText);
+    //         updateBoard(json);
+    //     }
+    // };
 
     //fill select options
     var selectCountries = $("#selectCountries");
@@ -48,6 +59,18 @@ function loadGame()
     }
 
 }
+
+var apiUrl = 'http://127.0.0.1:5000'
+
+var makeGetRequest = function(url, onSuccess, onFailure) {
+    $.ajax({
+        type: 'GET',
+        url: apiUrl + url,
+        dataType: "json",
+        success: onSuccess,
+        error: onFailure
+    });
+};
 
 //clears the board
 function clearBoard()
