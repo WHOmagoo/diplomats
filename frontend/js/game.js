@@ -402,9 +402,3 @@ function populate()
     }
 
 }
-
-
-
-
-
-
