@@ -386,8 +386,6 @@ def resolveOrders():
             oldLocationToNew[locationIdToName[db.getOrigin(move[0])]] = locationIdToName[move[2]]
 
 
-    global unitNameToId
-
     for key, val in oldLocationToNew.items():
         unitId = unitNameToId[key]
         unitIdToName[unitId] = val
@@ -445,6 +443,9 @@ def updateGame():
 def removeGame(gameData):
     pass
 
+
+# Depreceated text version of diplomacy.
+# No longer functional but can be slightly modified to work
 if __name__ == '__main__':
 
     # result = input('Enter a command: ')
@@ -485,13 +486,13 @@ if __name__ == '__main__':
                     type = ordertypes[type]
                     target = locationNameToId[target]
 
-                    makeOrder(origin, type, target)
+                    # makeOrder(origin, type, target)
                 except KeyError:
                     print("One or more of the inputs was incorrect")
             elif command[0] == 'a':
                 origin = command[1].replace(',', ' ')
                 origin = unitNameToId[origin]
-                attackable = OrderValidator.getAttackable(origin)
+                attackable = getAttackable(origin)
                 for id in attackable:
                     print(locationIdToName[id[0]] + ", ", end="")
 
@@ -500,14 +501,14 @@ if __name__ == '__main__':
             elif command[0] == 'd':
                 origin = command[1].replace(',', ' ')
                 origin = unitNameToId[origin]
-                for id in OrderValidator.getDefendable(origin):
+                for id in getDefendable(origin):
                     print(locationIdToName[id[0]] + ", ", end="")
 
                 print()
             elif command[0] == 's':
                 origin = command[1].replace(',', ' ')
                 origin = unitNameToId[origin]
-                for id in OrderValidator.getSupportable(origin):
+                for id in getSupportable(origin):
                     print(locationIdToName[id[0]] + ", ", end="")
 
                 print()
@@ -515,7 +516,7 @@ if __name__ == '__main__':
             elif command[0] == 'm':
                 origin = command[1].replace(',', ' ')
                 origin = unitNameToId[origin]
-                for id in OrderValidator.getMoveable(origin):
+                for id in getMoveable(origin):
                     print(locationIdToName[id[0]] + ", ", end="")
 
                 print()
@@ -525,7 +526,7 @@ if __name__ == '__main__':
                 origin = unitNameToId[origin]
                 secondary = command[2].replace(',', ' ')
                 secondary = unitNameToId[secondary]
-                for id in OrderValidator.getAttackableInCommon(origin, secondary):
+                for id in getAttackableInCommon(origin, secondary):
                     print(locationIdToName[id[0]] + ", ", end="")
 
                 print()
