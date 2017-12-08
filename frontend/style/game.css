@@ -650,6 +650,11 @@ header{
     top: 147px;
     left: 420px;
 }
+.OffMap{
+    position: absolute;
+    top: 25px;
+    left: 550px;
+}
 
 
 
