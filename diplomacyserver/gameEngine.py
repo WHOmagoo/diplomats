@@ -377,11 +377,21 @@ def resolveOrders():
 
         updateUnitLocation(db.getUnit(db.getOrigin(attack[0]))[0], attack[2])
 
+    oldLocationToNew = {}
+
     for move in moves:
         moveTo = move[2]
         if db.isEmpty(moveTo):
-            updateUnitLocation(move[0],move[2])
+            db.updateUnitLocation(move[0],move[2])
+            oldLocationToNew[locationIdToName[db.getOrigin(move[0])]] = locationIdToName[move[2]]
 
+
+    global unitNameToId
+
+    for key, val in oldLocationToNew.items():
+        unitId = unitNameToId[key]
+        unitIdToName[unitId] = val
+        unitNameToId[val] = unitId
 
 
     for dislodgedUnit in dislodged:
