@@ -1,6 +1,6 @@
 import csv
 
-from OrderValidator import *
+from diplomacyserver.OrderValidator import *
 from diplomacyserver.dbUtil import DB
 
 locationNameToId = {}
@@ -70,8 +70,6 @@ def generateFactionDict(gameId):
 def generateLocationDict():
     # db = DB()
     locations = parsecsv('locations.csv')
-
-    locationIdDict = {}
 
     for row in locations:
         name = row[0]
@@ -174,28 +172,28 @@ def validateOrder(unitid, type, target, secondaryTarget=None):
             return True
         else:
             print("Invalid Order for " + str(unitid) + ", 1, " + str(target))
-    if type == 2: #support
+    elif type == 2: #support
         if validateSupport(unitid, target, secondaryTarget):
-            orderid = db.makeUnitOrder(unitid, target, secondaryTarget)
+            orderid = db.makeUnitOrder(type, target, secondaryTarget)
             db.setOrder(unitid,orderid)
             return True
-    if type == 3: #defend
-        if validateDefend(origin, target):
-            orderId = db.makeUnitOrder(unitid, type, target)
+    elif type == 3: #defend
+        if validateDefend(unitid, target):
+            orderId = db.makeUnitOrder(type, target)
             db.setOrder(unitid, orderId)
             return True
         pass
-    if type == 4: #move
+    elif type == 4: #move
         if validateMove(unitid, target):
-            orderId = db.makeUnitOrder(unitid, type, target)
+            orderId = db.makeUnitOrder(type, target)
             db.setOrder(unitid, orderId)
             return True
-    if type == 5:
-        db.makeUnitOrder(unitid, type, unitid)
+    elif type == 5:
+        db.makeUnitOrder(type, unitid)
         return True
-    else:
-        print("Invalid order type")
-        return False
+
+    print("Invalid Order")
+    return False
 
     locationOrigin = db.getUnitLocation(unitid)
 
@@ -254,16 +252,21 @@ def printLocations(locationList):
     print(result)
 
 def resolveOrders():
+    orderMasterList = []
     undeterminedOrders = []
     actionableOrders = []
     orderAtLocation = {}
     for key, val in unitIdToName.items():
         order = db.getOrderData(key)
-        undeterminedOrders.append(order)
-        orderAtLocation[db.getUnitLocation(key)] = order
+        if order is not None:
+            undeterminedOrders.append(order)
+            orderAtLocation[db.getUnitLocation(key)] = order
+            orderMasterList.append(order[0])
 
     undeterminedLastSize = 0
-    while undeterminedLastSize != len(undeterminedOrders) or len(undeterminedOrders) == 0:
+    while undeterminedLastSize != len(undeterminedOrders) and len(undeterminedOrders) > 0:
+        undeterminedLastSize = len(undeterminedOrders)
+
         buffer = []
         for order in undeterminedOrders:
             if order[1] == 1:
@@ -272,16 +275,28 @@ def resolveOrders():
                 except KeyError:
                     pass
 
+        toRemove = []
+
         for order in undeterminedOrders:
             if order not in buffer:
                 actionableOrders.append(order)
+                if order[1] == 1:
+                    try:
+                        toRemove.append(orderAtLocation[order[2]])
+                    except KeyError:
+                        pass
 
-        undeterminedLastSize = len(undeterminedOrders)
+        for order in toRemove:
+            try:
+                undeterminedOrders.remove(order)
+            except ValueError:
+                pass
+
         undeterminedOrders = buffer
 
-        print("Total Length:" + str(len(actionableOrders) + len(undeterminedOrders)) +
-              ", Actionable Orders Length:" + str(len(actionableOrders)) +
-              ', Undetermined Orders Length:' + str(len(undeterminedOrders)))
+        # print("Total Length:" + str(len(actionableOrders) + len(undeterminedOrders)) +
+        #       ", Actionable Orders Length:" + str(len(actionableOrders)) +
+        #       ', Undetermined Orders Length:' + str(len(undeterminedOrders)))
 
 
     attacks = []
@@ -294,14 +309,14 @@ def resolveOrders():
 
     for order in actionableOrders:
         if order[1] == 1:
-            attacks.append((order, 1))
-        if order[1] == 2:
+            attacks.append(order)
+        elif order[1] == 2:
             supports.append(order)
-        if order[1] == 3:
+        elif order[1] == 3:
             defenses.append(order)
-        if order[1] == 4:
+        elif order[1] == 4:
             moves.append(order)
-        if order[1] == 5:
+        elif order[1] == 5:
             stay.append(order)
 
     locationIdToAttackStrength = {}
@@ -313,27 +328,30 @@ def resolveOrders():
 
     for support in supports:
         try:
-            if support[2] == locationIdToAttacking[3]:
-                locationIdToAttacking[support[2]] += 1
+            if support[2] == locationIdToAttacking[db.getUnitLocation(support[3])]:
+                locationIdToAttackStrength[db.getUnitLocation(support[3])] += 1
         except KeyError:
             pass
 
     locationToDefenseStrength = {}
 
-    for id, name in unitIdToName:
-        locationToDefenseStrength[db.getUnitLocation(id)] = 1;
+    for id, name in locationIdToName.items():
+        if name in unitNameToId.keys():
+            locationToDefenseStrength[id] = 1;
+        else:
+            locationToDefenseStrength[id] = 0;
 
     for defense in defenses:
         locationToDefenseStrength[defense[2]] += 1
 
     successfullAttacks = {}
 
-    for location, attacking in locationIdToAttacking:
-        if locationIdToAttackStrength[location] > locationToDefenseStrength[location]:
-            if attacking in successfullAttacks.items():
-                successfullAttacks[attacking].append((location, locationIdToAttackStrength[location]))
+    for location, attacking in locationIdToAttacking.items():
+        if locationIdToAttackStrength[location] > locationToDefenseStrength[attacking]:
+            if attacking in successfullAttacks.keys():
+                successfullAttacks[attacking].append((db.getOrderData(db.getUnit(location)[0]), locationIdToAttackStrength[location]))
             else:
-                successfullAttacks[attacking] = [(location, locationIdToAttackStrength[location])]
+                successfullAttacks[attacking] = [(db.getOrderData(db.getUnit(location)[0]), locationIdToAttackStrength[location])]
 
     strongestAttacks = []
 
@@ -341,11 +359,11 @@ def resolveOrders():
         bestAttackStrength = 0
         attacksWithStrength = []
         for attack in attacksOnLocation:
-            if attack[0] > bestAttackStrength:
-                bestAttackStrength = attack[0]
-                attacksWithStrength = [attack]
-            elif attack[0] == bestAttackStrength:
-                attacksWithStrength.append(attack)
+            if attack[1] > bestAttackStrength:
+                bestAttackStrength = attack[1]
+                attacksWithStrength = [attack[0]]
+            elif attack[1] == bestAttackStrength:
+                attacksWithStrength.append(attack[0])
 
         if len(attacksWithStrength) == 1:
             strongestAttacks.append(attacksWithStrength[0])
@@ -357,15 +375,37 @@ def resolveOrders():
         if not db.isEmpty(attacked):
             dislodged.append(db.getUnit(attacked))
 
-        db.updateUnitLocation(attack[0], attack[2])
+        updateUnitLocation(db.getUnit(db.getOrigin(attack[0]))[0], attack[2])
 
     for move in moves:
-        moveTo = attack[2]
+        moveTo = move[2]
         if db.isEmpty(moveTo):
-            db.updateUnitLocation(move[0], move[2])
+            updateUnitLocation(move[0],move[2])
 
 
 
+    for dislodgedUnit in dislodged:
+        newLocation = db.relocateUnit(dislodgedUnit[0])
+        if newLocation is not None:
+            unitIdToName[dislodgedUnit[0]] = locationIdToName[newLocation]
+            unitNameToId[unitIdToName[dislodgedUnit[0]]] = dislodgedUnit[0]
+        else:
+            db.removeUnit(dislodgedUnit[0])
+            unitNameToId.pop(unitIdToName[dislodgedUnit[0]])
+            unitIdToName.pop(dislodgedUnit[0])
+
+    for order in orderMasterList:
+        db.removeOrder(order)
+
+
+def updateUnitLocation(unitId, newLocationId):
+
+    unitNameToId.pop(unitIdToName[unitId])
+
+    unitIdToName[unitId] = locationIdToName[newLocationId]
+    unitNameToId[locationIdToName[newLocationId]] = unitId
+
+    db.updateUnitLocation(unitId, newLocationId)
 
 
 

@@ -183,3 +183,15 @@ WITH neighbors AS(
 
         {next team}
 }
+
+
+input: unitId
+
+WITH curfactionid AS (
+    SELECT factionid FROM diplomacy.unit WHERE id = 862),
+controlled AS (
+    SELECT id FROM diplomacy.location WHERE factionid = (SELECT factionid FROM diplomacy.unit WHERE id = 862) AND ispoi),
+units(id) AS (
+    SELECT location FROM diplomacy.unit WHERE factionid = (SELECT factionid FROM diplomacy.unit WHERE id = 862))
+SELECT id FROM controlled EXCEPT SELECT id FROM units;
+
