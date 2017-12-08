@@ -398,30 +398,33 @@
 	        <div class="orderCont">
 	            <div class="sendOrderCont">
                     <form class="sendOrderForm">
-                        <select id="selectCountries">
+                        <br>
+                        <select id="origin" onchange="onChooseOrigin()">
                             <!--countries get generated in here !-->
                         </select><br>
-                        <select id="action">
-                            <option value="attack" selected>attacks</option>
-                            <option id="support" value="support">supports</option>
+                        <br>
+                        <select id="action" onchange="onSelectCommand()">
+                            <option value="prompt" selected disabled hidden>Select a Command</option>
+                            <option value="attack">attacks</option>
+                            <option value="support">supports</option>
                             <option value="defend">defends</option>
                             <option value="move">moves to</option>
                             <option value="stay">stays</option>
-                        </select><br>
-                        <select id="targetCountries">
+                        </select><br><br>
+                        <select id="targetCountries" onchange="onChooseTarget()">
                             <!--countries get generated in here -->
-                        </select><br>
+                        </select><br><br>
                         <div class="attackCountriesCnt">
                             Attack On:<br>
-                            <select id="attackCountries">
+                            <select id="attackCountries" onchange="onChooseSecondTarget()">
                                 <!--countries get generated in here -->
-                            </select>
+                            </select><br><br>
                         </div>
-                        <input type="submit" value="Submit Order" onclick="onSubmit()">
+                        <input type="submit" id="submit" value="Submit Order" onclick="onSubmit()">
                     </form>
-	            </div>
+	            </div><br>
 	            <div class="ConfirmOrderCont">
-	                <button class="ConfirmOrdersButton" type="Button" onclick="onConfirmOrders()">Confirm Orders</button>
+	                <button class="ConfirmOrdersButton" type="Button" onclick="onResolveOrders()">Resolve Orders</button>
 	            </div>
 	        </div>
 	    </div>
