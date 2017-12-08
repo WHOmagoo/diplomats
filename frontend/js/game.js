@@ -239,7 +239,6 @@ function onChooseSecondTarget(){
     $("#origin").prop('disabled', false);
 
     $("#action").prop('disabled', false);
-
     $("#targetCountries").prop('disabled', false);
 
     $("#attackCountries").prop('disabled', false);

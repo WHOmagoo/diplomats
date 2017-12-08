@@ -121,7 +121,7 @@ def getAttackableInCommon():
             origin = diplomacyserver.gameEngine.unitNameToId[origin]
             supporting = diplomacyserver.gameEngine.unitNameToId[supporting]
 
-            targetableNames = getAttackableInCommon(origin, supporting)
+            targetableNames = diplomacyserver.gameEngine.getAttackableInCommon(origin, supporting)
             targetable = []
 
 
