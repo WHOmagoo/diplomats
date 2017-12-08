@@ -85,10 +85,9 @@ function test()
 function updateBoard(json)
 {
 
-
-    removeUnits();
+    //equivalent to clearing the entire page
+    clearBoard();
     $(".bottomBar").empty();
-    //parse through all the teams
 
     $("#origin").empty()
     $("#origin").append('<option selected disabled hidden >Choose a Unit</option>');
@@ -99,6 +98,7 @@ function updateBoard(json)
     $("#targetCountries").prop('disabled', true);
 
     var units = [];
+    //parse through all the teams
     for(var teamIndex in json.teams) {
         
         //generate teams
