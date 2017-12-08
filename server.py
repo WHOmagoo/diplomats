@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
-from diplomacyserver import gameEngine
-from diplomacyserver import OrderValidator
+import diplomacyserver.gameEngine
+import diplomacyserver.OrderValidator
 
 
 app = Flask(__name__)
@@ -29,13 +29,13 @@ def send_order():
 
             if action == 'support':
                 assisting = content['supporting']
-                assisting = gameEngine.unitNameToId[assisting]
+                assisting = diplomacyserver.gameEngine.unitNameToId[assisting]
 
-            origin = gameEngine.unitNameToId[origin]
-            target = gameEngine.locationNameToId[target]
-            action = gameEngine.ordertypes[action]
+            origin = diplomacyserver.gameEngine.unitNameToId[origin]
+            target = diplomacyserver.gameEngine.locationNameToId[target]
+            action = diplomacyserver.gameEngine.ordertypes[action]
 
-            valid = gameEngine.validateOrder(origin, action, target, assisting)
+            valid = diplomacyserver.gameEngine.validateOrder(origin, action, target, assisting)
 
         except KeyError:
             print("Key error")
@@ -70,7 +70,8 @@ def confirm_orders():
 
 @app.route(defUrl + 'get_game', methods=['GET'])
 def getGame():
-    data = gameEngine.getGame()
+    data = diplomacyserver.gameEngine.getGame()
+    # data = getGame()
 
     out = []
     for team in data:
@@ -87,15 +88,15 @@ def getTargetable():
             origin = data['origin']
             type = data['type']
 
-            origin = gameEngine.unitNameToId[origin]
-            type = gameEngine.ordertypes[type]
+            origin = diplomacyserver.gameEngine.unitNameToId[origin]
+            type = diplomacyserver.gameEngine.ordertypes[type]
 
-            targetableNames = OrderValidator.getTargetable(origin, type)
+            targetableNames = diplomacyserver.OrderValidator.getTargetable(origin, type)
             targetable = []
 
 
             for target in targetableNames:
-                targetable.append(gameEngine.locationIdToName[target])
+                targetable.append(diplomacyserver.gameEngine.locationIdToName[target])
 
             return jsonify({'status':200, 'targetable':targetable})
 
@@ -117,16 +118,16 @@ def getAttackableInCommon():
             supporting = data["supporting"]
 
 
-            origin = gameEngine.unitNameToId[origin]
-            supporting = gameEngine.unitNameToId[supporting]
+            origin = diplomacyserver.gameEngine.unitNameToId[origin]
+            supporting = diplomacyserver.gameEngine.unitNameToId[supporting]
 
-            targetableNames = OrderValidator.getAttackableInCommon(origin, supporting)
+            targetableNames = getAttackableInCommon(origin, supporting)
             targetable = []
 
 
 
             for target in targetableNames:
-                targetable.append(gameEngine.locationIdToName[target])
+                targetable.append(diplomacyserver.gameEngine.locationIdToName[target])
 
             return jsonify({'status':200, 'targetable':targetable})
         except KeyError:
@@ -137,9 +138,9 @@ def getAttackableInCommon():
 
 @app.route(defUrl + 'resolve_orders', methods=['GET'])
 def resolveOrders():
-    gameEngine.resolveOrders()
+    diplomacyserver.gameEngine.resolveOrders()
 
-    data = gameEngine.getGame()
+    data = diplomacyserver.gameEngine.getGame()
 
     out = []
     for team in data:
@@ -150,5 +151,5 @@ def resolveOrders():
 
 
 if __name__ == '__main__':
-    gameEngine.createGame()
+    diplomacyserver.gameEngine.createGame()
     app.run()
