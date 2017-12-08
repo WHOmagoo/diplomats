@@ -87,6 +87,7 @@ function updateBoard(json)
 
 
     removeUnits();
+    $(".bottomBar").empty();
     //parse through all the teams
 
     $("#origin").empty()
