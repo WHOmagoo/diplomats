@@ -116,7 +116,7 @@ header{
 }
 
 .team2 {
-    background-color: green;
+    background-color: darkgreen;
 }
 
 .team3{
@@ -138,21 +138,20 @@ header{
     background-color: aqua;
 }
 .team9{
-    background-color: brown;
+    background-color: limegreen;
 }
 .team10{
     background-color: orangered;
 }
-.team10{
-    background-color: lightcoral;
-}
 .team11{
-    background-color: darkcyan;
+    background-color: darkred;
 }
-.team11{
-    background-color: saddlebrown;
+.team12{
+    background-color: royalblue;
 }
-
+.team13{
+    background-color: salmon;
+}
 /*countries*/
 .IrishSea{
     position: absolute;
