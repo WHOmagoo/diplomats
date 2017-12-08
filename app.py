@@ -1,16 +1,13 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import json
-from diplomacyserver import gameEngine
-from diplomacyserver import OrderValidator
 
-
-app = Flask(__name__)
-
-defUrl = '/api/'
+from diplomacyserver import OrderValidator, gameEngine
 
 app = Flask(__name__)
 CORS(app)
+
+defUrl = '/api/'
+
 
 # recives and validates order
 # order is of the form JSON: {“unitID”= int,”targetName”=string, “orderType”=string }
@@ -102,8 +99,6 @@ def getTargetable():
         except KeyError:
             print("Key error")
             return jsonify({"status":200,"targetable":[]})
-
-        return jsonify({"status":200})
     else:
         return jsonify({"status":418})
 

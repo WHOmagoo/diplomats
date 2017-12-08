@@ -42,6 +42,7 @@ def getGame():
     # [(["Liverpool", "Ireland"], ["IrishSea"], 3), (["Casablanca"], ["AtlanticOcean"], 1)]
 
 def parsecsv(fileName):
+    fileName = "diplomacyserver/" + fileName
     data = []
     with open(fileName) as csvFile:
         csvReader = csv.reader(csvFile)
