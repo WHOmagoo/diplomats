@@ -68,6 +68,7 @@ function clearBoard()
     {
         removeTeam(countries[index]);
         removeUnit(countries[index]);
+        removeOrdered(countries[index]);
     }
     $(".attackCountriesCnt").hide();
 
@@ -287,6 +288,12 @@ function unitOrdered(country)
     var country = $("." + country);
     country.removeClass("ordered");
     country.addClass("ordered");
+}
+
+//removes the ordered area around countries
+function removeOrdered(country)
+{
+    $("." + country).removeClass("ordered");
 }
 
 //removes the countries team
