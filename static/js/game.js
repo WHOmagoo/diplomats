@@ -15,7 +15,7 @@ var countries = ["OffMap", "Liverpool", "Ireland", "Wales", "Edinburgh", "London
 
 function onLeave()
 {
-	window.location.href = "../html/joingame.html"
+	window.location.href = "../index.html"
     //send a leave post request
 }
 

@@ -43,5 +43,5 @@ function cancel()
 
 function onSuccess()
 {
-	window.location.href = "../html/joingame.html";
+	window.location.href = "../index.html";
 }
